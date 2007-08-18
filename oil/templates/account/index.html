@@ -1,0 +1,41 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="../layout.html" />
+  <head>
+    <title>My Account</title>
+  </head>
+
+  <body>
+    <form action="${ h.url_for(controller='account', action='index') }"
+          method="post" id="update_user" name="update_user"
+          accept-charset="UTF-8">
+      <fieldset class="user_input">
+        <legend>Account Settings for $c.user.openid</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="${c.user.name}"/>
+        <span class="error-message" py:if="'name' in c.form_errors">
+          ${ c.form_errors['name']}
+        </span><br/>
+        <label for="tzinfo">Timezone:</label>
+        <select id="tzinfo" name="tzinfo">
+          <py:for each="tz in c.tz_list">
+          <option value="$tz.value"><strong>$tz.value:</strong> $tz.name</option>
+          </py:for>
+        </select><br/>
+        <input type="hidden" name="openid" id="openid"
+               value="$c.user.openid"/>
+        <input class="input_button" name="submit" type="submit"
+               value="${_('Update')}"/>
+      </fieldset>
+    </form>
+    <script type="text/javascript">
+      $(document).ready( function() {
+        $('#tzinfo').selectOptions('$c.user.tzinfo');
+      });
+    </script>
+  </body>
+</html>

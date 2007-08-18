@@ -1,0 +1,41 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+  <head py:match="head">
+    <title>
+      Administration: ${select('title/text()')}
+    </title>
+    ${ h.javascript_include_tag('/js/irclv.admin.js') }
+    ${select("*[local-name() != 'title']")}
+  </head>
+
+  <body py:match="body">
+    <div id="sidemenu">
+    <ul>
+      <li>${ h.link_to_unless_current(_('Networks'),
+                                      h.url_for(controller='admin',
+                                      action='networks', id=None)) }</li>
+        <ul>
+          <li>- ${ h.link_to_unless_current(_('Add Network'),
+                                      h.url_for(controller='admin',
+                                      action='add_network', id=None)) }</li>
+        </ul>
+      <li>${ h.link_to_unless_current(_('Groups'),
+                                      h.url_for(controller='admin',
+                                      action='groups', id=None)) }</li>
+      <li>${ h.link_to_unless_current(_('Users'),
+                                      h.url_for(controller='admin',
+                                      action='users', id=None)) }</li>
+    </ul>
+    </div>
+    <h2>Administration: ${select('h2/text()')}</h2>
+    <div id="admin_content">
+      ${select("*[local-name() != 'h2']")}
+    </div>
+  </body>
+  <xi:include href="../layout.html" />
+</html>

@@ -22,13 +22,15 @@ class UTCDateTime(sqla.types.TypeDecorator):
     impl = sqla.types.DateTime
     def convert_bind_param(self, value, engine):
         return value
+        #return UTC.localize(value)
     def convert_result_value(self, value, engine):
+        #return value
         return UTC.localize(value)
 
 user_table = sqla.Table('user', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
     sqla.Column('name', sqla.Unicode(60), nullable=False, unique=True),
-    sqla.Column('openid', sqla.String()),
+    sqla.Column('openid', sqla.String),
     sqla.Column('signup', UTCDateTime, nullable=False),
     sqla.Column('lastlogin', UTCDateTime, nullable=False),
     sqla.Column('banned', sqla.Boolean, nullable=False, default=False),
@@ -41,11 +43,11 @@ class User(object):
     def __init__(self, openid, name=None):
         self.openid = openid
         self.name = name if name is not None else openid
-        self.signup = datetime.datetime.utcnow()
+        self.signup = UTC.localize(datetime.datetime.utcnow())
     def __unicode__(self):
         return self.name
     def updatelastlogin(self):
-        self.lastlogin = datetime.datetime.utcnow()
+        self.lastlogin = UTC.localize(datetime.datetime.utcnow())
     def is_admin(self):
         return isinstance(self, Admin)
 
@@ -72,7 +74,7 @@ class Network(object):
     def __init__(self, address, port, name=None):
         self.address = address
         self.port = port
-        self.added = datetime.datetime.utcnow()
+        self.added = UTC.localize(datetime.datetime.utcnow())
         if name is None:
             self.name = self.address
         else:
@@ -129,7 +131,7 @@ class Event(object):
         self.source = source
         self.msg = message
         self.type = type
-        self.stamp = datetime.datetime.utcnow()
+        self.stamp = UTC.localize(datetime.datetime.utcnow())
     def __unicode__(self):
         return self.msg
     def __repr__(self):

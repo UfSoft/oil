@@ -17,7 +17,16 @@ def make_map():
     map.connect('error/:action/:id', controller='error')
 
     # CUSTOM ROUTES HERE
+    map.connect('home', '', controller="main", action="index")
+    map.connect('view_networks', 'logs/', controller='logs',
+                action='view_networks')
+    map.connect('view_network', 'networks/:network/', controller='logs',
+                action='view_network')
+    map.connect('logs', 'logs/:network/:channel/:year/:month/:day',
+                controller='logs', action='view', network=None, channel=None,
+                year=None, month=None, day=None)
 
+    # Default and Fallback routes
     map.connect(':controller/:action/:id')
     map.connect('*url', controller='template', action='view')
 

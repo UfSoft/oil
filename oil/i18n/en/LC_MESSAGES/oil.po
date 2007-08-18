@@ -1,0 +1,372 @@
+# English translations for OIL.
+# Copyright (C) 2007 UfSoft.org
+# This file is distributed under the same license as the OIL project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OIL 0.1\n"
+"Report-Msgid-Bugs-To: ufs@ufsoft.org\n"
+"POT-Creation-Date: 2007-08-18 15:21+0100\n"
+"PO-Revision-Date: 2007-08-18 15:21+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9dev-r267\n"
+
+#: oil/controllers/account.py:33
+msgid "Already signed in."
+msgstr ""
+
+#: oil/controllers/account.py:88 oil/controllers/account.py:98
+msgid "You are not signed in."
+msgstr ""
+
+#: oil/controllers/account.py:92
+msgid "You've been signed out."
+msgstr ""
+
+#: oil/controllers/account.py:102
+msgid "You are not banned."
+msgstr ""
+
+#: oil/controllers/admin.py:18
+msgid "You are not an Administrator"
+msgstr ""
+
+#: oil/model/fe/validators.py:26 oil/model/fe/validators.py:35
+#, python-format
+msgid "Address is already used for network '%s'"
+msgstr ""
+
+#: oil/templates/layout.html:40
+msgid ""
+"Warning, your browser does not support JavaScript and is not capable of "
+"displaying the latest web pages such as those found on this site. Some of"
+" the functionality will be disabled."
+msgstr ""
+
+#: oil/templates/layout.html:51
+msgid "Language:"
+msgstr ""
+
+#: oil/templates/layout.html:69
+msgid "IRC Logs Viewer"
+msgstr ""
+
+#: oil/templates/layout.html:73
+msgid "Home"
+msgstr ""
+
+#: oil/templates/layout.html:76
+msgid "Admin"
+msgstr ""
+
+#: oil/templates/layout.html:79
+msgid "Logs"
+msgstr ""
+
+#: oil/templates/layout.html:83 oil/templates/account/index.html:9
+msgid "My Account"
+msgstr ""
+
+#: oil/templates/layout.html:87
+msgid "Sign Out"
+msgstr ""
+
+#: oil/templates/layout.html:91 oil/templates/account/signin.html:34
+msgid "Sign In"
+msgstr ""
+
+#: oil/templates/account/banned.html:8 oil/templates/account/banned.html:12
+msgid "You've been banned."
+msgstr ""
+
+#: oil/templates/account/banned.html:13
+msgid "For some reason the Administrator(s) of this site have banned you."
+msgstr ""
+
+#: oil/templates/account/index.html:17
+msgid "Account Settings for"
+msgstr ""
+
+#: oil/templates/account/index.html:18 oil/templates/admin/add_network.html:20
+#: oil/templates/admin/add_perm.html:20
+#: oil/templates/admin/delete_group.html:21
+#: oil/templates/admin/edit_network.html:27
+msgid "Name:"
+msgstr ""
+
+#: oil/templates/account/index.html:23
+msgid "Timezone:"
+msgstr ""
+
+#: oil/templates/account/index.html:31
+msgid "Update"
+msgstr ""
+
+#: oil/templates/account/signin.html:13
+msgid ""
+"This website uses OpenID for authentication. It's probable you already\n"
+"      have an OpenID -- many internet services now offer them. OpenID "
+"enables\n"
+"      you to log in at one place and be authenticated at many places."
+msgstr ""
+
+#: oil/templates/account/signin.html:16
+msgid "OpenID providers:"
+msgstr ""
+
+#: oil/templates/account/signin.html:18
+msgid "LiveJournal:"
+msgstr ""
+
+#: oil/templates/account/signin.html:18 oil/templates/account/signin.html:22
+#: oil/templates/account/signin.html:23 oil/templates/account/signin.html:24
+msgid "http://"
+msgstr ""
+
+#: oil/templates/account/signin.html:18 oil/templates/account/signin.html:22
+#: oil/templates/account/signin.html:24
+msgid "username"
+msgstr ""
+
+#: oil/templates/account/signin.html:18
+msgid ".livejournal.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:18
+msgid ""
+"Many other LiveJournal-based sites such as GreatestJournal offer\n"
+"            OpenIDs, so try your site url."
+msgstr ""
+
+#: oil/templates/account/signin.html:21
+msgid "AOL or AOL Instant Messenger:"
+msgstr ""
+
+#: oil/templates/account/signin.html:21
+msgid "http://openid.aol.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:21
+msgid "screenname"
+msgstr ""
+
+#: oil/templates/account/signin.html:22
+msgid "SmugMug:"
+msgstr ""
+
+#: oil/templates/account/signin.html:22
+msgid ".smugmug.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:23
+msgid "WordPress.com:"
+msgstr ""
+
+#: oil/templates/account/signin.html:23
+msgid "blog"
+msgstr ""
+
+#: oil/templates/account/signin.html:23
+msgid ".wordpress.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:24
+msgid "Vox:"
+msgstr ""
+
+#: oil/templates/account/signin.html:24
+msgid ".vox.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:25
+msgid "Or pick any provider from the"
+msgstr ""
+
+#: oil/templates/account/signin.html:26
+msgid "list"
+msgstr ""
+
+#: oil/templates/account/signin.html:29
+msgid "Please Sign In"
+msgstr ""
+
+#: oil/templates/admin/add_network.html:10
+#: oil/templates/admin/add_network.html:14
+#: oil/templates/admin/add_network.html:19
+#: oil/templates/admin/add_network.html:42 oil/templates/admin/admin.html:23
+#: oil/templates/admin/networks.html:20
+msgid "Add Network"
+msgstr ""
+
+#: oil/templates/admin/add_network.html:28
+#: oil/templates/admin/edit_network.html:34
+msgid "Address:"
+msgstr ""
+
+#: oil/templates/admin/add_network.html:35
+#: oil/templates/admin/edit_network.html:41
+msgid "Port:"
+msgstr ""
+
+#: oil/templates/admin/add_perm.html:10 oil/templates/admin/add_perm.html:14
+#: oil/templates/admin/add_perm.html:19 oil/templates/admin/add_perm.html:33
+#: oil/templates/admin/perms.html:20
+msgid "Add Permission"
+msgstr ""
+
+#: oil/templates/admin/add_perm.html:27
+#: oil/templates/admin/delete_group.html:25
+msgid "Description:"
+msgstr ""
+
+#: oil/templates/admin/admin.html:9 oil/templates/admin/admin.html:35
+msgid "Administration:"
+msgstr ""
+
+#: oil/templates/admin/admin.html:19 oil/templates/logs/view_networks.html:10
+#: oil/templates/logs/view_networks.html:14
+msgid "Networks"
+msgstr ""
+
+#: oil/templates/admin/admin.html:27 oil/templates/admin/networks.html:10
+#: oil/templates/admin/networks.html:19
+msgid "Groups"
+msgstr ""
+
+#: oil/templates/admin/admin.html:30 oil/templates/admin/users.html:10
+#: oil/templates/admin/users.html:14
+msgid "Users"
+msgstr ""
+
+#: oil/templates/admin/delete_group.html:10
+#: oil/templates/admin/delete_group.html:14
+#: oil/templates/admin/delete_group.html:20
+#: oil/templates/admin/delete_group.html:31
+msgid "Delete Group"
+msgstr ""
+
+#: oil/templates/admin/delete_group.html:15
+msgid "This is an irreversible operation"
+msgstr ""
+
+#: oil/templates/admin/delete_group.html:27
+msgid "Created On:"
+msgstr ""
+
+#: oil/templates/admin/delete_group.html:29
+msgid "Active:"
+msgstr ""
+
+#: oil/templates/admin/edit_network.html:10
+#: oil/templates/admin/edit_network.html:21
+#: oil/templates/admin/edit_network.html:26
+msgid "Edit Network"
+msgstr ""
+
+#: oil/templates/admin/edit_network.html:15
+msgid "Channel Name?"
+msgstr ""
+
+#: oil/templates/admin/edit_network.html:49
+#: oil/templates/admin/networks.html:29
+#: oil/templates/logs/view_networks.html:21
+msgid "Channels"
+msgstr ""
+
+#: oil/templates/admin/edit_network.html:55
+msgid "Add Channel"
+msgstr ""
+
+#: oil/templates/admin/edit_network.html:58
+msgid "Delete Selected Channel(s)"
+msgstr ""
+
+#: oil/templates/admin/edit_network.html:64
+msgid "Update Network"
+msgstr ""
+
+#: oil/templates/admin/index.html:11
+msgid "Currently logging"
+msgstr ""
+
+#: oil/templates/admin/index.html:11
+#, python-format
+msgid "%d channel"
+msgid_plural "%d channels"
+msgstr[0] ""
+msgstr[1] ""
+
+#: oil/templates/admin/index.html:11
+msgid "on"
+msgstr ""
+
+#: oil/templates/admin/index.html:12
+#, python-format
+msgid "%d network"
+msgid_plural "%d networks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: oil/templates/admin/networks.html:26 oil/templates/admin/perms.html:26
+#: oil/templates/logs/view_networks.html:18
+msgid "Name"
+msgstr ""
+
+#: oil/templates/admin/networks.html:27
+#: oil/templates/logs/view_networks.html:19
+msgid "Address"
+msgstr ""
+
+#: oil/templates/admin/networks.html:28
+#: oil/templates/logs/view_networks.html:20
+msgid "Port"
+msgstr ""
+
+#: oil/templates/admin/perms.html:10 oil/templates/admin/perms.html:19
+msgid "Permissions"
+msgstr ""
+
+#: oil/templates/admin/perms.html:27
+msgid "Description"
+msgstr ""
+
+#: oil/templates/admin/users.html:15
+msgid "FUsers!!!!"
+msgstr ""
+
+#: oil/templates/logs/index.html:9 oil/templates/logs/index.html:15
+#: oil/templates/main/index.html:9 oil/templates/main/index.html:15
+msgid "Welcome"
+msgstr ""
+
+#: oil/templates/logs/index.html:16 oil/templates/main/index.html:16
+msgid "Your last login was on"
+msgstr ""
+
+#: oil/templates/logs/index.html:19 oil/templates/main/index.html:19
+msgid "You can update your accout details"
+msgstr ""
+
+#: oil/templates/logs/index.html:20 oil/templates/main/index.html:20
+msgid "here"
+msgstr ""
+
+#: oil/templates/logs/index.html:24 oil/templates/main/index.html:24
+msgid "Welcome!!!"
+msgstr ""
+
+#: oil/templates/logs/view.html:9 oil/templates/logs/view2.html:9
+#: oil/templates/main/view.html:9
+msgid "View"
+msgstr ""
+
+#: oil/templates/logs/view.html:43
+msgid "No log entries for this day."
+msgstr ""
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+  <xi:include href="admin.html" />
+  <head>
+  <title>Add Permission</title>
+  </head>
+
+  <body>
+    <h2>Add Permission</h2>
+    <form action="${ h.url_for(controller='admin', action='add_perm') }"
+          method="post" id="add_perm" name="add_perm"
+          accept-charset="UTF-8" class="user_input">
+      <fieldset>
+        <legend>Add Permission</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="$c.name"/>
+        <span class="error-message" py:if="'name' in c.errors">
+          $c.errors.name
+        </span>
+        <br/>
+
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description"
+               value="$c.description"/><br/>
+        <span class="error-message" py:if="'description' in c.errors">
+          ${ c.errors.description }
+        </span> <!-- error  -->
+        <input class="input_button" name="submit" type="submit"
+               value="${_('Add Permission')}"/>
+      </fieldset>
+    </form><br/>
+  </body>
+</html>
