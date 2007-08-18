@@ -38,19 +38,19 @@ class AdminController(BaseController):
                 form='add_network', variable_decode=True)
     def add_network_POST(self):
         log.info('on add network POST')
-        sac_q = model.Session.query(model.Network)
         network = model.Network(request.POST['address'], request.POST['port'])
         network.name = request.POST['name']
-        sac_q.session.flush()
+        model.Session.save(network)
+        model.Session.commit()
         redirect_to(action='edit_network', id=request.POST['name'])
 
     @rest.dispatch_on(POST='edit_network_POST')
     def edit_network(self, id):
-        c.network = model.Session.query(model.Network).get_by(name=id)
+        c.network = model.Session.query(model.Network).filter_by(name=id).first()
         return render('admin.edit_network')
 
     def edit_network_POST(self, id):
-        network = model.Session.query(model.Network).get_by(name=id)
+        network = model.Session.query(model.Network).filter_by(name=id).first()
         vars = request.POST.copy()
         network.name = vars['name']
         network.address = vars['address']
@@ -58,9 +58,9 @@ class AdminController(BaseController):
         channels = request.POST.getall('channels')
         for channel in network.channels:
             if not channel.name in channels:
-                model.Session.session.delete(channel)
+                model.Session.delete(channel)
         for channel in channels:
             if not network.has_channel(channel):
                 network.channels.append(model.Channel(channel))
-        model.Session.session.commit()
+        model.Session.commit()
         redirect_to(action='networks')

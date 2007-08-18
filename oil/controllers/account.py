@@ -62,8 +62,6 @@ class AccountController(BaseController):
         if info.status == SUCCESS:
             query = model.Session.query(model.User)
             user = query.filter_by(openid=info.identity_url).first()
-            print user.lastlogin
-            print user
             if user is None:
                 user = model.User(info.identity_url)
                 #model.Session.save(user)
@@ -72,19 +70,20 @@ class AccountController(BaseController):
             user.updatelastlogin()
             model.Session.save(user)
             model.Session.commit()
+            session.clear()
             session['openid'] = info.identity_url
             session.save()
-            #session.clear()
             log.info('on verified before sassion check')
             if 'redirected_from' in session:
-                #log.info('redirected from found on session')
                 url = session['redirected_from']
-                #log.info(repr(url))
                 del(session['redirected_from'])
                 session.save()
                 return redirect_to(url)
             return redirect_to(controller='logs', action='index', id=None)
         else:
+            session['message'] = _('A problem ocurred comunicating to '
+                                   'your OpenID server. Please try again.')
+            session.save()
             return redirect_to(action='signin')
 
     def signout(self):

@@ -27,7 +27,8 @@ def make_map():
                 year=None, month=None, day=None)
 
     # Default and Fallback routes
-    map.connect(':controller/:action/:id')
+    map.connect(':controller/:action/:id', network=None, channel=None,
+                year=None, month=None, day=None)
     map.connect('*url', controller='template', action='view')
 
     return map
