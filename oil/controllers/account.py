@@ -184,28 +184,35 @@ class AccountController(BaseController):
               form='add_network')
     def add_network_POST(self, bot):
         bot = model.Session.query(model.Bot).filter_by(nick=bot).first()
-        if bot not in c.user.bots:
-            c.user.bots.append(bot)
+        #if bot not in c.user.bots:
+        #    c.user.bots.append(bot)
         network = model.Session.query(model.Network).filter_by(
             address=self.form_result['address'],
             port=self.form_result['port'],
             name=self.form_result['name']).first()
         if not network:
+            log.debug('Network not found on db, creating one')
             network = model.Network(self.form_result['address'],
                                     self.form_result['port'],
                                     self.form_result['name'])
         else:
+            log.debug('Network found on db')
             network.address = self.form_result['address']
             network.port = self.form_result['port']
             network.name = self.form_result['name']
+            network.created_by = network.modified_by = c.user.id
 
+        log.info(network)
+        model.Session.save(network)
+        model.Session.commit()
         if network not in bot.networks:
             bot.networks.append(network)
-        if network not in c.user.networks:
-            c.user.networks.append(network)
-        model.Session.save(c.user)
-        model.Session.save(network)
-        model.Session.save(bot)
+        log.info(bot)
+#        if network not in c.user.networks:
+#            c.user.networks.append(network)
+        #model.Session.save(c.user)
+        #model.Session.save(network)
+        #model.Session.save(bot)
         model.Session.commit()
         redirect_to(action='edit_network', bot=bot.nick, network=network.name)
 
@@ -213,7 +220,7 @@ class AccountController(BaseController):
     def edit_network(self, bot, network):
         query = model.Session.query(model.Network).filter_by(name=network)
         c.network = query.filter(model.bots.c.name==bot).first()
-        c.bot = c.network.bot[0]
+        c.bot = c.network.bot
         return render('account.edit_network')
 
     @rest.dispatch_on(POST="edit_channels_POST")

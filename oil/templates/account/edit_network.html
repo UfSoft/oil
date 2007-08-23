@@ -51,8 +51,8 @@
           ${ c.errors.port }
         </span><br/>
 
-        <label for="owner">Owner:</label>
-        <span id="owner" name="owner">$c.user.name</span><br/>
+        <label for="created_by">Created By:</label>
+        <span id="owner" name="owner">$c.network.created_by</span><br/>
 
         <label for="created">Created On:</label>
         <span id="created">
@@ -62,8 +62,8 @@
         <label for="modified">Modified On:</label>
         <span id="modified">
           Modified on
-          ${h.format_datetime(c.network.modified, tzinfo=c.timezone, locale=g.locale)}
-          by ${c.network.modified_by[-1].name}
+          ${h.format_datetime(c.network.changed_on, tzinfo=c.timezone, locale=g.locale)}
+          by ${c.network.modified_by.name}
         </span><br/>
 
         <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/><br/>
