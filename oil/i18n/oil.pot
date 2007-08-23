@@ -1,0 +1,265 @@
+# Translations template for OIL.
+# Copyright (C) 2007 UfSoft.org
+# This file is distributed under the same license as the OIL project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: OIL 0.1\n"
+"Report-Msgid-Bugs-To: ufs@ufsoft.org\n"
+"POT-Creation-Date: 2007-08-23 23:14+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9dev-r267\n"
+
+#: oil/controllers/account.py:40
+msgid "Already signed in."
+msgstr ""
+
+#: oil/controllers/account.py:47 oil/controllers/account.py:78
+msgid "A problem ocurred comunicating to your OpenID server. Please try again."
+msgstr ""
+
+#: oil/controllers/account.py:123 oil/controllers/account.py:133
+msgid "You are not signed in."
+msgstr ""
+
+#: oil/controllers/account.py:127
+msgid "You've been signed out."
+msgstr ""
+
+#: oil/controllers/account.py:137
+msgid "You are not banned."
+msgstr ""
+
+#: oil/model/fe/validators.py:26
+#, python-format
+msgid "Address is already used for network '%s'"
+msgstr ""
+
+#: oil/model/fe/validators.py:46
+#, python-format
+msgid "Invalid network format for %r, should be \"name:address:port\"."
+msgstr ""
+
+#: oil/templates/layout.html:40
+msgid ""
+"Warning, your browser does not support JavaScript and is not capable of "
+"displaying the latest web pages such as those found on this site. Some of the"
+" functionality will be disabled."
+msgstr ""
+
+#: oil/templates/layout.html:51
+msgid "Language:"
+msgstr ""
+
+#: oil/templates/layout.html:69
+msgid "IRC Logs Viewer"
+msgstr ""
+
+#: oil/templates/layout.html:73
+msgid "Home"
+msgstr ""
+
+#: oil/templates/layout.html:76
+msgid "Admin"
+msgstr ""
+
+#: oil/templates/layout.html:79
+msgid "Logs"
+msgstr ""
+
+#: oil/templates/layout.html:83 oil/templates/account/index.html:9
+#: oil/templates/account/index.html:22
+msgid "My Account"
+msgstr ""
+
+#: oil/templates/layout.html:87
+msgid "Sign Out"
+msgstr ""
+
+#: oil/templates/layout.html:91 oil/templates/account/signin.html:34
+msgid "Sign In"
+msgstr ""
+
+#: oil/templates/account/banned.html:8 oil/templates/account/banned.html:12
+msgid "You've been banned."
+msgstr ""
+
+#: oil/templates/account/banned.html:13
+msgid "For some reason the Administrator(s) of this site have banned you."
+msgstr ""
+
+#: oil/templates/account/index.html:23
+msgid "OpenID:"
+msgstr ""
+
+#: oil/templates/account/index.html:26
+msgid "Name:"
+msgstr ""
+
+#: oil/templates/account/index.html:33
+msgid "Email:"
+msgstr ""
+
+#: oil/templates/account/index.html:40
+msgid "Timezone:"
+msgstr ""
+
+#: oil/templates/account/index.html:57
+msgid "Update"
+msgstr ""
+
+#: oil/templates/account/index.html:62
+msgid "My Bots"
+msgstr ""
+
+#: oil/templates/account/index.html:67
+msgid "Edit Bot"
+msgstr ""
+
+#: oil/templates/account/index.html:73
+msgid "Name"
+msgstr ""
+
+#: oil/templates/account/index.html:74
+msgid "Address"
+msgstr ""
+
+#: oil/templates/account/index.html:75
+msgid "Port"
+msgstr ""
+
+#: oil/templates/account/index.html:76
+msgid "Channels"
+msgstr ""
+
+#: oil/templates/account/index.html:84
+msgid "Edit Channels"
+msgstr ""
+
+#: oil/templates/account/index.html:100
+msgid "Edit Network"
+msgstr ""
+
+#: oil/templates/account/index.html:105
+msgid "Register A New Bot"
+msgstr ""
+
+#: oil/templates/account/signin.html:13
+msgid ""
+"This website uses OpenID for authentication. It's probable you already\n"
+"      have an OpenID -- many internet services now offer them. OpenID enables"
+"\n"
+"      you to log in at one place and be authenticated at many places."
+msgstr ""
+
+#: oil/templates/account/signin.html:16
+msgid "OpenID providers:"
+msgstr ""
+
+#: oil/templates/account/signin.html:18
+msgid "LiveJournal:"
+msgstr ""
+
+#: oil/templates/account/signin.html:18 oil/templates/account/signin.html:22
+#: oil/templates/account/signin.html:23 oil/templates/account/signin.html:24
+msgid "http://"
+msgstr ""
+
+#: oil/templates/account/signin.html:18 oil/templates/account/signin.html:22
+#: oil/templates/account/signin.html:24
+msgid "username"
+msgstr ""
+
+#: oil/templates/account/signin.html:18
+msgid ".livejournal.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:18
+msgid ""
+"Many other LiveJournal-based sites such as GreatestJournal offer\n"
+"            OpenIDs, so try your site url."
+msgstr ""
+
+#: oil/templates/account/signin.html:21
+msgid "AOL or AOL Instant Messenger:"
+msgstr ""
+
+#: oil/templates/account/signin.html:21
+msgid "http://openid.aol.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:21
+msgid "screenname"
+msgstr ""
+
+#: oil/templates/account/signin.html:22
+msgid "SmugMug:"
+msgstr ""
+
+#: oil/templates/account/signin.html:22
+msgid ".smugmug.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:23
+msgid "WordPress.com:"
+msgstr ""
+
+#: oil/templates/account/signin.html:23
+msgid "blog"
+msgstr ""
+
+#: oil/templates/account/signin.html:23
+msgid ".wordpress.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:24
+msgid "Vox:"
+msgstr ""
+
+#: oil/templates/account/signin.html:24
+msgid ".vox.com/"
+msgstr ""
+
+#: oil/templates/account/signin.html:25
+msgid "Or pick any provider from the"
+msgstr ""
+
+#: oil/templates/account/signin.html:26
+msgid "list"
+msgstr ""
+
+#: oil/templates/account/signin.html:29
+msgid "Please Sign In"
+msgstr ""
+
+#: oil/templates/main/index.html:9 oil/templates/main/index.html:15
+msgid "Welcome"
+msgstr ""
+
+#: oil/templates/main/index.html:16
+msgid "Your last login was on"
+msgstr ""
+
+#: oil/templates/main/index.html:20
+msgid "You can update your accout details"
+msgstr ""
+
+#: oil/templates/main/index.html:21
+msgid "here"
+msgstr ""
+
+#: oil/templates/main/index.html:25
+msgid "Welcome!!!"
+msgstr ""
+
+#: oil/templates/main/view.html:9
+msgid "View"
+msgstr ""
+

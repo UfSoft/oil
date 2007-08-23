@@ -6,6 +6,7 @@ from pylons import config
 import oil.lib.app_globals as app_globals
 import oil.lib.helpers
 from oil.config.routing import make_map
+from sqlalchemy import engine_from_config
 
 def load_environment(global_conf, app_conf):
     """Configure the Pylons environment via the ``pylons.config`` object"""
@@ -29,3 +30,4 @@ def load_environment(global_conf, app_conf):
 
     # CONFIGURATION OPTIONS HERE (note: all config options will override any
     # Pylons config options)
+    config['pylons.g'].sa_engine = engine_from_config(config, 'sqlalchemy.')

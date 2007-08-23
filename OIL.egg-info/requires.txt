@@ -1,0 +1,3 @@
+Pylons
+Genshi
+python-openid>=2.0.1

@@ -1,0 +1,13 @@
+
+    [paste.app_factory]
+    main = oil.config.middleware:make_app
+
+    [paste.app_install]
+    main = pylons.util:PylonsInstaller
+
+    [distutils.commands]
+    extract = babel.messages.frontend:extract_messages
+    init = babel.messages.frontend:init_catalog
+    compile = babel.messages.frontend:compile_catalog
+    update = babel.messages.frontend:update_catalog
+    
