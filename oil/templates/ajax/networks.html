@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<ajaxresponse  xmlns:py="http://genshi.edgewall.org/">
-  <item py:for="network in c.networks">
-    <text>
-      <![CDATA[<b>$network.name</b>:$network.port]]>
-    </text>
-    <value><![CDATA[$network.name:$network.address:$network.port]]></value>
-  </item>
-</ajaxresponse>
