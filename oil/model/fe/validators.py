@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: sw=4 ts=4 fenc=utf-8
 # =============================================================================
-# $Id: validators.py 6 2007-08-18 17:04:07Z s0undt3ch $
+# $Id: validators.py 7 2007-08-23 07:23:55Z s0undt3ch $
 # =============================================================================
 #             $URL: http://oil.ufsoft.org/svn/trunk/oil/model/fe/validators.py $
-# $LastChangedDate: 2007-08-18 18:04:07 +0100 (Sat, 18 Aug 2007) $
-#             $Rev: 6 $
+# $LastChangedDate: 2007-08-23 08:23:55 +0100 (Thu, 23 Aug 2007) $
+#             $Rev: 7 $
 #   $LastChangedBy: s0undt3ch $
 # =============================================================================
 # Copyright (C) 2007 Ufsoft.org - Pedro Algarvio <ufs@ufsoft.org>
@@ -26,4 +26,36 @@ class UniqueAddress(validators.UnicodeString):
             raise Invalid(_("Address is already used for network '%s'") % \
                           network.name, value, state)
         model.Session.remove()
+
+class ValidNetworkAddrPortPair(validators.FancyValidator):
+
+    def to_python(self, value, state):
+        networks = []
+        for entry in [tuple(value.strip(',').split(':')) for value in value.split()]:
+            if len(entry) == 3:
+                name, address, port = entry
+            else:
+                address, port = entry
+                name = u'%s-%s' % (address, port)
+            networks.append((name, address, port))
+        return networks
+
+    def validate_python(self, value, state):
+        for item in value:
+            if not len(item)==3:
+                raise Invalid(_('Invalid network format for %r, should '
+                              'be "name:address:port".') % item, value, state)
+
+    def from_python(self, value, state):
+        return u', '.join(u'%s:%s:%s' % (name, addr, port) for name, addr, port in value)
+
+class ChannelList(validators.FancyValidator):
+    def to_python(self, value, state):
+        return [channel.strip(',#') for channel in value.split()]
+
+    def from_python(self, value, state):
+        return u', '.join([u'#%s' for channel in value])
+
+    def validate_python(self, value, state):
+        print 1111111, value
 

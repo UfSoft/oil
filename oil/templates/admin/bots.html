@@ -1,0 +1,44 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+  <xi:include href="admin.html" />
+  <head>
+  <title>Bots</title>
+  <script type="text/javascript">
+    function add_bot() {
+      location.href = "${ h.url_for(controller='admin', action='add_bot')}"
+    };
+  </script>
+  </head>
+
+  <body>
+    <h2>Networks</h2>
+    <input class="input_button" name="submit" type="button"
+           value="${_('Add Bot')}"
+           onClick="add_bot()"/><br/>
+    <table py:if="c.bots" class="listing">
+      <thead>
+        <tr>
+          <th>Nick</th>
+          <th>Name</th>
+          <th>Owner</th>
+          <th>Channels</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="bot in c.bots">
+          <td><a href="${h.url_for(action='edit_bot', id=bot.nick)}">
+            $bot.nick</a>
+          </td>
+          <td>$bot.name</td>
+          <td>$bot.owner</td>
+          <td>${u', '.join(channel.name for channel in bot.channels)}</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

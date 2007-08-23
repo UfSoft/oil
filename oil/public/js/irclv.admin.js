@@ -1,5 +1,5 @@
 // Add <option> to <select>
-function new_channel(select_id, question) {
+function new_option(select_id, question) {
   var name = prompt(question);
   if ( name ) {
     if ( name.charAt(0) == '#' ) {
@@ -11,7 +11,7 @@ function new_channel(select_id, question) {
 };
 
 // Remove <option> from <select>
-function remove_channels(select_id) {
+function remove_option(select_id) {
   $(select_id+'/option:selected').each(function() {
     $(select_id).removeOption(this.value);
   });

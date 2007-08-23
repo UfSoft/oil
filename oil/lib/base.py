@@ -7,7 +7,7 @@ import logging
 from pylons import c, cache, config, g, request, response, session
 from pylons.controllers import WSGIController
 from pylons.controllers.util import abort, etag_cache, redirect_to
-from pylons.decorators import rest #, jsonify
+from pylons.decorators import rest, jsonify
 from pylons.decorators.cache import beaker_cache
 from pylons.i18n import _, ungettext, N_
 from pylons.templating import render
@@ -30,9 +30,11 @@ class BaseController(WSGIController):
         # WSGIController.__call__ dispatches to the Controller method the
         # request is routed to. This routing information is available in
         # environ['pylons.routes_dict']
-        c.user = h.get_perms(session['openid']) if 'openid' in session else None
+        c.user = model.Session.query(model.User).filter_by(openid=(session['openid'])).first() \
+            if 'openid' in session and session['openid'] else None
         c.timezone = timezone(str(c.user.tzinfo) if c.user else 'UTC')
 
+        log.debug(request.POST)
         if 'language' in request.POST.keys():
             language = request.POST['language']
             if h.get_lang() != language:
@@ -85,7 +87,7 @@ class BaseController(WSGIController):
 
     @beaker_cache(type='memory', key='initial_locale')
     def _set_language_dropdown_values(self, initial_locale=None):
-        log.info('Setting languages dropdown menu for %r' % initial_locale)
+        log.debug('Setting languages dropdown menu for %r' % initial_locale)
         available_locales = self._find_available_locales()
         locale = Locale.parse(initial_locale)
         languages = []
@@ -97,10 +99,12 @@ class BaseController(WSGIController):
                 country = u'(%s)' % locale.territories[territory]
                 value = ['%s_%s' % (loc, territory),
                          u'%s %s' % (language, country)]
+                #if value[0] == (c.user.language if c.user else current_lang):
                 if value[0] == current_lang:
                     selected = True
             else:
                 value = [loc, language]
+                #if value[0] == (c.user.language if c.user else current_lang):
                 if value[0] == current_lang:
                     selected = True
             languages.append( value + [selected])
@@ -111,9 +115,9 @@ class BaseController(WSGIController):
     @beaker_cache(type='memory', key='locale')
     def _build_timezones(self, locale=None):
 #        if 'tz.%s'%locale in cache:
-#            log.info('Returning cached timezones mapping for %s' % locale)
+#            log.debug('Returning cached timezones mapping for %s' % locale)
 #            return cache['tz.%s'%locale]
-        log.info('UPDATING TZs for %r', h.get_lang()[0])
+        log.debug('UPDATING TZs for %r', h.get_lang()[0])
         tz_list = []
         #longest = max([len(tz) for tz in common_timezones])
         #format = "%%-%ds %%s" % max(8, longest + 1)
@@ -123,7 +127,7 @@ class BaseController(WSGIController):
                 tz['value'] = tzname
                 tz['name'] = get_timezone_name(timezone(tzname), locale=locale)
                 tz_list.append(tz)
-                #log.info(tz)
+                #log.debug(tz)
             except KeyError:
                 pass
         tz_list.sort(lambda x,y: cmp(x['value'], y['value']))

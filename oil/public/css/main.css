@@ -101,6 +101,17 @@
     padding: 5px;
 }
 
+.info-message {
+/*    background-color: #c6ffa2;
+    background-image: url(../img/info.png) no-repeat */
+    background: #c6ffa2 url(../img/info.png) no-repeat left top;
+    border: 1px dashed #81be63;
+    margin: 15px;
+    padding: 0px 15px 0px 25px;
+    font-size: 0.7em;
+
+}
+
 fieldset {
     padding: 3px 10px 15px 10px;
     margin: 0px 5px 0px 5px;
@@ -118,7 +129,7 @@ legend {
     display: block; float: left; margin-bottom: 5px; margin-top: 5px;
 }
 .user_input label {
-    text-align: right; width: 135px; padding-right: 15px;
+    text-align: right; width: 185px; padding-right: 15px;
     font-weight: bold; cursor: text;
 }
 .user_input br { clear: left; }
@@ -207,11 +218,27 @@ table.listing tbody td, table.listing tbody th {
 table.listing tbody td a:hover, table.listing tbody th a:hover {
      background-color: transparent;
 }
-table.listing td a:link, table.listing td a:hover,
-table.listing td a:visited, table.listing td a:active { color: #68b841; }
+table.listing a:link, table.listing a:hover,
+table.listing a:visited, table.listing a:active { color: #68b841; }
 
-fieldset.channels { width: 50%; }
+fieldset.subfieldset {
+  border: none; border-top: 1px solid #3363a3; border-bottom: 1px solid #3363a3;
+}
 
+/*
+fieldset.subfieldset a:link, fieldset.subfieldset a:hover,
+fieldset.subfieldset a:visited, fieldset.subfieldset a:active {
+  color: #68b841; text-decoration: none; font-weight: bold; font-size: 0.8em;
+}*/
+
+td.actions {
+  width: 20px;
+
+}
+td.actions a:link, td.actions a:hover,
+td.actions a:visited, td.actions a:active {
+  color: #fff;
+}
 
 
 table.logs { color: black; }
@@ -244,3 +271,16 @@ a.irclink {
   background: url(../img/irc.png) no-repeat right top;
   padding-right: 20px;
 }
+
+.ajax {
+  border: 1px solid #6FBEFF;
+  width: 250px;
+  background-color: #d2fb8f;
+}
+.ajax ul li {
+  margin: 2px 10px;
+  padding: 2px 10px;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.ajaxSelect { border: 1px solid red; }

@@ -1,0 +1,45 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="" py:with="bot = c.network.bot[0]">
+  <xi:include href="../layout.html" />
+  <head>
+    <title>Edit Channels for $bot.name</title>
+  </head>
+  <body>
+    <form action="${ h.url_for('channels', bot=bot, network=c.network.name) }"
+          method="post" id="edit_channels" name="edit_channels"
+          accept-charset="UTF-8" class="user_input">
+      <fieldset>
+        <legend>Edit Channels for $bot.name</legend>
+
+        <label for="address">Name:</label>
+        <span id="address">$c.network.name</span><br/>
+
+        <label for="address">Address:</label>
+        <span id="address">$c.network.address</span><br/>
+
+        <label for="port">Port:</label>
+        <span id="address">$c.network.port</span><br/>
+
+        <label for="channels">Channels:</label>
+        <textarea rows="4" cols="60" id="channels"
+                  name="channels">${ c.form_result.channels or u', '.join(
+          [u'#%s' % channel.name for channel in c.network.channels]
+        )}</textarea>
+        <span class="info-message">
+           (comma and space(<strong><tt>,&lt;space&gt;</tt></strong>)
+           seperated list of <strong><tt>channel_name</tt></strong> value.<br/>
+           You may skip the <strong><tt>#</tt></strong> on the channel names.<br/>
+           <strong>NOTE: Removing a channel will also delete it's logs.</strong>
+        </span><br/>
+        <input type="hidden" name="bot" id="bot" value="${c.form_result.bot or bot.name}"/>
+        <input class="input_button" name="submit" type="submit"
+               value="${_('Update Channel List')}"/>
+      </fieldset>
+    </form>
+  </body>
+</html>

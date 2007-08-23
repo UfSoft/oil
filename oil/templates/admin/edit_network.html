@@ -12,7 +12,7 @@
   <script type="text/javascript">
     function call_new_channel(select_id) {
       // needed to pass the translated question, how do we handle I18n on JS???
-      new_channel(select_id, '${_("Channel Name?")}');
+      new_option(select_id, '${_("Channel Name?")}');
     };
   </script>
   </head>
@@ -45,7 +45,7 @@
           ${ c.errors.port }
         </span>
 
-        <fieldset class="channels">
+        <fieldset class="subfieldset">
           <legend>Channels</legend>
         <select id="channels" name="channels" multiple="multiple">
           <option py:for="channel in c.network.channels"

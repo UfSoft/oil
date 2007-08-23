@@ -36,6 +36,12 @@ def make_app(global_conf, full_stack=True, **app_conf):
     app = PylonsApp()
 
     # CUSTOM MIDDLEWARE HERE (filtered by the error handling middlewares)
+#    if config['openid.server.run']:
+#        from openid.server.server import Server
+#        from openid.store.filestore import FileOpenIDStore
+#        oidserver = Server(FileOpenIDStore(config['openid.server.url']),
+#                           config['openid.server.store.dir'])
+#
 
     if asbool(full_stack):
         # Handle Python exceptions

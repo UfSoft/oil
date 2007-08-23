@@ -72,22 +72,22 @@
           <ul>
             <li>${ h.link_to_unless_current(_('Home'),
                                             h.url_for('home')) }</li>
-            <li py:if="'openid' in session and c.user.is_admin()">
+            <li py:if="c.user and c.user.is_admin()">
               ${ h.link_to_unless_current(_('Admin'),
                                           h.url_for(controller='admin',
                                           action='index', id=None)) }</li>
             <li>${ h.link_to_unless_current(_('Logs'),
                                             h.url_for(controller='logs',
                                             action='index', id=None)) }</li>
-            <li py:if="'openid' in session">
+            <li py:if="c.user">
               ${ h.link_to_unless_current(_('My Account'),
                                           h.url_for(controller='account',
                                           action='index', id=None)) }</li>
-            <li py:if="'openid' in session">
+            <li py:if="c.user">
               ${ h.link_to_unless_current(_('Sign Out'),
                                           h.url_for(controller='account',
                                           action='signout', id=None)) }</li>
-            <li py:if="'openid' not in session">
+            <li py:if="not c.user">
               ${ h.link_to_unless_current(_('Sign In'),
                                           h.url_for(controller='account',
                                           action='signin', id=None)) }</li>
@@ -124,6 +124,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 5 2007-08-18 16:05:25Z s0undt3ch $
+$Id: layout.html 7 2007-08-23 07:23:55Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->

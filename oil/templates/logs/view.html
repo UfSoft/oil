@@ -20,7 +20,7 @@
             <th colspan="3">$c.topic</th>
           </tr>
           <tr>
-            <th>$c.timezone</th>
+            <th>${ h.get_timezone_name(c.timezone, locale=g.locale)}</th>
             <th colspan="2" style="text-align: right; width: 100%;">
               ${h.format_date(c.date, format='long', locale=g.locale)}
             </th>
@@ -70,7 +70,7 @@
     </script>
 </html>
 <!--!
-$Id: view.html 5 2007-08-18 16:05:25Z s0undt3ch $
+$Id: view.html 7 2007-08-23 07:23:55Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
 

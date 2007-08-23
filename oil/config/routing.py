@@ -25,10 +25,16 @@ def make_map():
     map.connect('logs', 'logs/:network/:channel/:year/:month/:day',
                 controller='logs', action='view', network=None, channel=None,
                 year=None, month=None, day=None)
+    map.connect('channels', 'edit/channels/:bot/:network',
+                controller="account", action="edit_channels")
+    map.connect('add_network', 'add/network/:bot',
+                controller='account', action='add_network', bot=None)
+    map.connect('edit_network', 'edit/network/:bot/:network',
+                controller='account', action='edit_network', bot=None, network=None)
 
     # Default and Fallback routes
     map.connect(':controller/:action/:id', network=None, channel=None,
-                year=None, month=None, day=None)
+                year=None, month=None, day=None, bot=None)
     map.connect('*url', controller='template', action='view')
 
     return map

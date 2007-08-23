@@ -8,7 +8,7 @@ from pylons.i18n import get_lang, set_lang
 from genshi.builder import tag
 from genshi.core import Markup
 from decorator import decorator
-from babel.dates import format_datetime, format_date, format_time
+from babel.dates import format_datetime, format_date, format_time, get_timezone_name
 import pytz
 import logging
 
@@ -29,6 +29,7 @@ wrap_helpers(locals())
 
 def get_perms(openid):
     from oil import model
+    if openid == {}: return None
     user = model.Session.query(model.Admin).filter_by(openid=openid).first()
     if not user:
         user = model.Session.query(model.Manager).filter_by(openid=openid).first()
@@ -93,9 +94,10 @@ def validate(template=None, schema=None, validators=None, form=None, variable_de
         is_unicode_params = isinstance(params, UnicodeMultiDict)
         params = params.mixed()
         if variable_decode:
-            log.debug("Running variable_decode on params")
+            log.debug("Running variable_decode on params:")
             decoded = variabledecode.variable_decode(params, dict_char,
                                                      list_char)
+            log.debug(decoded)
         else:
             decoded = params
 
@@ -128,7 +130,7 @@ def validate(template=None, schema=None, validators=None, form=None, variable_de
                 raise Exception('You MUST pass a form to display errors')
                 return func(self, *args, **kwargs)
 
-            log.info(errors)
+            log.debug(errors)
             pylons.c.errors = errors
             pylons.c.form_result = decoded
 

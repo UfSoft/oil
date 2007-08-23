@@ -12,15 +12,16 @@ class LogsController(BaseController):
         c.weekDays = g.locale.days['format']['abbreviated'].values()
 
     def index(self):
+        log.debug('on logs index')
         return render('logs.index')
 
     def view_networks(self):
-        log.info('On VIEW NETWORKS')
+        log.debug('On VIEW NETWORKS')
         c.networks = model.Session.query(model.Network).all()
         return render('logs.view_networks')
 
     def view_network(self, network):
-        log.info('On VIEW NETWORK!')
+        log.debug('On VIEW NETWORK!')
 
     def view_channel(self, network, channel):
         pass
@@ -34,7 +35,7 @@ class LogsController(BaseController):
         c.selected = selected
         c.baseurl = h.url_for(action='view', network=network, channel=channel,
                               year=None, month=None, day=None, qualified=True)
-#        log.info('%s %s %s %s' %(network, channel, year, month, day))
+#        log.debug('%s %s %s %s' %(network, channel, year, month, day))
         #print network, channel, year, month, day
         network_ = model.Session.query(model.Network).filter_by(name=network).first()
         channel_ = model.Session.query(model.Channel).filter_by(network_id=network_.id).first()
@@ -60,8 +61,8 @@ class LogsController(BaseController):
         c.topic = channel_.topic
         c.messages = messages
         for message in messages:
-            log.info(repr(message.stamp))
-            #log.info(message.time)
+            log.debug(repr(message.stamp))
+            #log.debug(message.time)
         #print list(c.messages)
         #c.minDate = messages[0].date
         #c.maxDate = messages[-1:][0].date

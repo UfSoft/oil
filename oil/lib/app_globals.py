@@ -1,5 +1,6 @@
 """The application's Globals object"""
 from pylons import config
+from paste.deploy.converters import asbool
 from openid.store.filestore import FileOpenIDStore
 
 class Globals(object):
@@ -13,4 +14,8 @@ class Globals(object):
         """
         openid_store_dir = config['app_conf']['openid.store.dir']
         self.openid_store = FileOpenIDStore(openid_store_dir)
+        if asbool(config['app_conf']['openid.development.mode']):
+            self.development_mode = True
+        else:
+            self.development_mode = False
         pass

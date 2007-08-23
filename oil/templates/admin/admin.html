@@ -16,6 +16,14 @@
   <body py:match="body">
     <div id="sidemenu">
     <ul>
+      <li>${ h.link_to_unless_current(_('Bots'),
+                                      h.url_for(controller='admin',
+                                      action='bots', id=None)) }</li>
+        <ul>
+          <li>- ${ h.link_to_unless_current(_('Add Bot'),
+                                      h.url_for(controller='admin',
+                                      action='add_bot', id=None)) }</li>
+        </ul>
       <li>${ h.link_to_unless_current(_('Networks'),
                                       h.url_for(controller='admin',
                                       action='networks', id=None)) }</li>
