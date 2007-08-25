@@ -1,0 +1,66 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="../layout.html" />
+  <head>
+    <title xml:lang="en">My Bots</title>
+    <script type="text/javascript">
+      function register_bot() {
+        location.href = "${ h.url_for(controller='bots', action='register')}";
+      };
+    </script>
+  </head>
+
+  <body>
+   <fieldset class="user_input">
+      <legend>My Bots</legend>
+        <table class="listing" py:if="c.user.bots" py:for="bot in c.user.bots">
+          <thead>
+            <tr>
+              <th colspan="5">$bot.name
+                 (<a href="${ h.url_for(controller='bots', action='edit', id=bot.name)}">
+                  Edit Bot
+                 </a>)
+              </th>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Port</th>
+              <th>Channels</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr py:for="network in bot.networks">
+              <td>
+                $network.name
+                <small>(<a href="${ h.url_for(controller='bots', action='channels', id=bot.nick, network=network.name)}">
+                  Edit Channels
+                 </a>)</small>
+              </td>
+              <td>$network.address</td>
+              <td>$network.port</td>
+              <td>
+                <py:for each="channel in network.channels">
+                <a href="${h.url_for('logs',
+                                     network=network.name,
+                                     channel=channel.name)}">$channel.name</a>
+                </py:for>
+              </td>
+
+              <td class="actions">
+                <a href="${ h.url_for('edit_network', bot=bot.nick, network=network.name)}">
+                <img alt="${_('Edit Network')}" title="${_('Edit Network')}"
+                     src="${ h.url_for('/img')}/edit.png"/></a></td>
+              </tr>
+          </tbody>
+        </table><br/>
+      <input class="input_button" name="register" type="button"
+             value="${_('Register A New Bot')}" onClick="register_bot()"/>
+    </fieldset>
+  </body>
+</html>

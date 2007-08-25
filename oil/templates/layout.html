@@ -47,7 +47,8 @@
     </noscript>
     <div id="fakebody" style="display: none;">
         <div id="lang_div">
-          <form id="lang_choose" action="" method="post">
+          <form id="lang_choose" method="post"
+                action="${ h.url_for(controller='lang', action='index')}">
             <label for="language">Language:</label>
             <select name="language" id="language"
                     onChange="$('#lang_choose').submit()">
@@ -56,6 +57,8 @@
                       selected="selected">${ lang }</option>
               <option py:otherwise="" value="${ locale }">${ lang }</option>
             </py:for>
+            <input type="hidden" id="current_url" name="current_url"
+                   value="${ h.url_for(qualified=True) }"/>
             <noscript>
               <input type="submit" name="submit" value="Update"/>
             </noscript>
@@ -82,6 +85,10 @@
             <li py:if="c.user">
               ${ h.link_to_unless_current(_('My Account'),
                                           h.url_for(controller='account',
+                                          action='index', id=None)) }</li>
+            <li py:if="c.user">
+              ${ h.link_to_unless_current(_('My Bots'),
+                                          h.url_for(controller='bots',
                                           action='index', id=None)) }</li>
             <li py:if="c.user">
               ${ h.link_to_unless_current(_('Sign Out'),
@@ -124,6 +131,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 12 2007-08-23 22:16:30Z s0undt3ch $
+$Id: layout.html 13 2007-08-25 01:34:40Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->

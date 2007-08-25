@@ -21,8 +21,6 @@ class AccountController(BaseController):
     @validate(template='account.index', schema=schema.UpdateUser(), form='index',
               variable_decode=True)
     def update_account(self):
-        if 'language' in request.POST:
-            redirect_to(action='index', id=None)
         print request.POST
         query = model.Session.query(model.User)
         user = query.filter_by(openid=request.POST['openid']).first()
@@ -87,7 +85,6 @@ class AccountController(BaseController):
             user = query.filter_by(openid=info.identity_url).first()
             if user is None:
                 user = model.User(info.identity_url)
-                #model.Session.save(user)
             if user.banned:
                 redirect_to(action='banned')
             user.updatelastlogin()
@@ -95,12 +92,7 @@ class AccountController(BaseController):
             user.name = sreg_response.get('fullname', u'')
             user.email = sreg_response.get('email', u'')
             user.tzinfo = sreg_response.get('timezone', u'')
-            log.debug('sreg lang: %r' % sreg_response.get('language', u''))
-#            #data = info.extensionResponse('sreg', True)
-#            if sreg_response and sreg_response.has_key('fullname') and len(sreg_response['fullname']) > 0:
-#                user.name = sreg_response['fullname']
-#            if sreg_response and sreg_response.has_key('email') and len(sreg_response['email']) > 0:
-#                user.email = sreg_response['email']
+            user.language = sreg_response.get('language', u'')
             model.Session.save(user)
             model.Session.commit()
             session.clear()
