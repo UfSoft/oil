@@ -57,7 +57,7 @@ bots = sqla.Table('bots', metadata,
     sqla.Column('name', sqla.Unicode, nullable=True, unique=False),
     sqla.Column('passwd', sqla.Unicode, nullable=True, unique=False),
     sqla.Column('user_id', sqla.Integer, sqla.ForeignKey('users.id')),
-    sqla.Column('network_id', sqla.Integer, sqla.ForeignKey('networks.id'))
+    #sqla.Column('network_id', sqla.Integer, sqla.ForeignKey('networks.id'))
 )
 
 class Bot(object):
@@ -70,7 +70,7 @@ class Bot(object):
         return self.nick
 
     def __repr__(self):
-        return '<%r: Owned by %r>' % (
+        return "<IRC Bot: '%s' managed by '%s'>" % (
             self.name,
             Session.query(User).filter_by(id=self.user_id).first().name
         )
@@ -81,6 +81,11 @@ networks = sqla.Table('networks', metadata,
     sqla.Column('port', sqla.Integer, nullable=False, unique=False),
 )
 sqla.Index('networks_idx', networks.c.address, networks.c.port, unique=True)
+
+networkbots_association = sqla.Table('networkbots_association', metadata,
+    sqla.Column('network_id', sqla.Integer, sqla.ForeignKey('networks.id')),
+    sqla.Column('bot_id', sqla.Integer, sqla.ForeignKey('bots.id'))
+)
 
 class Network(object):
     def __init__(self, address, port):
@@ -152,7 +157,9 @@ mapper(Network, networks, order_by=[sqla.asc(networks.c.address),
         properties={
             'channels': relation(Channel,
                                  backref=sqla.orm.backref('network',
-                                                          uselist=False))
+                                                          uselist=False)),
+            'bots': relation(Bot, backref='networks',
+                             secondary=networkbots_association)
         }
 )
 
@@ -162,8 +169,7 @@ mapper(Channel, channels, order_by=[sqla.asc(channels.c.name)],
 
 
 mapper(Bot, bots, order_by=[sqla.asc(bots.c.nick)],
-       properties={
-            'owner': relation(User, backref='bots'),
-            'networks': relation(Network, backref='bots')
-        }
+       properties={'manager': relation(User, backref='bots'),
+                   'networks': relation(Network, backref='bots',
+                                        secondary=networkbots_association)}
 )

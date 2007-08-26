@@ -20,7 +20,7 @@
         <table class="listing" py:if="c.user.bots" py:for="bot in c.user.bots">
           <thead>
             <tr>
-              <th colspan="5">$bot.name
+              <th colspan="5">$bot.name Networks &#38; Channels
                  (<a href="${ h.url_for(controller='bots', action='edit', id=bot.name)}">
                   Edit Bot
                  </a>)
@@ -59,6 +59,7 @@
               </tr>
           </tbody>
         </table><br/>
+      <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/>
       <input class="input_button" name="register" type="button"
              value="${_('Register A New Bot')}" onClick="register_bot()"/>
     </fieldset>

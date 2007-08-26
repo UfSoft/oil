@@ -21,12 +21,9 @@ class AccountController(BaseController):
     @validate(template='account.index', schema=schema.UpdateUser(), form='index',
               variable_decode=True)
     def update_account(self):
-        print request.POST
-        query = model.Session.query(model.User)
-        user = query.filter_by(openid=request.POST['openid']).first()
+        user = model.Session.query(model.User).get(int(request.POST['user_id']))
         user.name = request.POST['name']
-        if 'email' in request.POST:
-            user.email = request.POST['email']
+        user.email = request.POST['email']
         user.tzinfo = request.POST['tzinfo']
         #user.language = request.POST['language']
         model.Session.commit()
