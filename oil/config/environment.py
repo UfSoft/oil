@@ -7,6 +7,12 @@ import oil.lib.app_globals as app_globals
 import oil.lib.helpers
 from oil.config.routing import make_map
 from sqlalchemy import engine_from_config
+from pylons.i18n import ugettext
+from genshi.filters import Translator
+
+def template_loaded(template):
+    #return template # while genshi bug #129 is not fixed :\
+    template.filters.insert(0, Translator(ugettext))
 
 def load_environment(global_conf, app_conf):
     """Configure the Pylons environment via the ``pylons.config`` object"""
@@ -27,6 +33,7 @@ def load_environment(global_conf, app_conf):
 
     # Customize templating options via this variable
     tmpl_options = config['buffet.template_options']
+    tmpl_options['genshi.loader_callback'] = template_loaded
 
     # CONFIGURATION OPTIONS HERE (note: all config options will override any
     # Pylons config options)

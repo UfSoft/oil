@@ -3,7 +3,8 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n">
   <xi:include href="../layout.html"/>
   <head>
     <title>Welcome</title>
@@ -12,12 +13,13 @@
   <body>
     <py:choose test="">
       <py:when test="c.user">
-      <h2>Welcome $c.user.name!!!!</h2>
-      <p>Your last login was on ${h.format_datetime(c.user.lastlogin,
-                                                    format='full',
-                                                    tzinfo=c.timezone,
-                                                    locale=g.locale)}</p>
-      <p>You can update your accout details
+      <h2 i18n-msg="">${ _('Welcome %s!!!!' % c.user.name)}</h2>
+      <p i18n-msg="">${ _('Your last login was on %s') % \
+                        h.format_datetime(c.user.lastlogin,
+                                            format='full',
+                                            tzinfo=c.timezone,
+                                            locale=g.locale)}</p>
+      <p i18n:msg="">You can update your accout details
         <a href="${h.url_for(controller='account', action='index', id=None)}">
           here</a>.</p>
 
@@ -28,7 +30,7 @@
   </body>
 </html>
 <!--!
-$Id: index.html 12 2007-08-23 22:16:30Z s0undt3ch $
+$Id: index.html 15 2007-08-26 16:31:24Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
 

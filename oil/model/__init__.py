@@ -77,6 +77,8 @@ class Bot(object):
 
 networks = sqla.Table('networks', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
+    sqla.Column('name', sqla.Unicode, nullable=False, unique=False),
+    sqla.Column('address', sqla.Unicode, nullable=False, unique=False),
     sqla.Column('address', sqla.Unicode, nullable=False, unique=False),
     sqla.Column('port', sqla.Integer, nullable=False, unique=False),
 )
@@ -86,15 +88,19 @@ networkbots_association = sqla.Table('networkbots_association', metadata,
     sqla.Column('network_id', sqla.Integer, sqla.ForeignKey('networks.id')),
     sqla.Column('bot_id', sqla.Integer, sqla.ForeignKey('bots.id'))
 )
+#sqla.Index('netbots_assoc_idx',
+#           networkbots_association.c.address,
+#           networkbots_association.c.port, unique=True)
 
 class Network(object):
     def __init__(self, address, port):
         self.address = address
         self.port = port
+        self.name = u'%s-%s' % (address, port)
     def __unicode__(self):
-        return '%s:%d' % (self.address, self.port)
+        return '%s:%s' % (self.address, self.port)
     def __repr__(self):
-        return '<IRC Network: %s:%d>' % (self.address, self.port)
+        return '<IRC Network: %s:%s>' % (self.address, self.port)
 
 channels = sqla.Table('channels', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
@@ -111,8 +117,8 @@ class Channel(object):
         self.name = name
 
     def __repr__(self):
-        network = Session.Query(Network).filter_by(id=self.network_id).first()
-        return '<IRC Channel: %s on %s:%d>' % (
+        network = Session.query(Network).filter_by(id=self.network_id).first()
+        return "<IRC Channel: '%s' on '%s:%d'>" % (
             self.name, network.address, network.port
         )
 
@@ -159,7 +165,7 @@ mapper(Network, networks, order_by=[sqla.asc(networks.c.address),
                                  backref=sqla.orm.backref('network',
                                                           uselist=False)),
             'bots': relation(Bot, backref='networks',
-                             secondary=networkbots_association)
+                             secondary=networkbots_association),
         }
 )
 
@@ -170,6 +176,7 @@ mapper(Channel, channels, order_by=[sqla.asc(channels.c.name)],
 
 mapper(Bot, bots, order_by=[sqla.asc(bots.c.nick)],
        properties={'manager': relation(User, backref='bots'),
-                   'networks': relation(Network, backref='bots',
+                   'networks': relation(Network,
+                                        backref=sqla.orm.backref('bot', uselist=False),
                                         secondary=networkbots_association)}
 )

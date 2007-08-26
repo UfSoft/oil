@@ -4,10 +4,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
       py:strip="">
   <xi:include href="../layout.html" />
   <head>
     <title>Edit Bot</title>
+    <script type="text/javascript">
+      function add_network() {
+        location.href = "${ h.url_for(controller='networks', action='add', id=c.bot.nick)}";
+      };
+    </script>
   </head>
 
   <body>
@@ -50,14 +56,9 @@
           $c.bot.manager.name ($c.bot.manager.openid)
         </span><br/>
 
-        <fieldset class="subfieldset">
-        <legend>
-          Networks
-          (<a href="${ h.url_for(controller='networks', action='add', id=c.bot.nick) }">
-          Add Network</a>)
-        </legend>
         <table class="listing" py:if="c.bot.networks">
           <thead>
+            <tr><th colspan="4">Bot Networks &amp; Channels</th></tr>
             <tr>
               <th>Address</th>
               <th>Port</th>
@@ -84,12 +85,13 @@
             </tr>
           </tbody>
         </table>
-        </fieldset>
 
         <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/>
         <input type="hidden" id="bot_id" name="bot_id" value="$c.bot.id"/><br/>
         <input class="input_button" name="submit" type="submit"
                value="${_('Update Bot')}"/>
+        <input class="input_button" name="submit" type="button"
+               value="${_('Add Network')}" onClick="add_network();"/>
       </fieldset>
     </form><br/>
   </body>

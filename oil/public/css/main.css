@@ -102,8 +102,6 @@
 }
 
 .info-message {
-/*    background-color: #c6ffa2;
-    background-image: url(../img/info.png) no-repeat */
     background: #c6ffa2 url(../img/info.png) no-repeat left top;
     border: 1px dashed #81be63;
     margin: 15px;
@@ -111,6 +109,7 @@
     font-size: 0.7em;
 
 }
+.info-message tt { font-size: 1.5em; font-weight: bold; }
 
 fieldset {
     padding: 3px 10px 15px 10px;

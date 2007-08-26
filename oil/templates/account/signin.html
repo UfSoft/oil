@@ -2,8 +2,9 @@
     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
-  <xi:include href="../layout.html" />
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n">
+  <xi:include href="../layout.html"/>
   <head>
     <title xml:lang="en">Sign In</title>
   </head>
@@ -15,14 +16,14 @@
       you to log in at one place and be authenticated at many places.</p>
       <p>OpenID providers: <br/>
         <ul>
-          <li>LiveJournal: <code>http://<i>username</i>.livejournal.com/</code><br/>
+          <li i18n:msg="">LiveJournal: <code>http://<i>username</i>.livejournal.com/</code><br/>
             Many other LiveJournal-based sites such as GreatestJournal offer
             OpenIDs, so try your site url.</li>
-          <li>AOL or AOL Instant Messenger: <code>http://openid.aol.com/<i>screenname</i>/</code></li>
-          <li>SmugMug: <code>http://<i>username</i>.smugmug.com/</code></li>
-          <li>WordPress.com: <code>http://<i>blog</i>.wordpress.com/</code></li>
-          <li>Vox: <code>http://<i>username</i>.vox.com/</code></li>
-          <li>Or pick any provider from the
+          <li i18n:msg="">AOL or AOL Instant Messenger: <code>http://openid.aol.com/<i>screenname</i>/</code></li>
+          <li i18n:msg="">SmugMug: <code>http://<i>username</i>.smugmug.com/</code></li>
+          <li i18n:msg="">WordPress.com: <code>http://<i>blog</i>.wordpress.com/</code></li>
+          <li i18n:msg="">Vox: <code>http://<i>username</i>.vox.com/</code></li>
+          <li i18n:msg="">Or pick any provider from the
             <a href="http://openid.net/wiki/index.php/OpenIDServers">list</a>.</li>
         </ul>
       </p>

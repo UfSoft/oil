@@ -130,6 +130,9 @@ def validate(template=None, schema=None, validators=None, form=None, variable_de
                 raise Exception('You MUST pass a form to display errors')
                 return func(self, *args, **kwargs)
 
+            request.environ['pylons.routes_dict']['action'] = form
+            response = self._dispatch_call()
+
             log.debug(errors)
             pylons.c.errors = errors
             pylons.c.form_result = decoded

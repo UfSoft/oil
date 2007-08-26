@@ -1,6 +1,7 @@
 import logging
 
 from oil.lib.base import *
+from oil.model.fe import schemas as schema
 
 log = logging.getLogger(__name__)
 
@@ -17,7 +18,8 @@ class NetworksController(BaseController):
         c.bot = model.Session.query(model.Bot).filter_by(nick=id).first()
         return render('networks.add')
 
-    @rest.dispatch_on(GET="add")
+    @validate(template='networks.add', schema=schema.AddNetwork(),
+              form='add', variable_decode=True)
     def add_POST(self, id):
         bot = model.Session.query(model.Bot).filter_by(nick=id).first()
         post = request.POST.copy()
@@ -39,4 +41,31 @@ class NetworksController(BaseController):
         bot.networks.append(network)
         model.Session.save(bot)
         model.Session.commit()
-        redirect_to(controller='bots', action='edit', id=bot.nick)
+        redirect_to('edit_network', bot=bot.nick, network=network.name)
+
+    @rest.dispatch_on(POST="edit_POST")
+    def edit(self, bot, network):
+        query = model.Session.query(model.Network).filter(
+            model.Network.bots.any(nick=bot)
+        )
+        #c.bot = model.Session.query(model.Bot).filter_by(nick=bot).first()
+        c.network = query.filter_by(name=network).first()
+        return render('networks.edit')
+
+    @validate(template='networks.edit', schema=schema.UpdateNetwork(),
+              form='edit')
+    def edit_POST(self, bot, network):
+        log.debug('on networks edit_POST')
+        query = model.Session.query(model.Network).filter(
+            model.Network.bots.any(nick=bot)
+        )
+        #c.bot = model.Session.query(model.Bot).filter_by(nick=bot).first()
+        network = query.filter_by(name=network).first()
+        if not self.form_result['channels']:
+            self.form_result['channels'] = []
+        network.channels = [
+            model.Channel(channel) for channel in self.form_result['channels']
+        ]
+        model.Session.save(network)
+        model.Session.commit()
+        redirect_to(controller='bots', action='index')

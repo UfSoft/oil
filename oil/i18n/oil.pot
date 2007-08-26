@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OIL 0.1\n"
 "Report-Msgid-Bugs-To: ufs@ufsoft.org\n"
-"POT-Creation-Date: 2007-08-23 23:14+0100\n"
+"POT-Creation-Date: 2007-08-26 12:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,24 +17,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9dev-r267\n"
 
-#: oil/controllers/account.py:40
+#: oil/controllers/account.py:35
 msgid "Already signed in."
 msgstr ""
 
-#: oil/controllers/account.py:47 oil/controllers/account.py:78
+#: oil/controllers/account.py:42 oil/controllers/account.py:73
 msgid "A problem ocurred comunicating to your OpenID server. Please try again."
 msgstr ""
 
-#: oil/controllers/account.py:123 oil/controllers/account.py:133
+#: oil/controllers/account.py:112 oil/controllers/account.py:122
 msgid "You are not signed in."
 msgstr ""
 
-#: oil/controllers/account.py:127
+#: oil/controllers/account.py:116
 msgid "You've been signed out."
 msgstr ""
 
-#: oil/controllers/account.py:137
+#: oil/controllers/account.py:126
 msgid "You are not banned."
+msgstr ""
+
+#: oil/controllers/bots.py:22
+msgid "A bot with that nick is already registred."
+msgstr ""
+
+#: oil/controllers/networks.py:35
+msgid "Network already registred for this bot. No need for duplicates"
 msgstr ""
 
 #: oil/model/fe/validators.py:26
@@ -54,36 +62,40 @@ msgid ""
 " functionality will be disabled."
 msgstr ""
 
-#: oil/templates/layout.html:51
+#: oil/templates/layout.html:52
 msgid "Language:"
 msgstr ""
 
-#: oil/templates/layout.html:69
+#: oil/templates/layout.html:72
 msgid "IRC Logs Viewer"
 msgstr ""
 
-#: oil/templates/layout.html:73
+#: oil/templates/layout.html:76
 msgid "Home"
 msgstr ""
 
-#: oil/templates/layout.html:76
+#: oil/templates/layout.html:79
 msgid "Admin"
 msgstr ""
 
-#: oil/templates/layout.html:79
+#: oil/templates/layout.html:82
 msgid "Logs"
 msgstr ""
 
-#: oil/templates/layout.html:83 oil/templates/account/index.html:9
+#: oil/templates/layout.html:86 oil/templates/account/index.html:9
 #: oil/templates/account/index.html:22
 msgid "My Account"
 msgstr ""
 
-#: oil/templates/layout.html:87
+#: oil/templates/layout.html:90 oil/templates/bots/index.html:20
+msgid "My Bots"
+msgstr ""
+
+#: oil/templates/layout.html:94
 msgid "Sign Out"
 msgstr ""
 
-#: oil/templates/layout.html:91 oil/templates/account/signin.html:34
+#: oil/templates/layout.html:98 oil/templates/account/signin.html:35
 msgid "Sign In"
 msgstr ""
 
@@ -99,7 +111,8 @@ msgstr ""
 msgid "OpenID:"
 msgstr ""
 
-#: oil/templates/account/index.html:26
+#: oil/templates/account/index.html:26 oil/templates/bots/edit.html:28
+#: oil/templates/bots/register.html:83 oil/templates/networks/edit.html:32
 msgid "Name:"
 msgstr ""
 
@@ -115,43 +128,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: oil/templates/account/index.html:62
-msgid "My Bots"
-msgstr ""
-
-#: oil/templates/account/index.html:67
-msgid "Edit Bot"
-msgstr ""
-
-#: oil/templates/account/index.html:73
-msgid "Name"
-msgstr ""
-
-#: oil/templates/account/index.html:74
-msgid "Address"
-msgstr ""
-
-#: oil/templates/account/index.html:75
-msgid "Port"
-msgstr ""
-
-#: oil/templates/account/index.html:76
-msgid "Channels"
-msgstr ""
-
-#: oil/templates/account/index.html:84
-msgid "Edit Channels"
-msgstr ""
-
-#: oil/templates/account/index.html:100
-msgid "Edit Network"
-msgstr ""
-
-#: oil/templates/account/index.html:105
-msgid "Register A New Bot"
-msgstr ""
-
-#: oil/templates/account/signin.html:13
+#: oil/templates/account/signin.html:14
 msgid ""
 "This website uses OpenID for authentication. It's probable you already\n"
 "      have an OpenID -- many internet services now offer them. OpenID enables"
@@ -159,100 +136,132 @@ msgid ""
 "      you to log in at one place and be authenticated at many places."
 msgstr ""
 
-#: oil/templates/account/signin.html:16
+#: oil/templates/account/signin.html:17
 msgid "OpenID providers:"
 msgstr ""
 
-#: oil/templates/account/signin.html:18
-msgid "LiveJournal:"
-msgstr ""
-
-#: oil/templates/account/signin.html:18 oil/templates/account/signin.html:22
-#: oil/templates/account/signin.html:23 oil/templates/account/signin.html:24
-msgid "http://"
-msgstr ""
-
-#: oil/templates/account/signin.html:18 oil/templates/account/signin.html:22
-#: oil/templates/account/signin.html:24
-msgid "username"
-msgstr ""
-
-#: oil/templates/account/signin.html:18
-msgid ".livejournal.com/"
-msgstr ""
-
-#: oil/templates/account/signin.html:18
+#: oil/templates/account/signin.html:19
 msgid ""
-"Many other LiveJournal-based sites such as GreatestJournal offer\n"
+"LiveJournal: [1:http://[2:username].livejournal.com/][3:]\n"
+"            Many other LiveJournal-based sites such as GreatestJournal offer\n"
 "            OpenIDs, so try your site url."
 msgstr ""
 
-#: oil/templates/account/signin.html:21
-msgid "AOL or AOL Instant Messenger:"
-msgstr ""
-
-#: oil/templates/account/signin.html:21
-msgid "http://openid.aol.com/"
-msgstr ""
-
-#: oil/templates/account/signin.html:21
-msgid "screenname"
-msgstr ""
-
 #: oil/templates/account/signin.html:22
-msgid "SmugMug:"
-msgstr ""
-
-#: oil/templates/account/signin.html:22
-msgid ".smugmug.com/"
+msgid "AOL or AOL Instant Messenger: [1:http://openid.aol.com/[2:screenname]/]"
 msgstr ""
 
 #: oil/templates/account/signin.html:23
-msgid "WordPress.com:"
-msgstr ""
-
-#: oil/templates/account/signin.html:23
-msgid "blog"
-msgstr ""
-
-#: oil/templates/account/signin.html:23
-msgid ".wordpress.com/"
+msgid "SmugMug: [1:http://[2:username].smugmug.com/]"
 msgstr ""
 
 #: oil/templates/account/signin.html:24
-msgid "Vox:"
-msgstr ""
-
-#: oil/templates/account/signin.html:24
-msgid ".vox.com/"
+msgid "WordPress.com: [1:http://[2:blog].wordpress.com/]"
 msgstr ""
 
 #: oil/templates/account/signin.html:25
-msgid "Or pick any provider from the"
+msgid "Vox: [1:http://[2:username].vox.com/]"
 msgstr ""
 
 #: oil/templates/account/signin.html:26
-msgid "list"
+msgid ""
+"Or pick any provider from the\n"
+"            [1:list]."
 msgstr ""
 
-#: oil/templates/account/signin.html:29
+#: oil/templates/account/signin.html:30
 msgid "Please Sign In"
 msgstr ""
 
-#: oil/templates/main/index.html:9 oil/templates/main/index.html:15
+#: oil/templates/bots/edit.html:11 oil/templates/bots/edit.html:19
+#: oil/templates/bots/index.html:25
+msgid "Edit Bot"
+msgstr ""
+
+#: oil/templates/bots/edit.html:20 oil/templates/bots/register.html:75
+msgid "Nick:"
+msgstr ""
+
+#: oil/templates/bots/edit.html:36 oil/templates/bots/register.html:91
+msgid "Password:"
+msgstr ""
+
+#: oil/templates/bots/edit.html:41 oil/templates/bots/register.html:96
+msgid "Only used for registred nicks"
+msgstr ""
+
+#: oil/templates/bots/edit.html:42 oil/templates/bots/register.html:98
+msgid "Confirm Password:"
+msgstr ""
+
+#: oil/templates/bots/edit.html:49
+msgid "Managed By:"
+msgstr ""
+
+#: oil/templates/bots/edit.html:55
+msgid ""
+"Networks\n"
+"          ([1:\n"
+"          Add Network])"
+msgstr ""
+
+#: oil/templates/bots/edit.html:63 oil/templates/bots/index.html:31
+msgid "Address"
+msgstr ""
+
+#: oil/templates/bots/edit.html:64 oil/templates/bots/index.html:32
+msgid "Port"
+msgstr ""
+
+#: oil/templates/bots/edit.html:65 oil/templates/bots/index.html:33
+msgid "Channels"
+msgstr ""
+
+#: oil/templates/bots/edit.html:75
+msgid "See the logs"
+msgstr ""
+
+#: oil/templates/bots/edit.html:83 oil/templates/bots/index.html:51
+#: oil/templates/networks/edit.html:30
+msgid "Edit Network"
+msgstr ""
+
+#: oil/templates/bots/edit.html:92
+msgid "Update Bot"
+msgstr ""
+
+#: oil/templates/bots/index.html:24
+msgid ""
+"Networks & Channels\n"
+"                 ("
+msgstr ""
+
+#: oil/templates/bots/index.html:57
+msgid "Register A New Bot"
+msgstr ""
+
+#: oil/templates/bots/register.html:10 oil/templates/bots/register.html:74
+#: oil/templates/bots/register.html:105 oil/templates/networks/edit.html:10
+msgid "Register Bot"
+msgstr ""
+
+#: oil/templates/bots/register.html:58
+msgid "Remove"
+msgstr ""
+
+#: oil/templates/main/index.html:10 oil/templates/main/index.html:16
 msgid "Welcome"
 msgstr ""
 
-#: oil/templates/main/index.html:16
+#: oil/templates/main/index.html:17
 msgid "Your last login was on"
 msgstr ""
 
 #: oil/templates/main/index.html:20
-msgid "You can update your accout details"
-msgstr ""
-
-#: oil/templates/main/index.html:21
-msgid "here"
+msgid ""
+"You can update your accout details\n"
+"        [1:\n"
+"          here]."
 msgstr ""
 
 #: oil/templates/main/index.html:25
@@ -261,5 +270,53 @@ msgstr ""
 
 #: oil/templates/main/view.html:9
 msgid "View"
+msgstr ""
+
+#: oil/templates/networks/add.html:10
+msgid "Add Network"
+msgstr ""
+
+#: oil/templates/networks/add.html:18
+msgid "Add Network for"
+msgstr ""
+
+#: oil/templates/networks/add.html:20 oil/templates/networks/edit.html:40
+msgid "Address:"
+msgstr ""
+
+#: oil/templates/networks/add.html:27 oil/templates/networks/edit.html:47
+msgid "Port:"
+msgstr ""
+
+#: oil/templates/networks/add.html:36
+msgid "Create Network"
+msgstr ""
+
+#: oil/templates/networks/edit.html:54
+msgid "Owner:"
+msgstr ""
+
+#: oil/templates/networks/edit.html:57
+msgid "Created On:"
+msgstr ""
+
+#: oil/templates/networks/edit.html:62
+msgid "Modified On:"
+msgstr ""
+
+#: oil/templates/networks/edit.html:63
+msgid "Modified on"
+msgstr ""
+
+#: oil/templates/networks/edit.html:65
+msgid "by"
+msgstr ""
+
+#: oil/templates/networks/edit.html:70
+msgid "Update Network"
+msgstr ""
+
+#: oil/templates/networks/edit.html:72
+msgid "Edit Channels"
 msgstr ""
 

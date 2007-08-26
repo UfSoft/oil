@@ -26,7 +26,7 @@ class BotsController(BaseController):
         c.user.bots.append(bot)
         model.Session.save(c.user)
         model.Session.commit()
-        redirect_to(action='index')
+        redirect_to(action='edit', id=post['name'])
 
     def edit(self, id):
         c.bot = model.Session.query(model.Bot).filter_by(nick=id).first()
