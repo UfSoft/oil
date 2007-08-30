@@ -1,0 +1,46 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      py:strip=""
+      py:with="network = c.participation.network_participation.network">
+  <xi:include href="../layout.html" />
+  <head>
+    <title>
+      Delete Channel for $c.participation.network_participation.nick on
+      $network.address:$network.port
+    </title>
+  </head>
+
+  <body>
+    <form action="${h.url_for('delete_channel',
+                              id=c.participation.network_participations_id,
+                              channel=c.participation.channel_name)}"
+          method="post" id="delete_channel" name="delete_channel"
+          accept-charset="UTF-8" class="user_input">
+      <fieldset>
+        <legend>
+          Delete Channel for $c.participation.network_participation.nick on
+          $network.address:$network.port
+        </legend>
+
+        <p class="warning-message" i18n:msg="">
+          <b>Are You Sure? This is an irreversible operation!!!</b>
+        </p>
+        <label for="channel">Channel Name:</label>
+        <span id="channel" name="channel" class="channel_span">
+          <tt><b>#$c.participation.channel_name</b></tt></span><br/>
+
+        <input type="hidden" id="participation_id" name="participation_id"
+               value="$c.participation.network_participations_id"/>
+        <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/><br/>
+        <input class="input_button" name="submit" type="submit"
+               value="${_('Delete Channel')}"/>
+        <a class="input_button" onClick="window.history.back();">Cancel</a>
+      </fieldset>
+    </form><br/>
+  </body>
+</html>

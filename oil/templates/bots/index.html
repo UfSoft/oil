@@ -21,13 +21,14 @@
         <table class="listing" py:if="c.user.bots" py:for="bot in c.user.bots">
           <thead>
             <tr>
-              <th colspan="4">$bot.name
+              <th colspan="5">$bot.name
                  (<a href="${ h.url_for(controller='bots', action='edit', id=bot.name)}">
                   Edit Bot
                  </a>)
               </th>
             </tr>
             <tr>
+              <th>Nick on Network</th>
               <th>Address</th>
               <th>Port</th>
               <th>Channels</th>
@@ -35,19 +36,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr py:for="network in bot.networks">
+            <tr py:for="participation in bot.network_participation"
+                py:with="network = participation.network">
+              <td>$participation.nick</td>
               <td>$network.address</td>
               <td>$network.port</td>
               <td>
                 <py:for each="channel in network.channels">
                 <a href="${h.url_for('logs',
                                      network=network.name,
-                                     channel=channel.name)}">$channel.name</a>
+                                     channel=channel.channel_name)}">$channel.channel_name</a>
                 </py:for>
               </td>
 
               <td class="actions">
-                <a href="${ h.url_for('edit_network', bot=bot.nick, network=network.name) }">
+                <a href="${ h.url_for('edit_network', nick=participation.nick, network=network.name) }">
                 <img alt="${_('Edit Network')}" title="${_('Edit Network')}"
                      src="${ h.url_for('/img')}/edit.png"/></a></td>
               </tr>

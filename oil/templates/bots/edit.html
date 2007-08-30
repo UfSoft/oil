@@ -11,24 +11,17 @@
     <title>Edit Bot</title>
     <script type="text/javascript">
       function add_network() {
-        location.href = "${ h.url_for(controller='networks', action='add', id=c.bot.nick)}";
+        location.href = "${ h.url_for(controller='networks', action='add', id=c.bot.name)}";
       };
     </script>
   </head>
 
   <body>
-    <form action="${ h.url_for(controller='bots', action='edit', id=c.bot.nick) }"
+    <form action="${ h.url_for(controller='bots', action='edit', id=c.bot.name) }"
           method="post" id="edit_bot" name="edit_bot"
           accept-charset="UTF-8" class="user_input">
       <fieldset>
         <legend>Edit Bot</legend>
-        <label for="nick">Nick:</label>
-        <input type="text" id="nick" name="nick"
-               value="${c.form_result.nick or c.bot.nick}"/>
-        <span class="error-message" py:if="'nick' in c.errors">
-          $c.errors.nick
-        </span>
-        <br/>
 
         <label for="name">Name:</label>
         <input type="text" id="name" name="name"
@@ -38,28 +31,16 @@
         </span>
         <br/>
 
-        <label for="passwd">Password:</label>
-        <input type="password" id="passwd" name="passwd" value=""/>
-        <span class="error-message" py:if="'passwd' in c.errors">
-          ${ c.errors.passwd }
-        </span>
-        <span class="info-message">Only used for registred nicks</span><br/>
-        <label for="passwd_confirm">Confirm Password:</label>
-        <input type="password" id="passwd_confirm" name="passwd_confirm"
-               value=""/>
-        <span class="error-message" py:if="'passwd_confirm' in c.errors">
-          ${ c.errors.passwd_confirm }
-        </span><br/>
-
         <label for="manager">Managed By:</label>
         <span id="manager" name="manager">
           $c.bot.manager.name ($c.bot.manager.openid)
         </span><br/>
 
-        <table class="listing" py:if="c.bot.networks">
+        <table class="listing" py:if="c.bot.network_participation">
           <thead>
-            <tr><th colspan="4">Bot Networks &amp; Channels</th></tr>
+            <tr><th colspan="5">Networks</th></tr>
             <tr>
+              <th>Nick</th>
               <th>Address</th>
               <th>Port</th>
               <th>Channels</th>
@@ -67,19 +48,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr py:for="network in c.bot.networks">
+            <tr py:for="participation in c.bot.network_participation"
+                py:with="network = participation.network">
+              <td>$participation.nick</td>
               <td>$network.address</td>
               <td>$network.port</td>
               <td>
                <py:for each="channel in network.channels">
                 <a href="${h.url_for('logs',
                                      network=network.name,
-                                     channel=channel.name)}"
-                   title="See the logs">$channel.name</a>
+                                     channel=channel.channel_name)}"
+                   title="See the logs">$channel.channel_name</a>
                </py:for>
               </td>
               <td class="actions">
-                <a href="${ h.url_for('edit_network', bot=c.bot.nick, network=network.name)}">
+                <a href="${ h.url_for('edit_network', nick=participation.nick, network=network.name)}">
                 <img alt="${_('Edit Network')}" title="${_('Edit Network')}"
                      src="${ h.url_for('/img')}/edit.png"/></a></td>
             </tr>

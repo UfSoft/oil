@@ -18,14 +18,17 @@ def make_map():
 
     # CUSTOM ROUTES HERE
     map.connect('home', '', controller="main", action="index")
-    map.connect('edit_network', 'networks/edit/:bot/:network',
-                controller='networks', action='edit', bot=None, network=None)
+    map.connect('edit_network', 'networks/edit/:nick/:network',
+                controller='networks', action='edit', nick=None, network=None)
+    map.connect('delete_channel', 'channels/delete/:id/:channel',
+                controller='channels', action='delete',
+                id=None, channel=None)
     map.connect('logs', 'logs/:network/:channel/:year/:month/:day',
                 controller='logs', action='view', network=None, channel=None,
                 year=None, month=None, day=None)
 
     map.connect(':controller/:action/:id', id=None, bot=None, network=None,
-                channel=None, year=None, month=None, day=None)
+                channel=None, nick=None, year=None, month=None, day=None)
     map.connect('*url', controller='template', action='view')
 
     return map

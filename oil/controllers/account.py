@@ -3,7 +3,6 @@ import logging
 from oil.lib.base import *
 from openid.consumer.consumer import Consumer, SUCCESS, FAILURE, DiscoveryFailure
 from openid import sreg
-from datetime import datetime
 from oil.model.fe import schemas as schema
 
 log = logging.getLogger(__name__)
@@ -81,15 +80,15 @@ class AccountController(BaseController):
             query = model.Session.query(model.User)
             user = query.filter_by(openid=info.identity_url).first()
             if user is None:
+                sreg_response = sreg.SRegResponse.fromSuccessResponse(info)
                 user = model.User(info.identity_url)
+                user.name = sreg_response.get('fullname', u'')
+                user.email = sreg_response.get('email', u'')
+                user.tzinfo = sreg_response.get('timezone', u'')
+                user.language = sreg_response.get('language', u'')
             if user.banned:
                 redirect_to(action='banned')
             user.updatelastlogin()
-            sreg_response = sreg.SRegResponse.fromSuccessResponse(info)
-            user.name = sreg_response.get('fullname', u'')
-            user.email = sreg_response.get('email', u'')
-            user.tzinfo = sreg_response.get('timezone', u'')
-            user.language = sreg_response.get('language', u'')
             model.Session.save(user)
             model.Session.commit()
             session.clear()

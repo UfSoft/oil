@@ -134,7 +134,7 @@ legend {
 .user_input br { clear: left; }
 
 /* Image Buttons */
-input.input_button {
+input.input_button, a.input_button {
     color: #223344;
     font-family: Arial, Verdana, Geneva, "Bitstream Vera Sans", Helvetica, sans-serif;
     font-weight: bold;
@@ -150,9 +150,15 @@ input.input_button {
     margin-right: 10px;
     vertical-align: text-top;
 }
-input.input_button:hover { background-image: url(../img/button-bg-hover.png); }
-input.input_button[disabled] { color: grey; }
-input.input_button[disabled]:hover { background-image: url(../img/button-bg.png); }
+input.input_button:hover, a.input_button:hover {
+  background-image: url(../img/button-bg-hover.png);
+}
+input.input_button[disabled], a.input_button[disabled] { color: grey; }
+input.input_button[disabled]:hover, a.input_button[disabled]:hover {
+  background-image: url(../img/button-bg.png);
+}
+a.input_button { text-decoration: none; padding: 1px 0.2em 1px 0.2em; cursor: default; }
+a.inline {margin: -250px 10px;}
 
 .user_input fieldset {
     border: 1px solid #3363a3;
@@ -283,3 +289,5 @@ a.irclink {
   font-size: 11px;
 }
 .ajaxSelect { border: 1px solid red; }
+
+.channel_span tt { font-size: 1.4em; }

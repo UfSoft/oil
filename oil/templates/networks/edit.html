@@ -1,0 +1,85 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      py:strip="">
+  <xi:include href="../layout.html" />
+  <head>
+  <title>Edit Network</title>
+  </head>
+
+  <body>
+    <form action="${h.url_for('edit_network', nick=c.participation.nick,
+                              network=c.participation.network.name)}"
+          method="post" id="edit_network" name="edit_network"
+          accept-charset="UTF-8" class="user_input">
+      <fieldset>
+        <legend>Edit Network</legend>
+
+        <label for="nick">Nick:</label>
+        <input type="text" id="nick" name="nick"
+               value="${c.form_result.nick or c.participation.nick}"/>
+        <span class="error-message" py:if="'nick' in c.errors">
+          ${ c.errors.nick }
+        </span><br/>
+
+        <label for="passwd">Password:</label>
+        <input type="password" id="passwd" name="passwd"
+               value=""/>
+        <span class="error-message" py:if="'passwd' in c.errors">
+          ${ c.errors.passwd }
+        </span>
+        <span class="info-message">Only used for registred nicks</span><br/>
+        <label for="passwd_confirm">Confirm Password:</label>
+        <input type="password" id="passwd_confirm" name="passwd_confirm"
+               value=""/>
+        <span class="error-message" py:if="'passwd_confirm' in c.errors">
+          ${ c.errors.passwd_confirm }
+        </span><br/>
+
+        <py:if test="c.participation.passwd">
+        <label for="clear_passwd">Clear Password:</label>
+        <input type="radio" name="clear_passwd" value="0" checked="checked"/>No<br/>
+        <label for="clear_passwd1"></label>
+        <input type="radio" name="clear_passwd" value="1"/>Yes<br/>
+        </py:if>
+
+        <label for="address">Address:</label>
+        <span id="address" name="address">$c.participation.network.address</span><br/>
+
+        <label for="port">Port:</label>
+        <span id="port" name="port">$c.participation.network.port</span><br/>
+
+        <fieldset class="subfieldset">
+          <legend>
+            Channels
+            <a class="input_button inline"
+             href="${h.url_for(controller='channels', action='add', id=c.participation.nick)}">
+             Add Channel</a>
+          </legend>
+        <py:for each="idx, channel in enumerate(c.participation.network.channels)">
+        <span class="channel_span" id="channel-$idx" name="channel-$idx">
+          <tt><b>#$channel.channel_name</b></tt>
+          <a class="input_button inline"
+             href="${h.url_for('delete_channel', id=c.participation.id,
+                               channel=channel.channel_name)}">Remove Channel</a>
+        </span>
+        <br/>
+        </py:for>
+        </fieldset>
+
+        <input type="hidden" id="participation_id" name="participation_id"
+               value="$c.participation.id"/>
+        <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/><br/>
+        <input class="input_button" name="submit" type="submit"
+               value="${_('Update Network')}"/>
+        <a class="input_button inline"
+           href="${h.url_for(controller='networks', action='delete', id=c.participation.id)}">
+             Delete Network</a>
+      </fieldset>
+    </form><br/>
+  </body>
+</html>

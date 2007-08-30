@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: sw=4 ts=4 fenc=utf-8
 # =============================================================================
-# $Id: validators.py 15 2007-08-26 16:31:24Z s0undt3ch $
+# $Id: validators.py 16 2007-08-30 00:16:26Z s0undt3ch $
 # =============================================================================
 #             $URL: http://oil.ufsoft.org/svn/trunk/oil/model/fe/validators.py $
-# $LastChangedDate: 2007-08-26 17:31:24 +0100 (Sun, 26 Aug 2007) $
-#             $Rev: 15 $
+# $LastChangedDate: 2007-08-30 01:16:26 +0100 (Thu, 30 Aug 2007) $
+#             $Rev: 16 $
 #   $LastChangedBy: s0undt3ch $
 # =============================================================================
 # Copyright (C) 2007 Ufsoft.org - Pedro Algarvio <ufs@ufsoft.org>
@@ -21,24 +21,13 @@ import logging
 
 log = logging.getLogger(__name__)
 
-class UniqueAddress(validators.UnicodeString):
-
+class UniqueBotName(validators.UnicodeString):
     def validate_python(self, value, state):
-        log.debug('validating python for unique address')
-        #bot = model.Session.query(model.Bot).get(request.POST['bot_id'])
-        query = model.Session.query(model.Network)
-        query = query.filter(model.Network.bots.any(
-            id=int(request.POST['bot_id']))
-        )
-        networks = query.filter_by(port=int(request.POST['port'])).all()
-        log.debug(networks)
-        for net in networks:
-            log.debug(net)
-            if net.address == value:
-                raise Invalid(
-                    _("There's already a network by this name for %s" % \
-                      net.bot.name), value, state)
-
+        log.debug(repr(value))
+        bot = model.Session.query(model.Bot).filter_by(name=value).first()
+        if bot:
+            raise Invalid(_('A bot with that name already exists. '
+                            'Please choose another name.'), value, state)
 
 class ChannelList(validators.FancyValidator):
     def _to_python(self, value, state):
@@ -62,3 +51,7 @@ class ChannelList(validators.FancyValidator):
         log.debug('channel list from_python')
         log.debug(u' '.join([u'#%s' for channel in value]))
         return u' '.join([u'#%s' for channel in value])
+
+class ValidChannelName(validators.UnicodeString):
+    def _to_python(self, value, state):
+        return value.strip('#').lower()

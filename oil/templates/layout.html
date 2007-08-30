@@ -48,7 +48,7 @@
     <div id="fakebody" style="display: none;">
         <div id="lang_div">
           <form id="lang_choose" method="post"
-                action="${ h.url_for(controller='lang', action='index')}">
+                action="${ h.url_for(controller='lang', action='index', id=None)}">
             <label for="language">Language:</label>
             <select name="language" id="language"
                     onChange="$('#lang_choose').submit()">
@@ -131,6 +131,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 13 2007-08-25 01:34:40Z s0undt3ch $
+$Id: layout.html 16 2007-08-30 00:16:26Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->

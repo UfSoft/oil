@@ -1,0 +1,45 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      py:strip="">
+  <xi:include href="../layout.html" />
+  <head>
+  <title>
+    Add Channel for $c.participation.nick on
+    $c.participation.network.address:$c.participation.network.port</title>
+  </head>
+
+  <body>
+    <form action="${h.url_for(controller='channels', action='add', id=c.participation.nick)}"
+          method="post" id="add_channel" name="add_channel"
+          accept-charset="UTF-8" class="user_input">
+      <fieldset>
+        <legend>
+          Add Channel for $c.participation.nick on
+          $c.participation.network.address:$c.participation.network.port
+        </legend>
+
+        <label for="channel">Channel Name:</label>
+        <input type="text" id="channel" name="channel"
+               value="${c.form_result.channel or c.participation.channel}"/>
+        <span class="error-message" py:if="'channel' in c.errors">
+          ${ c.errors.channel }
+        </span>
+        <span class="info-message" i18n:msg="">
+          You can omit the <tt>#</tt> from the channel name.
+          <b>Capitalization does not matter.</b>
+        </span><br/>
+
+        <input type="hidden" id="participation_id" name="participation_id"
+               value="$c.participation.id"/>
+        <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/><br/>
+        <input class="input_button" name="submit" type="submit"
+               value="${_('Add Channel')}"/>
+      </fieldset>
+    </form><br/>
+  </body>
+</html>

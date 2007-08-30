@@ -4,8 +4,11 @@ from pylons import config
 import sqlalchemy as sqla
 from sqlalchemy.orm import mapper, relation
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.associationproxy import association_proxy
 import datetime
 from pytz import UTC
+
+# http://dpaste.com/17837/
 
 # Global session manager.
 #S ession() returns the session object appropriate for the current web request.
@@ -21,12 +24,12 @@ metadata = sqla.MetaData()
 
 users = sqla.Table('users', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
+    sqla.Column('openid', sqla.String, unique=True),
     sqla.Column('name', sqla.Unicode(60), nullable=False, unique=True),
-    sqla.Column('openid', sqla.String),
     sqla.Column('slug', sqla.String),
     sqla.Column('signup', sqla.DateTime(timezone=True), nullable=False),
     sqla.Column('lastlogin', sqla.DateTime(timezone=True), nullable=False),
-    sqla.Column('email', sqla.Unicode, nullable=True, unique=True),
+    sqla.Column('email', sqla.Unicode, nullable=True, unique=False), #, unique=True),
     sqla.Column('banned', sqla.Boolean, nullable=False, default=False),
     sqla.Column('type', sqla.String(7), nullable=False, default="user"),
     sqla.Column('language', sqla.Unicode, nullable=True, default="en"),
@@ -38,59 +41,44 @@ class User(object):
     def __init__(self, openid, name=None):
         self.openid = openid
         self.name = name if name is not None else openid
-        self.signup = UTC.localize(datetime.datetime.utcnow())
+        #self.signup = UTC.localize(datetime.datetime.utcnow())
+        self.signup = datetime.datetime.utcnow()
         self.updatelastlogin()
     def __unicode__(self):
         return self.name
+    def __repr__(self):
+        return "<User: %s (%s)>" % (self.name, self.openid)
     def updatelastlogin(self):
         self.lastlogin = UTC.localize(datetime.datetime.utcnow())
+        #self.lastlogin = datetime.datetime.utcnow()
     def is_admin(self):
         return self.type == 'admin'
     def is_manager(self):
         return self.type == 'manager'
 
-mapper(User, users, order_by=[sqla.asc(users.c.name)])
 
 bots = sqla.Table('bots', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
-    sqla.Column('nick', sqla.Unicode, nullable=False, unique=True),
-    sqla.Column('name', sqla.Unicode, nullable=True, unique=False),
-    sqla.Column('passwd', sqla.Unicode, nullable=True, unique=False),
-    sqla.Column('user_id', sqla.Integer, sqla.ForeignKey('users.id')),
-    #sqla.Column('network_id', sqla.Integer, sqla.ForeignKey('networks.id'))
+    sqla.Column('name', sqla.Unicode, nullable=False, unique=True), #, primary_key=True),
+    sqla.Column('user_id', sqla.Integer, sqla.ForeignKey('users.id'))
 )
 
 class Bot(object):
-    def __init__(self, nick, name=None, passwd=None):
-        self.nick = nick
+    def __init__(self, name):
         self.name = name
-        self.passwd = passwd
 
     def __unicode__(self):
-        return self.nick
+        return self.name
 
     def __repr__(self):
-        return "<IRC Bot: '%s' managed by '%s'>" % (
-            self.name,
-            Session.query(User).filter_by(id=self.user_id).first().name
-        )
+        return "<IRC Bot: %s>" % self.name
+
 
 networks = sqla.Table('networks', metadata,
-    sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
-    sqla.Column('name', sqla.Unicode, nullable=False, unique=False),
-    sqla.Column('address', sqla.Unicode, nullable=False, unique=False),
+    sqla.Column('name', sqla.Unicode, nullable=False, unique=True, primary_key=True),
     sqla.Column('address', sqla.Unicode, nullable=False, unique=False),
     sqla.Column('port', sqla.Integer, nullable=False, unique=False),
 )
-sqla.Index('networks_idx', networks.c.address, networks.c.port, unique=True)
-
-networkbots_association = sqla.Table('networkbots_association', metadata,
-    sqla.Column('network_id', sqla.Integer, sqla.ForeignKey('networks.id')),
-    sqla.Column('bot_id', sqla.Integer, sqla.ForeignKey('bots.id'))
-)
-#sqla.Index('netbots_assoc_idx',
-#           networkbots_association.c.address,
-#           networkbots_association.c.port, unique=True)
 
 class Network(object):
     def __init__(self, address, port):
@@ -102,81 +90,112 @@ class Network(object):
     def __repr__(self):
         return '<IRC Network: %s:%s>' % (self.address, self.port)
 
-channels = sqla.Table('channels', metadata,
+network_participations = sqla.Table('network_participations', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
-    sqla.Column('name', sqla.Unicode, nullable=False, unique=False),
+    sqla.Column('network_name', None, sqla.ForeignKey('networks.name')),
+    sqla.Column('bot_id', None, sqla.ForeignKey('bots.id')),
+    sqla.Column('nick', sqla.Unicode, nullable=True, unique=True),
+    sqla.Column('passwd', sqla.Unicode, nullable=True, unique=False),
+)
+
+class NetworkParticipation(object):
+    def __init__(self, bot, network, nick=None):
+        self.bot = bot
+        self.network = network
+        self.nick = nick
+    def __repr__(self):
+        return "<NetworkParticipation: %s (%s on %s:%s)>" % (self.nick,
+                                                          self.bot.name,
+                                                          self.network.address,
+                                                          self.network.port)
+
+
+channels = sqla.Table('channels', metadata,
+    sqla.Column('network_name', None, sqla.ForeignKey('networks.name'),
+                primary_key=True),
+    sqla.Column('channel_name', sqla.Unicode, primary_key=True),
     sqla.Column('topic', sqla.Unicode, nullable=True, unique=False),
     sqla.Column('first_entry', sqla.Date, nullable=True, unique=False),
     sqla.Column('last_entry', sqla.Date, nullable=True, unique=False),
-    sqla.Column('network_id', sqla.Integer, sqla.ForeignKey('networks.id'))
+    sqla.PrimaryKeyConstraint('network_name', 'channel_name')
 )
-sqla.Index('channels_idx', channels.c.name, channels.c.network_id, unique=True)
 
 class Channel(object):
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, network, name):
+        self.network = network
+        self.channel_name = name
 
     def __repr__(self):
-        network = Session.query(Network).filter_by(id=self.network_id).first()
-        return "<IRC Channel: '%s' on '%s:%d'>" % (
-            self.name, network.address, network.port
-        )
+        return "<IRC Channel: '%s'>" % self.channel_name
+#        network = Session.query(Network).filter_by(id=self.network.name).first()
+#        return "<IRC Channel: '%s' on '%s:%d'>" % (
+#            self.name, self.network.address, self.network.port
+#        )
 
     def __unicode__(self):
-        return self.name
-
-#    def add_event(self, type, source, message):
-#        event = Event(type, source, message)
-#        self.events.append(event)
-#        self.update_last_entry_date(event.stamp)
+        return self.channel_name
 
 
-    def update_last_entry_date(self, date):
-        if not self.first_entry:
-            self.first_entry = date
-        self.last_entry = date
-
-
-events = sqla.Table('events', metadata,
-    sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
-    sqla.Column('stamp', sqla.DateTime(timezone=True), nullable=False, unique=False),
-    sqla.Column('type', sqla.Unicode, nullable=False, unique=False),
-    sqla.Column('subtype', sqla.Unicode, nullable=True, unique=False),
-    sqla.Column('source', sqla.Unicode, nullable=False, unique=False),
-    sqla.Column('msg', sqla.Unicode, nullable=False, unique=False),
-    sqla.Column('channel_id', sqla.Integer, sqla.ForeignKey('channels.id')),
+channel_participations = sqla.Table('channel_participations', metadata,
+    sqla.Column('network_name', sqla.Unicode),
+    sqla.Column('channel_name', sqla.Unicode),
+    sqla.Column('network_participations_id', sqla.Integer,
+                sqla.ForeignKey('network_participations.id')),
+    sqla.PrimaryKeyConstraint('network_participations_id','network_name','channel_name',
+                              name='channel_participation_pk'),
+    sqla.ForeignKeyConstraint(['network_name','channel_name'],
+                              ['channels.network_name','channels.channel_name'],
+                              name='channel_participation_fk')
 )
 
-class Event(object):
-    def __init__(self, type, source, message):
-        self.source = source
-        self.msg = message
-        self.type = type
-        self.stamp = datetime.datetime.utcnow()
-    def __unicode__(self):
-        return self.msg
+class ChannelParticipation(object):
+    def __init__(self, network_participation, channel_instance):
+        self.network_participation = network_participation
+        self.channel = channel_instance
     def __repr__(self):
-        return '<IRC Event: %s %r %r>' % (self.stamp, self.type, self.msg)
+        return '<ChannelParticipation: "%r" "%r">' % (self.channel,
+                                                    self.network_participation)
 
-mapper(Network, networks, order_by=[sqla.asc(networks.c.address),
-                                    sqla.asc(networks.c.port)],
-        properties={
-            'channels': relation(Channel,
-                                 backref=sqla.orm.backref('network',
-                                                          uselist=False)),
-            'bots': relation(Bot, backref='networks',
-                             secondary=networkbots_association),
-        }
+mapper(User, users, order_by=[sqla.asc(users.c.name)])
+
+
+mapper(Bot, bots, order_by=[sqla.asc(bots.c.name)],
+       properties=dict(
+            manager=relation(User, backref='bots'),
+            #networks=relation(NetworkParticipation, backref='bots')
+       )
 )
 
-mapper(Channel, channels, order_by=[sqla.asc(channels.c.name)],
-       properties={'network': relation(Network, backref='channels')}
+mapper(Network, networks,
+#       properties=dict(
+#            bots=relation(Bot, backref='networks')
+#       )
 )
 
+mapper(NetworkParticipation, network_participations,
+       order_by=[sqla.asc(network_participations.c.id)],
+       properties=dict(
+            #channels=relation(ChannelParticipation, backref='bot'),
+            network = relation(Network, backref='network_participation'),
+            bot = relation(Bot, backref='network_participation')
+       )
 
-mapper(Bot, bots, order_by=[sqla.asc(bots.c.nick)],
-       properties={'manager': relation(User, backref='bots'),
-                   'networks': relation(Network,
-                                        backref=sqla.orm.backref('bot', uselist=False),
-                                        secondary=networkbots_association)}
+)
+
+mapper(Channel, channels,
+       order_by=[sqla.asc(channels.c.network_name)],
+       properties=dict(
+            network=relation(Network, backref='channels'),
+       )
+)
+
+mapper(ChannelParticipation, channel_participations,
+       order_by=[sqla.asc(channel_participations.c.network_participations_id)],
+       properties=dict(
+            network_participation=relation(NetworkParticipation,
+                                           backref='channel_participation'),
+            #network=relation(Channel, backref='bots_on_chans'),
+            channel=relation(Channel, backref='channel_participation',
+                             cascade="all, delete-orphan"),
+       )
 )
