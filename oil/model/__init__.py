@@ -9,6 +9,7 @@ import datetime
 from pytz import UTC
 
 # http://dpaste.com/17837/
+#
 
 # Global session manager.
 #S ession() returns the session object appropriate for the current web request.
@@ -73,6 +74,13 @@ class Bot(object):
     def __repr__(self):
         return "<IRC Bot: %s>" % self.name
 
+    def delete_children(self):
+        network_participations_for_bot = Session.query(NetworkParticipation) \
+            .filter_by(bot_id=self.id).all()
+        for participation in network_participations_for_bot:
+            participation.delete_children()
+            Session.delete(participation)
+
 
 networks = sqla.Table('networks', metadata,
     sqla.Column('name', sqla.Unicode, nullable=False, unique=True, primary_key=True),
@@ -94,9 +102,11 @@ network_participations = sqla.Table('network_participations', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
     sqla.Column('network_name', None, sqla.ForeignKey('networks.name')),
     sqla.Column('bot_id', None, sqla.ForeignKey('bots.id')),
-    sqla.Column('nick', sqla.Unicode, nullable=True, unique=True),
+    sqla.Column('nick', sqla.Unicode, nullable=True, unique=False),
     sqla.Column('passwd', sqla.Unicode, nullable=True, unique=False),
 )
+sqla.Index('network_participations_idx', network_participations.c.network_name,
+           network_participations.c.bot_id)
 
 class NetworkParticipation(object):
     def __init__(self, bot, network, nick=None):
@@ -108,6 +118,12 @@ class NetworkParticipation(object):
                                                           self.bot.name,
                                                           self.network.address,
                                                           self.network.port)
+    def delete_children(self):
+        channel_participations_for_network = Session.query(ChannelParticipation) \
+            .filter_by(network_participations_id=self.id).all()
+        for participation in channel_participations_for_network:
+            participation.delete_children()
+            Session.delete(participation)
 
 
 channels = sqla.Table('channels', metadata,
@@ -156,6 +172,10 @@ class ChannelParticipation(object):
         return '<ChannelParticipation: "%r" "%r">' % (self.channel,
                                                     self.network_participation)
 
+    def delete_children(self):
+        # TODO: Delete event's for channel participation
+        Session.delete(self.channel)
+
 mapper(User, users, order_by=[sqla.asc(users.c.name)])
 
 
@@ -176,7 +196,8 @@ mapper(NetworkParticipation, network_participations,
        order_by=[sqla.asc(network_participations.c.id)],
        properties=dict(
             #channels=relation(ChannelParticipation, backref='bot'),
-            network = relation(Network, backref='network_participation'),
+            network = relation(Network, backref='network_participation',
+                               cascade="all, delete-orphan"),
             bot = relation(Bot, backref='network_participation')
        )
 
@@ -185,7 +206,8 @@ mapper(NetworkParticipation, network_participations,
 mapper(Channel, channels,
        order_by=[sqla.asc(channels.c.network_name)],
        properties=dict(
-            network=relation(Network, backref='channels'),
+            network=relation(Network, backref='channels',
+                             cascade="all, delete-orphan"),
        )
 )
 

@@ -51,3 +51,14 @@ class BotsController(BaseController):
         model.Session.commit()
         redirect_to(action='index', id=None)
 
+    @rest.dispatch_on(POST="delete_POST")
+    def delete(self, id):
+        c.bot = model.Session.query(model.Bot).get(int(id))
+        return render('bots.delete')
+
+    def delete_POST(self, id):
+        bot = model.Session.query(model.Bot).get(int(id))
+        bot.delete_children()
+        model.Session.delete(bot)
+        model.Session.commit()
+        redirect_to(action='index', id=None)

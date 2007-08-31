@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: sw=4 ts=4 fenc=utf-8
 # =============================================================================
-# $Id: schemas.py 16 2007-08-30 00:16:26Z s0undt3ch $
+# $Id: schemas.py 17 2007-08-31 16:43:56Z s0undt3ch $
 # =============================================================================
 #             $URL: http://oil.ufsoft.org/svn/trunk/oil/model/fe/schemas.py $
-# $LastChangedDate: 2007-08-30 01:16:26 +0100 (Thu, 30 Aug 2007) $
-#             $Rev: 16 $
+# $LastChangedDate: 2007-08-31 17:43:56 +0100 (Fri, 31 Aug 2007) $
+#             $Rev: 17 $
 #   $LastChangedBy: s0undt3ch $
 # =============================================================================
 # Copyright (C) 2007 Ufsoft.org - Pedro Algarvio <ufs@ufsoft.org>
@@ -32,16 +32,16 @@ class UpdateUser(Schema):
 #    user_id = validators.Int(not_empty=True)
 
 class RegisterBot(Schema):
-    allow_extra_fields = True
-    filter_extra_fields = True
+    #allow_extra_fields = True
+    #filter_extra_fields = True
     name = validator.UniqueBotName(not_empty=True, encoding='UTF-8')
     user_id = validators.Int(not_empty=True)
 
 class UpdateBot(Schema):
-    allow_extra_fields = True
-    filter_extra_fields = True
+    #allow_extra_fields = True
+    #filter_extra_fields = True
     name = validators.UnicodeString(not_empty=True, encoding='UTF-8')
-    #bot_id = validators.Int(not_empty=True)
+    bot_id = validators.Int(not_empty=True)
     user_id = validators.Int(not_empty=True)
 #    allow_extra_fields = True
 #    filter_extra_fields = True
@@ -55,14 +55,15 @@ class UpdateBot(Schema):
 
 
 class AddNetwork(Schema):
-    allow_extra_fields = True
-    filter_extra_fields = True
+    #allow_extra_fields = True
+    #filter_extra_fields = True
     nick = validators.UnicodeString(not_empty=True, encoding='UTF-8')
     address = validators.UnicodeString(not_empty=True, encoding='UTF-8')
     port = validators.Int(not_empty=True)
     passwd = validators.UnicodeString(not_empty=False, encoding='UTF-8')
     passwd_confirm = validators.UnicodeString(not_empty=False, encoding='UTF-8')
     user_id = validators.Int(not_empty=True)
+    bot_id = validators.Int(not_empty=True)
     chained_validators = [ validators.FieldsMatch('passwd', 'passwd_confirm') ]
 
 class UpdateNetwork(Schema):

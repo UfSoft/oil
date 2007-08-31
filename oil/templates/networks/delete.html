@@ -1,0 +1,53 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      py:strip="">
+  <xi:include href="../layout.html" />
+  <head>
+  <title>Delete Network</title>
+  </head>
+
+  <body>
+    <form action="${h.url_for(controller='networks', action='delete', id=c.participation.id)}"
+          method="post" id="delete_network" name="delete_network"
+          accept-charset="UTF-8" class="user_input">
+      <fieldset>
+        <legend>Delete Network</legend>
+
+        <p class="warning-message" i18n:msg="">
+          <b>Are You Sure? This is an irreversible operation!!!</b>
+        </p>
+
+        <label for="nick">Nick:</label>
+        <span id="nick" name="nick">$c.participation.nick</span><br/>
+
+        <label for="address">Address:</label>
+        <span id="address" name="address">$c.participation.network.address</span><br/>
+
+        <label for="port">Port:</label>
+        <span id="port" name="port">$c.participation.network.port</span><br/>
+
+        <fieldset class="subfieldset">
+          <legend>Channels</legend>
+        <py:for each="idx, channel in enumerate(c.participation.network.channels)">
+        <span class="channel_span" id="channel-$idx" name="channel-$idx">
+          <tt><b>#$channel.channel_name</b></tt>
+        </span>
+        <br/>
+        </py:for>
+        </fieldset>
+
+        <input type="hidden" id="participation_id" name="participation_id"
+               value="$c.participation.id"/>
+        <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/><br/>
+        <input class="input_button" name="submit" type="submit"
+               value="${_('Delete Network')}"/>
+        <a class="input_button" onClick="window.history.back();">Cancel</a>
+      </fieldset>
+    </form><br/>
+  </body>
+</html>

@@ -8,22 +8,22 @@
       py:strip="">
   <xi:include href="../layout.html" />
   <head>
-    <title>Edit Bot</title>
+    <title>Delete Bot</title>
   </head>
 
   <body>
-    <form action="${ h.url_for(controller='bots', action='edit', id=c.bot.name) }"
-          method="post" id="edit_bot" name="edit_bot"
+    <form action="${ h.url_for(controller='bots', action='delete', id=c.bot.id) }"
+          method="post" id="delete_bot" name="delete_bot"
           accept-charset="UTF-8" class="user_input">
       <fieldset>
-        <legend>Edit Bot</legend>
+        <legend>Delete Bot</legend>
+
+        <p class="warning-message" i18n:msg="">
+          <b>Are You Sure? This is an irreversible operation!!!</b>
+        </p>
 
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name"
-               value="${c.form_result.name or c.bot.name}"/>
-        <span class="error-message" py:if="'name' in c.errors">
-          $c.errors.name
-        </span>
+        <span id="name" name="name">$c.bot.name</span>
         <br/>
 
         <label for="manager">Managed By:</label>
@@ -33,13 +33,12 @@
 
         <table class="listing" py:if="c.bot.network_participation">
           <thead>
-            <tr><th colspan="5">Networks</th></tr>
+            <tr><th colspan="4">Networks</th></tr>
             <tr>
               <th>Nick</th>
               <th>Address</th>
               <th>Port</th>
               <th>Channels</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -50,27 +49,17 @@
               <td>$network.port</td>
               <td>
                <py:for each="channel in network.channels">
-                <a href="${h.url_for('logs',
-                                     network=network.name,
-                                     channel=channel.channel_name)}"
-                   title="See the logs">$channel.channel_name</a>
+                $channel.channel_name
                </py:for>
               </td>
-              <td class="actions">
-                <a href="${ h.url_for('edit_network', nick=participation.nick, network=network.name)}">
-                <img alt="${_('Edit Network')}" title="${_('Edit Network')}"
-                     src="${ h.url_for('/img')}/edit.png"/></a></td>
             </tr>
           </tbody>
         </table>
 
         <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/>
         <input type="hidden" id="bot_id" name="bot_id" value="$c.bot.id"/><br/>
-        <input class="input_button" type="submit" value="${_('Update Bot')}"/>
-        <a href="${ h.url_for(controller='bots', action='delete', id=c.bot.id)}"
-           class="input_button">Delete Bot</a>
-        <a href="${ h.url_for(controller='networks', action='add', id=c.bot.name)}"
-           class="input_button">Add Network</a>
+        <input class="input_button" type="submit" value="${_('Delete Bot')}"/>
+        <a class="input_button" onClick="window.history.back();">Cancel</a>
       </fieldset>
     </form><br/>
   </body>

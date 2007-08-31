@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OIL 0.1\n"
 "Report-Msgid-Bugs-To: ufs@ufsoft.org\n"
-"POT-Creation-Date: 2007-08-26 12:27+0100\n"
+"POT-Creation-Date: 2007-08-31 17:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,42 +17,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9dev-r267\n"
 
-#: oil/controllers/account.py:35
+#: oil/controllers/account.py:34
 msgid "Already signed in."
 msgstr ""
 
-#: oil/controllers/account.py:42 oil/controllers/account.py:73
+#: oil/controllers/account.py:41 oil/controllers/account.py:72
 msgid "A problem ocurred comunicating to your OpenID server. Please try again."
 msgstr ""
 
-#: oil/controllers/account.py:112 oil/controllers/account.py:122
+#: oil/controllers/account.py:111 oil/controllers/account.py:121
 msgid "You are not signed in."
 msgstr ""
 
-#: oil/controllers/account.py:116
+#: oil/controllers/account.py:115
 msgid "You've been signed out."
 msgstr ""
 
-#: oil/controllers/account.py:126
+#: oil/controllers/account.py:125
 msgid "You are not banned."
 msgstr ""
 
-#: oil/controllers/bots.py:22
-msgid "A bot with that nick is already registred."
+#: oil/controllers/channels.py:35
+#, python-format
+msgid "Channel %s already on %s channel list"
 msgstr ""
 
-#: oil/controllers/networks.py:35
+#: oil/controllers/networks.py:44
 msgid "Network already registred for this bot. No need for duplicates"
 msgstr ""
 
-#: oil/model/fe/validators.py:26
-#, python-format
-msgid "Address is already used for network '%s'"
+#: oil/controllers/networks.py:94 oil/controllers/networks.py:102
+msgid "You're trying to delete an unknown network"
 msgstr ""
 
-#: oil/model/fe/validators.py:46
+#: oil/model/fe/validators.py:29
+msgid "A bot with that name already exists. Please choose another name."
+msgstr ""
+
+#: oil/model/fe/validators.py:47
 #, python-format
-msgid "Invalid network format for %r, should be \"name:address:port\"."
+msgid "No need to duplicate channel names: '%s'., "
 msgstr ""
 
 #: oil/templates/layout.html:40
@@ -78,7 +82,7 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: oil/templates/layout.html:82
+#: oil/templates/layout.html:82 oil/templates/logs/index.html:9
 msgid "Logs"
 msgstr ""
 
@@ -111,8 +115,8 @@ msgstr ""
 msgid "OpenID:"
 msgstr ""
 
-#: oil/templates/account/index.html:26 oil/templates/bots/edit.html:28
-#: oil/templates/bots/register.html:83 oil/templates/networks/edit.html:32
+#: oil/templates/account/index.html:26 oil/templates/bots/delete.html:25
+#: oil/templates/bots/edit.html:21 oil/templates/bots/register.html:20
 msgid "Name:"
 msgstr ""
 
@@ -173,98 +177,138 @@ msgstr ""
 msgid "Please Sign In"
 msgstr ""
 
+#: oil/templates/bots/delete.html:11 oil/templates/bots/delete.html:19
+#: oil/templates/bots/delete.html:61 oil/templates/bots/edit.html:71
+msgid "Delete Bot"
+msgstr ""
+
+#: oil/templates/bots/delete.html:21 oil/templates/channels/delete.html:30
+#: oil/templates/networks/delete.html:21
+msgid "[1:Are You Sure? This is an irreversible operation!!!]"
+msgstr ""
+
+#: oil/templates/bots/delete.html:29 oil/templates/bots/edit.html:29
+msgid "Managed By:"
+msgstr ""
+
+#: oil/templates/bots/delete.html:36 oil/templates/bots/edit.html:36
+msgid "Networks"
+msgstr ""
+
+#: oil/templates/bots/delete.html:38 oil/templates/bots/edit.html:38
+msgid "Nick"
+msgstr ""
+
+#: oil/templates/bots/delete.html:39 oil/templates/bots/edit.html:39
+#: oil/templates/bots/index.html:32
+msgid "Address"
+msgstr ""
+
+#: oil/templates/bots/delete.html:40 oil/templates/bots/edit.html:40
+#: oil/templates/bots/index.html:33
+msgid "Port"
+msgstr ""
+
+#: oil/templates/bots/delete.html:41 oil/templates/bots/edit.html:41
+#: oil/templates/bots/index.html:34 oil/templates/networks/delete.html:35
+#: oil/templates/networks/edit.html:57
+msgid "Channels"
+msgstr ""
+
+#: oil/templates/bots/delete.html:62 oil/templates/channels/delete.html:42
+#: oil/templates/networks/delete.html:49
+msgid "Cancel"
+msgstr ""
+
 #: oil/templates/bots/edit.html:11 oil/templates/bots/edit.html:19
 #: oil/templates/bots/index.html:25
 msgid "Edit Bot"
 msgstr ""
 
-#: oil/templates/bots/edit.html:20 oil/templates/bots/register.html:75
-msgid "Nick:"
-msgstr ""
-
-#: oil/templates/bots/edit.html:36 oil/templates/bots/register.html:91
-msgid "Password:"
-msgstr ""
-
-#: oil/templates/bots/edit.html:41 oil/templates/bots/register.html:96
-msgid "Only used for registred nicks"
-msgstr ""
-
-#: oil/templates/bots/edit.html:42 oil/templates/bots/register.html:98
-msgid "Confirm Password:"
-msgstr ""
-
-#: oil/templates/bots/edit.html:49
-msgid "Managed By:"
-msgstr ""
-
-#: oil/templates/bots/edit.html:55
-msgid ""
-"Networks\n"
-"          ([1:\n"
-"          Add Network])"
-msgstr ""
-
-#: oil/templates/bots/edit.html:63 oil/templates/bots/index.html:31
-msgid "Address"
-msgstr ""
-
-#: oil/templates/bots/edit.html:64 oil/templates/bots/index.html:32
-msgid "Port"
-msgstr ""
-
-#: oil/templates/bots/edit.html:65 oil/templates/bots/index.html:33
-msgid "Channels"
-msgstr ""
-
-#: oil/templates/bots/edit.html:75
+#: oil/templates/bots/edit.html:53
 msgid "See the logs"
 msgstr ""
 
-#: oil/templates/bots/edit.html:83 oil/templates/bots/index.html:51
-#: oil/templates/networks/edit.html:30
+#: oil/templates/bots/edit.html:61 oil/templates/bots/index.html:54
+#: oil/templates/networks/edit.html:11 oil/templates/networks/edit.html:20
 msgid "Edit Network"
 msgstr ""
 
-#: oil/templates/bots/edit.html:92
+#: oil/templates/bots/edit.html:69
 msgid "Update Bot"
 msgstr ""
 
-#: oil/templates/bots/index.html:24
-msgid ""
-"Networks & Channels\n"
-"                 ("
+#: oil/templates/bots/edit.html:73 oil/templates/networks/add.html:10
+msgid "Add Network"
 msgstr ""
 
-#: oil/templates/bots/index.html:57
+#: oil/templates/bots/index.html:31
+msgid "Nick on Network"
+msgstr ""
+
+#: oil/templates/bots/index.html:60
 msgid "Register A New Bot"
 msgstr ""
 
-#: oil/templates/bots/register.html:10 oil/templates/bots/register.html:74
-#: oil/templates/bots/register.html:105 oil/templates/networks/edit.html:10
+#: oil/templates/bots/register.html:11 oil/templates/bots/register.html:19
+#: oil/templates/bots/register.html:32
 msgid "Register Bot"
 msgstr ""
 
-#: oil/templates/bots/register.html:58
-msgid "Remove"
+#: oil/templates/bots/register.html:26
+msgid ""
+"The [1:nick] and possible [2:password] will later be\n"
+"          configured per-network."
 msgstr ""
 
-#: oil/templates/main/index.html:10 oil/templates/main/index.html:16
+#: oil/templates/channels/add.html:11 oil/templates/channels/add.html:21
+msgid "Add Channel for"
+msgstr ""
+
+#: oil/templates/channels/add.html:12 oil/templates/channels/add.html:22
+#: oil/templates/channels/delete.html:13 oil/templates/channels/delete.html:26
+msgid "on"
+msgstr ""
+
+#: oil/templates/channels/add.html:26 oil/templates/channels/delete.html:33
+msgid "Channel Name:"
+msgstr ""
+
+#: oil/templates/channels/add.html:32
+msgid ""
+"You can omit the [1:#] from the channel name.\n"
+"          [2:Capitalization does not matter.]"
+msgstr ""
+
+#: oil/templates/channels/add.html:40 oil/templates/networks/edit.html:60
+msgid "Add Channel"
+msgstr ""
+
+#: oil/templates/channels/delete.html:12 oil/templates/channels/delete.html:25
+msgid "Delete Channel for"
+msgstr ""
+
+#: oil/templates/channels/delete.html:40
+msgid "Delete Channel"
+msgstr ""
+
+#: oil/templates/main/index.html:10
 msgid "Welcome"
 msgstr ""
 
 #: oil/templates/main/index.html:17
-msgid "Your last login was on"
+#, python-format
+msgid "Your last login was on %s"
 msgstr ""
 
-#: oil/templates/main/index.html:20
+#: oil/templates/main/index.html:22
 msgid ""
 "You can update your accout details\n"
 "        [1:\n"
 "          here]."
 msgstr ""
 
-#: oil/templates/main/index.html:25
+#: oil/templates/main/index.html:27
 msgid "Welcome!!!"
 msgstr ""
 
@@ -272,51 +316,63 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: oil/templates/networks/add.html:10
-msgid "Add Network"
-msgstr ""
-
 #: oil/templates/networks/add.html:18
 msgid "Add Network for"
 msgstr ""
 
-#: oil/templates/networks/add.html:20 oil/templates/networks/edit.html:40
+#: oil/templates/networks/add.html:20 oil/templates/networks/delete.html:25
+#: oil/templates/networks/edit.html:22
+msgid "Nick:"
+msgstr ""
+
+#: oil/templates/networks/add.html:27 oil/templates/networks/edit.html:29
+msgid "Password:"
+msgstr ""
+
+#: oil/templates/networks/add.html:33 oil/templates/networks/edit.html:35
+msgid "Only used for registred nicks"
+msgstr ""
+
+#: oil/templates/networks/add.html:34 oil/templates/networks/edit.html:36
+msgid "Confirm Password:"
+msgstr ""
+
+#: oil/templates/networks/add.html:41 oil/templates/networks/delete.html:28
+#: oil/templates/networks/edit.html:50
 msgid "Address:"
 msgstr ""
 
-#: oil/templates/networks/add.html:27 oil/templates/networks/edit.html:47
+#: oil/templates/networks/add.html:48 oil/templates/networks/delete.html:31
+#: oil/templates/networks/edit.html:53
 msgid "Port:"
 msgstr ""
 
-#: oil/templates/networks/add.html:36
+#: oil/templates/networks/add.html:57
 msgid "Create Network"
 msgstr ""
 
-#: oil/templates/networks/edit.html:54
-msgid "Owner:"
+#: oil/templates/networks/delete.html:11 oil/templates/networks/delete.html:19
+#: oil/templates/networks/delete.html:47 oil/templates/networks/edit.html:80
+msgid "Delete Network"
 msgstr ""
 
-#: oil/templates/networks/edit.html:57
-msgid "Created On:"
+#: oil/templates/networks/edit.html:44
+msgid "Clear Password:"
 msgstr ""
 
-#: oil/templates/networks/edit.html:62
-msgid "Modified On:"
+#: oil/templates/networks/edit.html:45
+msgid "No"
 msgstr ""
 
-#: oil/templates/networks/edit.html:63
-msgid "Modified on"
+#: oil/templates/networks/edit.html:47
+msgid "Yes"
 msgstr ""
 
-#: oil/templates/networks/edit.html:65
-msgid "by"
+#: oil/templates/networks/edit.html:68
+msgid "Remove Channel"
 msgstr ""
 
-#: oil/templates/networks/edit.html:70
+#: oil/templates/networks/edit.html:77
 msgid "Update Network"
-msgstr ""
-
-#: oil/templates/networks/edit.html:72
-msgid "Edit Channels"
 msgstr ""
 

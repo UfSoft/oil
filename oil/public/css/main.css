@@ -158,7 +158,6 @@ input.input_button[disabled]:hover, a.input_button[disabled]:hover {
   background-image: url(../img/button-bg.png);
 }
 a.input_button { text-decoration: none; padding: 1px 0.2em 1px 0.2em; cursor: default; }
-a.inline {margin: -250px 10px;}
 
 .user_input fieldset {
     border: 1px solid #3363a3;
