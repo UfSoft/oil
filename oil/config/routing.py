@@ -27,6 +27,9 @@ def make_map():
                 controller='logs', action='view', network=None, channel=None,
                 year=None, month=None, day=None)
 
+    map.connect('add_channels', 'channels/:action/:nick/:network',
+                controller='channels')
+
     map.connect(':controller/:action/:id', id=None, bot=None, network=None,
                 channel=None, nick=None, year=None, month=None, day=None)
     map.connect('*url', controller='template', action='view')

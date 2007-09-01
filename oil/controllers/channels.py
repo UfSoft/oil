@@ -14,17 +14,19 @@ class ChannelsController(BaseController):
         return 'Hello World'
 
     @rest.dispatch_on(POST="add_POST")
-    def add(self, id):
+    def add(self, nick, network):
         query = model.Session.query(model.NetworkParticipation)
-        c.participation = query.filter_by(nick=id).first()
+        c.participation = query.filter_by(nick=nick,
+                                          network_name=network).first()
         return render('channels.add')
 
     @validate(template='channels.add', schema=schema.AddChannel(),
               form='add', variable_decode=True)
-    def add_POST(self, id):
+    def add_POST(self, nick, network):
         log.debug(self.form_result)
         query = model.Session.query(model.NetworkParticipation)
-        participation = query.filter_by(nick=id).first()
+        participation = query.filter_by(nick=nick,
+                                          network_name=network).first()
 
         channnel_participation = model.Session.query(model.ChannelParticipation) \
             .filter_by(network_participations_id=participation.id) \

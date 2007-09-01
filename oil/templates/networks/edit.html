@@ -57,7 +57,8 @@
           <legend>
             Channels
             <a class="input_button inline"
-             href="${h.url_for(controller='channels', action='add', id=c.participation.nick)}">
+             href="${h.url_for(controller='channels', action='add', nick=c.participation.nick,
+                               network=c.participation.network.name)}">
              Add Channel</a>
           </legend>
         <py:for each="idx, channel in enumerate(c.participation.network.channels)">
