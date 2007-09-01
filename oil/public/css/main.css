@@ -157,7 +157,12 @@ input.input_button[disabled], a.input_button[disabled] { color: grey; }
 input.input_button[disabled]:hover, a.input_button[disabled]:hover {
   background-image: url(../img/button-bg.png);
 }
-a.input_button { text-decoration: none; padding: 1px 0.2em 1px 0.2em; cursor: default; }
+a.input_button {
+  text-decoration: none;
+  padding: 1px 0.4em 1px 0.4em;
+  cursor: default;
+  margin: 2px;
+}
 
 .user_input fieldset {
     border: 1px solid #3363a3;

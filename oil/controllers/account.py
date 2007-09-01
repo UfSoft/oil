@@ -77,9 +77,11 @@ class AccountController(BaseController):
                                                  action='verified',
                                                  qualified=True)))
         if info.status == SUCCESS:
+            new_user = False
             query = model.Session.query(model.User)
             user = query.filter_by(openid=info.identity_url).first()
             if user is None:
+                new_user = True
                 sreg_response = sreg.SRegResponse.fromSuccessResponse(info)
                 user = model.User(info.identity_url)
                 user.name = sreg_response.get('fullname', u'')
@@ -100,7 +102,13 @@ class AccountController(BaseController):
                 del(session['redirected_from'])
                 session.save()
                 return redirect_to(url)
-            return redirect_to(controller='logs', action='index', id=None)
+            if new_user:
+                session['message'] = _('Welcome!!! Please confirm/update '
+                                       'your details.')
+                session.save()
+                redirect_to(action='index')
+            else:
+                redirect_to(controller='main', action='index', id=None)
         else:
             session['message'] = problem_msg
             session.save()
@@ -126,3 +134,20 @@ class AccountController(BaseController):
             session.save()
             redirect_to(action='index')
         return render('account.banned')
+
+    @rest.dispatch_on(POST="remove_POST")
+    def remove(self):
+        return render('account.remove')
+
+    def remove_POST(self):
+        user = c.user
+        #return_redir = self.signout()
+        log.debug(user)
+        user.delete_children()
+        model.Session.delete(user)
+        model.Session.commit()
+        session['message'] = _("You've been signed out and your account deleted.")
+        session.save()
+        self.signout()
+        #return return_redir
+

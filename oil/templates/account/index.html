@@ -53,9 +53,13 @@
         </select><br/>
 -->
         <input type="hidden" name="openid" id="openid"
-               value="$c.user.openid"/>
+               value="$c.user.openid"/><br/>
         <input class="input_button" name="submit" type="submit"
                value="${_('Update')}"/>
+        <a class='input_button'
+           href="${h.url_for(controller='account', action='remove', id=None)}">
+          Delete Account
+        </a>
       </fieldset>
       <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/>
     </form>

@@ -42,8 +42,8 @@ class User(object):
     def __init__(self, openid, name=None):
         self.openid = openid
         self.name = name if name is not None else openid
-        #self.signup = UTC.localize(datetime.datetime.utcnow())
-        self.signup = datetime.datetime.utcnow()
+        self.signup = UTC.localize(datetime.datetime.utcnow())
+        #self.signup = datetime.datetime.utcnow()
         self.updatelastlogin()
     def __unicode__(self):
         return self.name
@@ -56,6 +56,11 @@ class User(object):
         return self.type == 'admin'
     def is_manager(self):
         return self.type == 'manager'
+
+    def delete_children(self):
+        user_bots = Session.query(Bot).filter_by(user_id=self.id).all()
+        for bot in user_bots:
+            Session.delete(bot)
 
 
 bots = sqla.Table('bots', metadata,
@@ -153,16 +158,21 @@ class Channel(object):
 
 
 channel_participations = sqla.Table('channel_participations', metadata,
+    sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
     sqla.Column('network_name', sqla.Unicode),
     sqla.Column('channel_name', sqla.Unicode),
     sqla.Column('network_participations_id', sqla.Integer,
                 sqla.ForeignKey('network_participations.id')),
-    sqla.PrimaryKeyConstraint('network_participations_id','network_name','channel_name',
-                              name='channel_participation_pk'),
+    #sqla.PrimaryKeyConstraint('network_participations_id','network_name','channel_name',
+    #                          name='channel_participation_pk'),
     sqla.ForeignKeyConstraint(['network_name','channel_name'],
                               ['channels.network_name','channels.channel_name'],
                               name='channel_participation_fk')
 )
+
+sqla.Index('channel_participations_idx', channel_participations.c.network_name,
+           channel_participations.c.channel_name,
+           channel_participations.c.network_participations_id)
 
 class ChannelParticipation(object):
     def __init__(self, network_participation, channel_instance):
@@ -173,8 +183,41 @@ class ChannelParticipation(object):
                                                     self.network_participation)
 
     def delete_children(self):
-        # TODO: Delete event's for channel participation
+        channel_events_for_channel_participation = Session.query(ChannelEvent) \
+            .filter_by(channel_participation_id=self.id)
+        for event in channel_events_for_channel_participation:
+            Session.delete(event)
         Session.delete(self.channel)
+
+channel_events = sqla.Table('channel_events', metadata,
+    sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
+    sqla.Column('channel_participation_id', None,
+                sqla.ForeignKey('channel_participations.id')),
+    #sqla.Column('channel_name', sqla.Unicode)
+    sqla.Column('stamp', sqla.DateTime(timezone=True), nullable=False, unique=False),
+    sqla.Column('type', sqla.Unicode, nullable=False, unique=False),
+    sqla.Column('subtype', sqla.Unicode, nullable=True, unique=False),
+    sqla.Column('source', sqla.Unicode, nullable=False, unique=False),
+    sqla.Column('msg', sqla.Unicode, nullable=False, unique=False),
+)
+
+class ChannelEvent(object):
+    def __init__(self, channel_participation, type, source, message, subtype=None):
+        self.channel_participation = channel_participation
+        self.type = type
+        self.subtype = subtype
+        self.source = source
+        self.msg = message
+        self.stamp = UTC.localize(datetime.datetime.utcnow())
+
+    def __unicode__(self):
+        return self.msg
+
+    def __repr__(self):
+        return "<ChannelEvent: (%s) %s(%s) - %s - %s>" % (self.stamp, self.type,
+                                                          self.subtype,
+                                                          self.source,
+                                                          self.msg)
 
 mapper(User, users, order_by=[sqla.asc(users.c.name)])
 
@@ -219,5 +262,14 @@ mapper(ChannelParticipation, channel_participations,
             #network=relation(Channel, backref='bots_on_chans'),
             channel=relation(Channel, backref='channel_participation',
                              cascade="all, delete-orphan"),
+       )
+)
+
+mapper(ChannelEvent, channel_events,
+       order_by=[sqla.asc(channel_events.c.channel_participation_id),
+                sqla.asc(channel_events.c.stamp)],
+       properties=dict(
+            channel_participation=relation(ChannelParticipation,
+                                           backref='events')
        )
 )
