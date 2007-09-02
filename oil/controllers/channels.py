@@ -26,12 +26,16 @@ class ChannelsController(BaseController):
         log.debug(self.form_result)
         query = model.Session.query(model.NetworkParticipation)
         participation = query.filter_by(nick=nick,
-                                          network_name=network).first()
+                                        network_name=network).first()
 
+#        channnel_participation = model.Session.query(model.ChannelParticipation) \
+#            .filter_by(network_participations_id=participation.id) \
+#            .filter_by(channel_name=self.form_result['channel']).first()
         channnel_participation = model.Session.query(model.ChannelParticipation) \
-            .filter_by(network_participations_id=participation.id) \
-            .filter_by(channel_name=self.form_result['channel']).first()
-        if channnel_participation:
+            .filter_by(channel_name=self.form_result['channel'])
+
+        if channnel_participation \
+            .filter_by(network_participations_id=participation.id).first():
             log.debug(channnel_participation)
             session['message'] = _('Channel %s already on %s channel list' %
                                    (self.form_result['channel'],
@@ -39,6 +43,17 @@ class ChannelsController(BaseController):
             session.save()
             redirect_to('edit_network', nick=participation.nick,
                         network=participation.network.name)
+        elif channnel_participation.first():
+            log.debug(channnel_participation)
+            session['message'] = _('Channel %s already on the channel list '
+                                   'of another bot, %s' %
+                                   (self.form_result['channel'],
+                                    channnel_participation.first() \
+                                        .network_participation.nick))
+            session.save()
+            redirect_to('edit_network', nick=participation.nick,
+                        network=participation.network.name)
+
         channnel_participation = model.ChannelParticipation(
             participation, model.Channel(participation.network,
                                          self.form_result['channel'])

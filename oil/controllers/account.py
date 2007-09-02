@@ -20,6 +20,8 @@ class AccountController(BaseController):
     @validate(template='account.index', schema=schema.UpdateUser(), form='index',
               variable_decode=True)
     def update_account(self):
+        # TODO: take care of duplicate DB values for name, email, etc
+        # and handle them correctly
         user = model.Session.query(model.User).get(int(request.POST['user_id']))
         user.name = request.POST['name']
         user.email = request.POST['email']

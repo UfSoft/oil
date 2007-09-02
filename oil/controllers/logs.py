@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 class LogsController(BaseController):
 
     def index(self):
-        c.networks = model.Session.query(model.NetworkParticipation).all()
+        c.networks = model.Session.query(model.Network).all()
         log.debug(c.networks)
         return render('logs.index')
 

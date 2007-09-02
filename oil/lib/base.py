@@ -64,12 +64,12 @@ class BaseController(WSGIController):
             c.message = session['message']
             session['message'] = ''
             session.save()
+
         try:
             return WSGIController.__call__(self, environ, start_response)
         finally:
+            #log.debug("removing db session")
             model.Session.remove()
-
-        return WSGIController.__call__(self, environ, start_response)
 
     @beaker_cache(type='memory')
     def _find_available_locales(self):

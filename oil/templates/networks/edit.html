@@ -61,7 +61,7 @@
                                network=c.participation.network.name)}">
              Add Channel</a>
           </legend>
-        <py:for each="idx, channel in enumerate(c.participation.network.channels)">
+        <py:for each="idx, channel in enumerate(c.participation.channel_participation)">
         <span class="channel_span" id="channel-$idx" name="channel-$idx">
           <tt><b>#$channel.channel_name</b></tt>
           <a class="input_button inline"

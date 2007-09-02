@@ -22,13 +22,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr py:for="participation in c.networks">
-          <td>$participation.network.address</td>
-          <td>$participation.network.port</td>
+        <tr py:for="network in c.networks">
+          <td>$network.address</td>
+          <td>$network.port</td>
           <td>
-            <py:for each="channel in participation.network.channels">
+            <py:for each="channel in network.channels">
             <a href="${h.url_for('logs',
-                                 network=participation.network.name,
+                                 network=network.name,
                                  channel=channel.channel_name)}">$channel.channel_name</a>
                 </py:for>
           </td>

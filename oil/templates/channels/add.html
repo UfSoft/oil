@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <form action="${h.url_for(controller='channels', action='add', id=c.participation.nick)}"
+    <form action="${h.url_for(controller='channels', action='add', nick=c.participation.nick)}"
           method="post" id="add_channel" name="add_channel"
           accept-charset="UTF-8" class="user_input">
       <fieldset>
