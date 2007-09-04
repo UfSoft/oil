@@ -35,5 +35,8 @@ setup(
     init = babel.messages.frontend:init_catalog
     compile = babel.messages.frontend:compile_catalog
     update = babel.messages.frontend:update_catalog
+
+    [console_scripts]
+    bot-launch = oil.IRC.cmdline:main
     """,
 )

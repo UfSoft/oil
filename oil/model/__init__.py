@@ -12,7 +12,7 @@ from pytz import UTC
 #
 
 # Global session manager.
-#S ession() returns the session object appropriate for the current web request.
+# Session() returns the session object appropriate for the current web request.
 Session = scoped_session(sessionmaker(autoflush=True,
                                       transactional=True,
                                       bind=config['pylons.g'].sa_engine))
@@ -145,13 +145,13 @@ class Channel(object):
     def __init__(self, network, name):
         self.network = network
         self.channel_name = name
+        self.topic = None
 
     def __repr__(self):
         return "<IRC Channel: '%s'>" % self.channel_name
 #        network = Session.query(Network).filter_by(id=self.network.name).first()
 #        return "<IRC Channel: '%s' on '%s:%d'>" % (
-#            self.name, self.network.address, self.network.port
-#        )
+#            self.name, self.network.address, self.network.port#        )
 
     def __unicode__(self):
         return self.channel_name
@@ -181,6 +181,11 @@ class ChannelParticipation(object):
     def __repr__(self):
         return '<ChannelParticipation: "%r" "%r">' % (self.channel,
                                                     self.network_participation)
+    def add_event(self, type, source, message, subtype=None):
+        print 'trying to add event to db'
+        event = ChannelEvent(self, type, source, message, subtype)
+        Session.save(event)
+        Session.commit()
 
     def delete_children(self):
         channel_events_for_channel_participation = Session.query(ChannelEvent) \
@@ -204,11 +209,13 @@ channel_events = sqla.Table('channel_events', metadata,
 class ChannelEvent(object):
     def __init__(self, channel_participation, type, source, message, subtype=None):
         self.channel_participation = channel_participation
+        self.channel_participation_id = channel_participation.id
         self.type = type
         self.subtype = subtype
         self.source = source
         self.msg = message
         self.stamp = UTC.localize(datetime.datetime.utcnow())
+#        self.stamp = datetime.datetime.utcnow()
 
     def __unicode__(self):
         return self.msg

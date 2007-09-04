@@ -23,14 +23,17 @@
       </thead>
       <tbody>
         <tr py:for="network in c.networks">
-          <td>$network.address</td>
-          <td>$network.port</td>
-          <td>
+          <td><a href="irc://$network.address:$network.port" class="irclink">
+            $network.address</a>
+          </td>
+          <td class="ports">$network.port</td>
+          <td class="channels_list">
             <py:for each="channel in network.channels">
             <a href="${h.url_for('logs',
                                  network=network.name,
                                  channel=channel.channel_name)}">$channel.channel_name</a>
-                </py:for>
+            <a href="irc://$network.address:$network.port/$channel.channel_name" class="irclink"/>
+            </py:for>
           </td>
         </tr>
         <tr py:if="not c.networks">

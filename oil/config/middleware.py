@@ -12,6 +12,8 @@ from pylons.wsgiapp import PylonsApp
 
 from oil.config.environment import load_environment
 
+import threading
+
 def make_app(global_conf, full_stack=True, **app_conf):
     """Create a Pylons WSGI application and return it
 
@@ -37,6 +39,15 @@ def make_app(global_conf, full_stack=True, **app_conf):
 
     # CUSTOM MIDDLEWARE HERE (filtered by the error handling middlewares)
 
+#    from oil.IRC import network
+#    from oil.lib.helpers import url_for
+#    irc = network.IRCBotsNetwork()
+#    irc.connect_all()
+#    th = threading.Timer(5.0, irc.process_all)
+##    th = threading.Timer(5.0, config['pylons.g'].ircnw.connect_all)
+#    th.start()
+#    config['pylons.g'].ircnw = irc
+
     if asbool(full_stack):
         # Handle Python exceptions
         app = ErrorHandler(app, global_conf, error_template=error_template,
@@ -53,4 +64,5 @@ def make_app(global_conf, full_stack=True, **app_conf):
     javascripts_app = StaticJavascripts()
     static_app = StaticURLParser(config['pylons.paths']['static_files'])
     app = Cascade([static_app, javascripts_app, app])
+    #config['pylons.g'].ircnw.baseurl=url_for('/', qualified=True)
     return app
