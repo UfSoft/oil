@@ -21,4 +21,9 @@ class LogsController(BaseController):
         c.topic = channel_participation.channel.topic
         c.events = model.Session.query(model.ChannelEvent) \
             .filter_by(channel_participation_id=channel_participation.id).all()
+#        c.network = channel_participation.network_name
+#        c.channel = channel_participation.channel_name
+        c.url = h.url_for('feed_logs', network=channel_participation.network_name,
+                          channel=channel_participation.channel_name,
+                          qualified=True)
         return render('logs.view')
