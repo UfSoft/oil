@@ -3,7 +3,7 @@
 # =============================================================================
 # $Id: validators.py 16 2007-08-30 00:16:26Z s0undt3ch $
 # =============================================================================
-#             $URL: http://oil.ufsoft.org/svn/trunk/oil/model/fe/validators.py $
+#             $URL: http://oil.ufsoft.org/svn/trunk/web/oil/model/fe/validators.py $
 # $LastChangedDate: 2007-08-30 01:16:26 +0100 (Thu, 30 Aug 2007) $
 #             $Rev: 16 $
 #   $LastChangedBy: s0undt3ch $
