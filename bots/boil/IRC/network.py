@@ -44,6 +44,7 @@ class IRCNetworkParticipation(object):
         self.connection.add_global_handler('ctcp', self.on_ctcp)
         self.connection.add_global_handler('join', self.on_join_and_part)
         self.connection.add_global_handler('part', self.on_join_and_part)
+        self.connection.add_global_handler('namreply', self.on_namreply)
 
     def is_connected(self):
         return self.connection.is_connected()
@@ -132,9 +133,19 @@ class IRCNetworkParticipation(object):
             message = join_msg % (nick, channel)
         elif type == 'part':
             message = part_msg % (nick, channel)
-        if nick not in (self.name, self.nick):
+        if nick not in (self.name, self.nick) and channel in self.channels.keys():
             # Only log part's and joins which are not mine
             self.write_event(channel, type, '*****', message)
+        self.connection.names(['#%s'%channel])
+#        log.debug("users on %s: %s" % (channel, ))
+
+    def on_namreply(self, c, e):
+        log.debug('namreply for channel %r -> type: %s source: %s target: %s'
+                  % (e.arguments()[1], e.eventtype(), e.source(), e.target()))
+        log.debug([nick for nick in e.arguments()[2].split()])
+
+    def on_error(self, c, e):
+        log.error(e.arguments())
 
     def write_event(self, channel, type, source, message, subtype=None):
         log.debug("writing event -> channel: %r type: %r source: %r message: %r subtype: %r"

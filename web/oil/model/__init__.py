@@ -4,9 +4,12 @@ from pylons import config
 import sqlalchemy as sqla
 from sqlalchemy.orm import mapper, relation
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.associationproxy import association_proxy
+#from sqlalchemy.ext.associationproxy import association_proxy
 import datetime
 from pytz import UTC
+import logging
+
+log = logging.getLogger(__name__)
 
 # http://dpaste.com/17837/
 #
@@ -188,11 +191,22 @@ class ChannelParticipation(object):
         Session.commit()
 
     def delete_children(self):
+        log.debug('deleting events for channel #%s' % self.channel.channel_name)
         channel_events_for_channel_participation = Session.query(ChannelEvent) \
             .filter_by(channel_participation_id=self.id)
         for event in channel_events_for_channel_participation:
             Session.delete(event)
+        log.debug('deleted events for channel #%s' % self.channel.channel_name)
         Session.delete(self.channel)
+        log.debug('deleted channel #%s' % self.channel.channel_name)
+#        Session.commit()
+
+    def get_events_for(self, day):
+        start = datetime.datetime(day.year, day.month, day.day, 0, 0, 1, 1, day.tzinfo)
+        end = datetime.datetime(day.year, day.month, day.day, 23, 59, 59, 999999, day.tzinfo)
+        return Session.query(ChannelEvent).filter(
+            channel_events.c.channel_participation_id == self.id
+        ).filter(channel_events.c.stamp.between(start, end)).all()
 
 channel_events = sqla.Table('channel_events', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
@@ -226,6 +240,7 @@ class ChannelEvent(object):
                                                           self.source,
                                                           self.msg)
 
+
 mapper(User, users, order_by=[sqla.asc(users.c.name)])
 
 
@@ -246,8 +261,7 @@ mapper(NetworkParticipation, network_participations,
        order_by=[sqla.asc(network_participations.c.id)],
        properties=dict(
             #channels=relation(ChannelParticipation, backref='bot'),
-            network = relation(Network, backref='network_participation',
-                               cascade="all, delete-orphan"),
+            network = relation(Network, backref='network_participation'),
             bot = relation(Bot, backref='network_participation')
        )
 
@@ -256,8 +270,7 @@ mapper(NetworkParticipation, network_participations,
 mapper(Channel, channels,
        order_by=[sqla.asc(channels.c.network_name)],
        properties=dict(
-            network=relation(Network, backref='channels',
-                             cascade="all, delete-orphan"),
+            network=relation(Network, backref='channels'),
        )
 )
 
@@ -267,8 +280,7 @@ mapper(ChannelParticipation, channel_participations,
             network_participation=relation(NetworkParticipation,
                                            backref='channel_participation'),
             #network=relation(Channel, backref='bots_on_chans'),
-            channel=relation(Channel, backref='channel_participation',
-                             cascade="all, delete-orphan"),
+            channel=relation(Channel, backref='channel_participation'),
        )
 )
 

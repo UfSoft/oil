@@ -71,15 +71,18 @@ class ChannelsController(BaseController):
         return render('channels.delete')
 
     def delete_POST(self, id, channel):
+        log.debug('on delete_POST')
         query = model.Session.query(model.ChannelParticipation)
         participation = query.filter_by(network_participations_id=int(id),
                                         channel_name=channel).first()
-
+        log.debug(participation)
         network_participation = participation.network_participation
         redirect_url = h.url_for('edit_network',
                                  nick=network_participation.nick,
                                  network=network_participation.network.name)
+        participation.delete_children()
         model.Session.delete(participation)
         model.Session.commit()
+        log.debug('deleted channel participation')
         redirect_to(redirect_url)
 

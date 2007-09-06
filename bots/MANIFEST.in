@@ -1,0 +1,2 @@
+recursive-include boil/public *
+recursive-include boil/templates *

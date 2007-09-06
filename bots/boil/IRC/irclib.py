@@ -16,7 +16,7 @@
 #
 # keltus <keltus@users.sourceforge.net>
 #
-# $Id: irclib.py 21 2007-09-04 12:41:43Z s0undt3ch $
+# $Id: irclib.py 24 2007-09-06 15:08:39Z s0undt3ch $
 
 """irclib -- Internet Relay Chat (IRC) protocol client library.
 
