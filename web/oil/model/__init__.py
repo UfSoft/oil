@@ -139,8 +139,8 @@ channels = sqla.Table('channels', metadata,
                 primary_key=True),
     sqla.Column('channel_name', sqla.Unicode, primary_key=True),
     sqla.Column('topic', sqla.Unicode, nullable=True, unique=False),
-    sqla.Column('first_entry', sqla.Date, nullable=True, unique=False),
-    sqla.Column('last_entry', sqla.Date, nullable=True, unique=False),
+    sqla.Column('first_entry', sqla.DateTime(timezone=True), nullable=True, unique=False),
+    sqla.Column('last_entry', sqla.DateTime(timezone=True), nullable=True, unique=False),
     sqla.PrimaryKeyConstraint('network_name', 'channel_name')
 )
 
@@ -152,12 +152,15 @@ class Channel(object):
 
     def __repr__(self):
         return "<IRC Channel: '%s'>" % self.channel_name
-#        network = Session.query(Network).filter_by(id=self.network.name).first()
-#        return "<IRC Channel: '%s' on '%s:%d'>" % (
-#            self.name, self.network.address, self.network.port#        )
 
     def __unicode__(self):
         return self.channel_name
+
+    def update_last_entry(self, date):
+        if not self.first_entry:
+            self.first_entry = date
+        self.last_entry = date
+        log.debug('updated last entry date')
 
 
 channel_participations = sqla.Table('channel_participations', metadata,
@@ -166,8 +169,6 @@ channel_participations = sqla.Table('channel_participations', metadata,
     sqla.Column('channel_name', sqla.Unicode),
     sqla.Column('network_participations_id', sqla.Integer,
                 sqla.ForeignKey('network_participations.id')),
-    #sqla.PrimaryKeyConstraint('network_participations_id','network_name','channel_name',
-    #                          name='channel_participation_pk'),
     sqla.ForeignKeyConstraint(['network_name','channel_name'],
                               ['channels.network_name','channels.channel_name'],
                               name='channel_participation_fk')
@@ -185,7 +186,7 @@ class ChannelParticipation(object):
         return '<ChannelParticipation: "%r" "%r">' % (self.channel,
                                                     self.network_participation)
     def add_event(self, type, source, message, subtype=None):
-        print 'trying to add event to db'
+        log.debug('adding new channel event')
         event = ChannelEvent(self, type, source, message, subtype)
         Session.save(event)
         Session.commit()
@@ -229,7 +230,8 @@ class ChannelEvent(object):
         self.source = source
         self.msg = message
         self.stamp = UTC.localize(datetime.datetime.utcnow())
-#        self.stamp = datetime.datetime.utcnow()
+        self.channel_participation.channel.update_last_entry(self.stamp)
+        Session.save(self.channel_participation.channel)
 
     def __unicode__(self):
         return self.msg

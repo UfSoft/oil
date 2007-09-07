@@ -1,0 +1,40 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n">
+  <xi:include href="../layout.html" />
+  <head>
+    <title>My Account</title>
+  </head>
+
+  <body>
+    <form action="${ h.url_for(controller='account', action='remove') }"
+          method="post" id="remove_user" name="remove_user"
+          accept-charset="UTF-8">
+      <fieldset class="user_input">
+        <legend>My Account</legend>
+        <p class="warning-message" i18n:msg="">
+          <b>Are You Sure? This is an irreversible operation!!!</b><br/>
+          All bots managed by you, their networks, channels and respective
+          logs will be deleted.
+        </p>
+        <label for="openid_label">OpenID:</label>
+        <span id="openid_label" name="openid_label">$c.user.openid</span><br/>
+
+        <label for="name">Name:</label>
+        <span id="name" name="name">$c.user.name</span><br/>
+
+        <label for="email">Email:</label>
+        <span id="email" name="email">$c.user.email</span><br/><br/>
+
+        <input class="input_button" name="submit" type="submit"
+               value="${_('Remove Account')}"/>
+        <a class="input_button" onClick="window.history.back();">Cancel</a>
+      </fieldset>
+      <input type="hidden" id="user_id" name="user_id" value="$c.user.id"/>
+    </form>
+  </body>
+</html>
