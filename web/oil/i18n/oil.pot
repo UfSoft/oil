@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OIL 0.1\n"
 "Report-Msgid-Bugs-To: ufs@ufsoft.org\n"
-"POT-Creation-Date: 2007-08-31 17:40+0100\n"
+"POT-Creation-Date: 2007-09-09 18:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,29 +17,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9dev-r267\n"
 
-#: oil/controllers/account.py:34
+#: oil/controllers/account.py:36
 msgid "Already signed in."
 msgstr ""
 
-#: oil/controllers/account.py:41 oil/controllers/account.py:72
+#: oil/controllers/account.py:43 oil/controllers/account.py:74
 msgid "A problem ocurred comunicating to your OpenID server. Please try again."
 msgstr ""
 
-#: oil/controllers/account.py:111 oil/controllers/account.py:121
+#: oil/controllers/account.py:108
+msgid "Welcome!!! Please confirm/update your details."
+msgstr ""
+
+#: oil/controllers/account.py:121 oil/controllers/account.py:131
 msgid "You are not signed in."
 msgstr ""
 
-#: oil/controllers/account.py:115
+#: oil/controllers/account.py:125
 msgid "You've been signed out."
 msgstr ""
 
-#: oil/controllers/account.py:125
+#: oil/controllers/account.py:135
 msgid "You are not banned."
 msgstr ""
 
-#: oil/controllers/channels.py:35
+#: oil/controllers/account.py:151
+msgid "You've been signed out and your account deleted."
+msgstr ""
+
+#: oil/controllers/channels.py:41
 #, python-format
 msgid "Channel %s already on %s channel list"
+msgstr ""
+
+#: oil/controllers/channels.py:51
+#, python-format
+msgid "Channel %s already on the channel list of another bot, %s"
 msgstr ""
 
 #: oil/controllers/networks.py:44
@@ -87,7 +100,8 @@ msgid "Logs"
 msgstr ""
 
 #: oil/templates/layout.html:86 oil/templates/account/index.html:9
-#: oil/templates/account/index.html:22
+#: oil/templates/account/index.html:22 oil/templates/account/remove.html:10
+#: oil/templates/account/remove.html:18
 msgid "My Account"
 msgstr ""
 
@@ -111,16 +125,17 @@ msgstr ""
 msgid "For some reason the Administrator(s) of this site have banned you."
 msgstr ""
 
-#: oil/templates/account/index.html:23
+#: oil/templates/account/index.html:23 oil/templates/account/remove.html:24
 msgid "OpenID:"
 msgstr ""
 
-#: oil/templates/account/index.html:26 oil/templates/bots/delete.html:25
-#: oil/templates/bots/edit.html:21 oil/templates/bots/register.html:20
+#: oil/templates/account/index.html:26 oil/templates/account/remove.html:27
+#: oil/templates/bots/delete.html:25 oil/templates/bots/edit.html:21
+#: oil/templates/bots/register.html:20
 msgid "Name:"
 msgstr ""
 
-#: oil/templates/account/index.html:33
+#: oil/templates/account/index.html:33 oil/templates/account/remove.html:30
 msgid "Email:"
 msgstr ""
 
@@ -130,6 +145,26 @@ msgstr ""
 
 #: oil/templates/account/index.html:57
 msgid "Update"
+msgstr ""
+
+#: oil/templates/account/index.html:60
+msgid "Delete Account"
+msgstr ""
+
+#: oil/templates/account/remove.html:19
+msgid ""
+"[1:Are You Sure? This is an irreversible operation!!!][2:]\n"
+"          All bots managed by you, their networks, channels and respective\n"
+"          logs will be deleted."
+msgstr ""
+
+#: oil/templates/account/remove.html:33
+msgid "Remove Account"
+msgstr ""
+
+#: oil/templates/account/remove.html:35 oil/templates/bots/delete.html:62
+#: oil/templates/channels/delete.html:45 oil/templates/networks/delete.html:49
+msgid "Cancel"
 msgstr ""
 
 #: oil/templates/account/signin.html:14
@@ -200,24 +235,19 @@ msgid "Nick"
 msgstr ""
 
 #: oil/templates/bots/delete.html:39 oil/templates/bots/edit.html:39
-#: oil/templates/bots/index.html:32
+#: oil/templates/bots/index.html:32 oil/templates/logs/index.html:19
 msgid "Address"
 msgstr ""
 
 #: oil/templates/bots/delete.html:40 oil/templates/bots/edit.html:40
-#: oil/templates/bots/index.html:33
+#: oil/templates/bots/index.html:33 oil/templates/logs/index.html:20
 msgid "Port"
 msgstr ""
 
 #: oil/templates/bots/delete.html:41 oil/templates/bots/edit.html:41
-#: oil/templates/bots/index.html:34 oil/templates/networks/delete.html:35
-#: oil/templates/networks/edit.html:57
+#: oil/templates/bots/index.html:34 oil/templates/logs/index.html:21
+#: oil/templates/networks/delete.html:35 oil/templates/networks/edit.html:57
 msgid "Channels"
-msgstr ""
-
-#: oil/templates/bots/delete.html:62 oil/templates/channels/delete.html:42
-#: oil/templates/networks/delete.html:49
-msgid "Cancel"
 msgstr ""
 
 #: oil/templates/bots/edit.html:11 oil/templates/bots/edit.html:19
@@ -229,7 +259,7 @@ msgstr ""
 msgid "See the logs"
 msgstr ""
 
-#: oil/templates/bots/edit.html:61 oil/templates/bots/index.html:54
+#: oil/templates/bots/edit.html:61 oil/templates/bots/index.html:55
 #: oil/templates/networks/edit.html:11 oil/templates/networks/edit.html:20
 msgid "Edit Network"
 msgstr ""
@@ -246,7 +276,7 @@ msgstr ""
 msgid "Nick on Network"
 msgstr ""
 
-#: oil/templates/bots/index.html:60
+#: oil/templates/bots/index.html:61
 msgid "Register A New Bot"
 msgstr ""
 
@@ -270,17 +300,25 @@ msgstr ""
 msgid "on"
 msgstr ""
 
-#: oil/templates/channels/add.html:26 oil/templates/channels/delete.html:33
+#: oil/templates/channels/add.html:27
+msgid "Channel Prefix:"
+msgstr ""
+
+#: oil/templates/channels/add.html:33
+msgid ""
+"This is first char of the channel name, normally\n"
+"          [1:[2:#]] or [3:[4:&]]"
+msgstr ""
+
+#: oil/templates/channels/add.html:38
 msgid "Channel Name:"
 msgstr ""
 
-#: oil/templates/channels/add.html:32
-msgid ""
-"You can omit the [1:#] from the channel name.\n"
-"          [2:Capitalization does not matter.]"
+#: oil/templates/channels/add.html:44
+msgid "Without the above prefix."
 msgstr ""
 
-#: oil/templates/channels/add.html:40 oil/templates/networks/edit.html:60
+#: oil/templates/channels/add.html:51 oil/templates/networks/edit.html:61
 msgid "Add Channel"
 msgstr ""
 
@@ -288,8 +326,32 @@ msgstr ""
 msgid "Delete Channel for"
 msgstr ""
 
-#: oil/templates/channels/delete.html:40
+#: oil/templates/channels/delete.html:33
+msgid "Channel:"
+msgstr ""
+
+#: oil/templates/channels/delete.html:43
 msgid "Delete Channel"
+msgstr ""
+
+#: oil/templates/logs/index.html:16
+msgid "Logs Listing"
+msgstr ""
+
+#: oil/templates/logs/index.html:40
+msgid "No channels being logged"
+msgstr ""
+
+#: oil/templates/logs/view.html:7
+msgid "View Logs"
+msgstr ""
+
+#: oil/templates/logs/view.html:52
+msgid "No log entries for this day."
+msgstr ""
+
+#: oil/templates/logs/view.html:88
+msgid "Today"
 msgstr ""
 
 #: oil/templates/main/index.html:10
@@ -352,7 +414,7 @@ msgid "Create Network"
 msgstr ""
 
 #: oil/templates/networks/delete.html:11 oil/templates/networks/delete.html:19
-#: oil/templates/networks/delete.html:47 oil/templates/networks/edit.html:80
+#: oil/templates/networks/delete.html:47 oil/templates/networks/edit.html:81
 msgid "Delete Network"
 msgstr ""
 
@@ -372,7 +434,7 @@ msgstr ""
 msgid "Remove Channel"
 msgstr ""
 
-#: oil/templates/networks/edit.html:77
+#: oil/templates/networks/edit.html:78
 msgid "Update Network"
 msgstr ""
 

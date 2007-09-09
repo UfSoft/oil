@@ -13,7 +13,7 @@
     <date>$event.stamp</date>
     <link rel="alternate" href="$c.url#UTC:${h.format_time(event.stamp, locale='en_GB')}" type="text/html"/>
     <link rel="via" href="$c.url#UTC:${h.format_time(event.stamp, locale='en_GB')}" type="text/html"/>
-    <id>${h.url_for('/')}#UTC:${h.format_time(event.stamp, locale='en_GB')}</id>
+    <id xml:lang="en">${h.url_for('/')}#UTC:${h.format_time(event.stamp, locale='en_GB')}</id>
     <author>
       <name>$event.source</name>
     </author>

@@ -54,9 +54,10 @@ class ChannelsController(BaseController):
             redirect_to('edit_network', nick=participation.nick,
                         network=participation.network.name)
 
+        channel = model.Channel(participation.network, self.form_result['channel'])
+        channel.prefix = self.form_result['prefix']
         channnel_participation = model.ChannelParticipation(
-            participation, model.Channel(participation.network,
-                                         self.form_result['channel'])
+            participation, channel
         )
         model.Session.save(channnel_participation)
         model.Session.commit()

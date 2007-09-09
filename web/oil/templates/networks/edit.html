@@ -61,12 +61,12 @@
                                network=c.participation.network.name)}">
              Add Channel</a>
           </legend>
-        <py:for each="idx, channel in enumerate(c.participation.channel_participation)">
+        <py:for each="idx, channelp in enumerate(c.participation.channel_participation)">
         <span class="channel_span" id="channel-$idx" name="channel-$idx">
-          <tt><b>#$channel.channel_name</b></tt>
           <a class="input_button inline"
              href="${h.url_for('delete_channel', id=c.participation.id,
-                               channel=channel.channel_name)}">Remove Channel</a>
+                               channel=channelp.channel_name)}">Remove Channel</a>
+          <tt><b>$channelp.channel.channel_prefix$channelp.channel_name</b></tt>
         </span>
         <br/>
         </py:for>

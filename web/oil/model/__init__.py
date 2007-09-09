@@ -1,18 +1,12 @@
 from pylons import config
-#from oil.lib.helpers import url_for
-#from sqlalchemy import Column, MetaData, Table, types
 import sqlalchemy as sqla
 from sqlalchemy.orm import mapper, relation
 from sqlalchemy.orm import scoped_session, sessionmaker
-#from sqlalchemy.ext.associationproxy import association_proxy
 import datetime
 from pytz import UTC
 import logging
 
 log = logging.getLogger(__name__)
-
-# http://dpaste.com/17837/
-#
 
 # Global session manager.
 # Session() returns the session object appropriate for the current web request.
@@ -138,7 +132,8 @@ channels = sqla.Table('channels', metadata,
     sqla.Column('network_name', None, sqla.ForeignKey('networks.name'),
                 primary_key=True),
     sqla.Column('channel_name', sqla.Unicode, primary_key=True),
-    sqla.Column('topic', sqla.Unicode, nullable=True, unique=False),
+    sqla.Column('channel_key', sqla.Unicode, nullable=True),
+    sqla.Column('channel_prefix', sqla.String(3), nullable=False),
     sqla.Column('first_entry', sqla.DateTime(timezone=True), nullable=True, unique=False),
     sqla.Column('last_entry', sqla.DateTime(timezone=True), nullable=True, unique=False),
     sqla.PrimaryKeyConstraint('network_name', 'channel_name')
@@ -148,7 +143,6 @@ class Channel(object):
     def __init__(self, network, name):
         self.network = network
         self.channel_name = name
-        self.topic = None
 
     def __repr__(self):
         return "<IRC Channel: '%s'>" % self.channel_name
@@ -209,6 +203,51 @@ class ChannelParticipation(object):
             channel_events.c.channel_participation_id == self.id
         ).filter(channel_events.c.stamp.between(start, end)).all()
 
+channel_topics = sqla.Table('channel_topics', metadata,
+    sqla.Column('channel_participation_id', None,
+                sqla.ForeignKey('channel_participations.id'),
+                primary_key=True),
+    sqla.Column('topic', sqla.Unicode, unique=False, nullable=False),
+#    sqla.Column('changed_on', sqla.DateTime(timezone=True), unique=False),
+#    sqla.Column('changed_by', sqla.Unicode, unique=False),
+
+)
+
+class ChannelTopic(object):
+    def __init__(self, channel_participation, topic):
+        self.channel_participation = channel_participation
+        self.topic = topic
+
+    def __repr__(self):
+        return "<ChannelTopic: '%s' on %s%s>" % \
+            (self.topic, self.channel_participation.channel.channel_prefix,
+             self.channel_participation.channel.channel_name)
+
+channel_topic_infos = sqla.Table('channel_topic_infos', metadata,
+    sqla.Column('channel_participation_id', None,
+                sqla.ForeignKey('channel_participations.id'),
+                primary_key=True),
+    sqla.Column('changed_on', sqla.DateTime(timezone=True), unique=False, nullable=False),
+    sqla.Column('changed_by', sqla.Unicode, unique=False, nullable=False),
+
+)
+
+class ChannelTopicInfo(object):
+    def __init__(self, channel_participation, changed_by, changed_on):
+        self.channel_participation = channel_participation
+        self.changed_by = changed_by
+        if not isinstance(changed_on, float):
+            changed_on = float(changed_on)
+        self.changed_on = UTC.localize(
+            datetime.datetime.utcfromtimestamp(changed_on)
+        )
+
+    def __repr__(self):
+        return "<ChannelTopicInfo: topic for %s%s changed by %s on %s>" % \
+            (self.channel_participation.channel.channel_prefix,
+             self.channel_participation.channel.channel_name,
+             self.changed_by, self.changed_on)
+
 channel_events = sqla.Table('channel_events', metadata,
     sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
     sqla.Column('channel_participation_id', None,
@@ -241,6 +280,21 @@ class ChannelEvent(object):
                                                           self.subtype,
                                                           self.source,
                                                           self.msg)
+
+live_bots = sqla.Table('bot_networks', metadata,
+    sqla.Column('id', sqla.Integer, primary_key=True, autoincrement=True),
+    sqla.Column('bot_name', None, sqla.ForeignKey('bots.name')),
+    sqla.Column('url', sqla.String, nullable=False, unique=True),
+)
+
+class LiveBot(object):
+    def __init__(self, bot):
+        self.bot = bot
+        self.bot_name = bot.name
+        self.url = None
+
+    def __repr__(self):
+        return "<LiveBot: %s on %s>" % (self.bot.name, self.url)
 
 
 mapper(User, users, order_by=[sqla.asc(users.c.name)])
@@ -286,6 +340,25 @@ mapper(ChannelParticipation, channel_participations,
        )
 )
 
+mapper(ChannelTopic, channel_topics,
+       properties=dict(
+            channel_participation = relation(ChannelParticipation,
+                                             backref=sqla.orm.backref(
+                                                'channel_topic', uselist=False)
+                                             ),
+       )
+)
+
+mapper(ChannelTopicInfo, channel_topic_infos,
+       properties=dict(
+            channel_participation = relation(ChannelParticipation,
+                                             backref=sqla.orm.backref(
+                                                'channel_topic_info',
+                                                uselist=False)
+                                             ),
+       )
+)
+
 mapper(ChannelEvent, channel_events,
        order_by=[sqla.asc(channel_events.c.channel_participation_id),
                 sqla.asc(channel_events.c.stamp)],
@@ -293,4 +366,10 @@ mapper(ChannelEvent, channel_events,
             channel_participation=relation(ChannelParticipation,
                                            backref='events')
        )
+)
+
+mapper(LiveBot, live_bots,
+#       properties=dict(
+#           bot = relation(Bot, backref='online')
+#       )
 )

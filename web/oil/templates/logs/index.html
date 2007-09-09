@@ -31,8 +31,8 @@
             <py:for each="channel in network.channels">
             <a href="${h.url_for('logs',
                                  network=network.name,
-                                 channel=channel.channel_name)}">$channel.channel_name</a>
-            <a href="irc://$network.address:$network.port/$channel.channel_name" class="irclink"/>
+                                 channel=channel.channel_name)}">$channel.channel_prefix$channel.channel_name</a>
+            <a href="irc://$network.address:$network.port/$channel.channel_prefix$channel.channel_name" class="irclink"/>
             </py:for>
           </td>
         </tr>

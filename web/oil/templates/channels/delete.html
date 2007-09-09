@@ -30,9 +30,12 @@
         <p class="warning-message" i18n:msg="">
           <b>Are You Sure? This is an irreversible operation!!!</b>
         </p>
-        <label for="channel">Channel Name:</label>
+        <label for="channel">Channel:</label>
         <span id="channel" name="channel" class="channel_span">
-          <tt><b>#$c.participation.channel_name</b></tt></span><br/>
+          <tt><b>
+            $c.participation.channel.channel_prefix$c.participation.channel_name
+          </b></tt>
+        </span><br/>
 
         <input type="hidden" id="participation_id" name="participation_id"
                value="$c.participation.network_participations_id"/>

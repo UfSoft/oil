@@ -23,15 +23,26 @@
           $c.participation.network.address:$c.participation.network.port
         </legend>
 
+
+        <label for="prefix">Channel Prefix:</label>
+        <input type="text" id="prefix" name="prefix"
+               value="$c.form_result.prefix"/>
+        <span class="error-message" py:if="'channel' in c.errors">
+          ${ c.errors.prefix }
+        </span>
+        <span class="info-message" i18n:msg="">
+          This is first char of the channel name, normally
+          <tt><b>#</b></tt> or <tt><b>&amp;</b></tt>
+        </span><br/>
+
         <label for="channel">Channel Name:</label>
         <input type="text" id="channel" name="channel"
-               value="${c.form_result.channel or c.participation.channel}"/>
+               value="$c.form_result.channel"/>
         <span class="error-message" py:if="'channel' in c.errors">
           ${ c.errors.channel }
         </span>
         <span class="info-message" i18n:msg="">
-          You can omit the <tt>#</tt> from the channel name.
-          <b>Capitalization does not matter.</b>
+          Without the above prefix.
         </span><br/>
 
         <input type="hidden" id="participation_id" name="participation_id"

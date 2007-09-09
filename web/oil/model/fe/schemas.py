@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: sw=4 ts=4 fenc=utf-8
 # =============================================================================
-# $Id: schemas.py 17 2007-08-31 16:43:56Z s0undt3ch $
+# $Id: schemas.py 27 2007-09-09 17:50:17Z s0undt3ch $
 # =============================================================================
 #             $URL: http://oil.ufsoft.org/svn/trunk/web/oil/model/fe/schemas.py $
-# $LastChangedDate: 2007-08-31 17:43:56 +0100 (Fri, 31 Aug 2007) $
-#             $Rev: 17 $
+# $LastChangedDate: 2007-09-09 18:50:17 +0100 (Sun, 09 Sep 2007) $
+#             $Rev: 27 $
 #   $LastChangedBy: s0undt3ch $
 # =============================================================================
 # Copyright (C) 2007 Ufsoft.org - Pedro Algarvio <ufs@ufsoft.org>
@@ -79,4 +79,5 @@ class AddChannel(Schema):
     allow_extra_fields = True
     filter_extra_fields = True
     channel = validator.ValidChannelName(not_empty=False, encoding='UTF-8')
+    prefix = validator.ValidChannelName(not_empty=False, encoding='UTF-8')
     participation_id = validators.Int(not_empty=True)

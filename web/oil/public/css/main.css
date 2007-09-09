@@ -261,6 +261,10 @@ table.logs tbody tr td { vertical-align: top; }
 
 table.logs tr td.channels_list { width: 75%; }
 table.logs tr td.ports { text-align: center; }
+table.logs tr th.topic {font-size: 1.0em;}
+table.logs tr th.topic span {
+  font-size: 0.6em; font-weight: normal; font-style: italic;
+}
 
 /* IRC MSG TYPES */
 table.logs tr.action { font-style: italic; color: green; }
@@ -273,6 +277,9 @@ table.logs tr.join td.message { font-style: italic; }
 table.logs tr.part { color: gray; }
 table.logs tr.part td.nick { text-align: center; font-size: 0.7em; vertical-align: middle; }
 table.logs tr.part td.message { font-style: italic; }
+table.logs tr.topic { color: gray; }
+table.logs tr.topic td.nick { text-align: center; font-size: 0.7em; vertical-align: middle; }
+table.logs tr.topic td.message { font-style: italic; }
 
 
 

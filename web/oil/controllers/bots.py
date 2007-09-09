@@ -62,3 +62,4 @@ class BotsController(BaseController):
         model.Session.delete(bot)
         model.Session.commit()
         redirect_to(action='index', id=None)
+

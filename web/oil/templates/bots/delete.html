@@ -49,7 +49,7 @@
               <td>$network.port</td>
               <td>
                <py:for each="channel in network.channels">
-                $channel.channel_name
+                $channel.channel_prefix$channel.channel_name
                </py:for>
               </td>
             </tr>

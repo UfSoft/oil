@@ -35,7 +35,7 @@
           <legend>Channels</legend>
         <py:for each="idx, channel in enumerate(c.participation.network.channels)">
         <span class="channel_span" id="channel-$idx" name="channel-$idx">
-          <tt><b>#$channel.channel_name</b></tt>
+          <tt><b>$channel.channel_prefix$channel.channel_name</b></tt>
         </span>
         <br/>
         </py:for>

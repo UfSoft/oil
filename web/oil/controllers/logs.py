@@ -29,7 +29,7 @@ class LogsController(BaseController):
             c.date = tzinfo.localize(now)
         channel_participation = model.Session.query(model.ChannelParticipation) \
             .filter_by(network_name=network, channel_name=channel ).first()
-        c.topic = channel_participation.channel.topic
+        c.channel_participation = channel_participation
         c.events = channel_participation.get_events_for(c.date)
 
         # Get all dates which have log entries

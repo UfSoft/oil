@@ -1,0 +1,103 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n">
+  <xi:include href="../layout.html" />
+  <head>
+    <title>View Logs</title>
+    <link rel="alternate" type="application/atom+xml" title="$c.topic"
+          href="$c.url" />
+    ${ h.stylesheet_link_tag('/css/jquery-calendar.css') }
+    ${ h.javascript_include_tag('/js/jquery-calendar.js') }
+  </head>
+
+  <body>
+    <div id="inline_calendar"/>
+    <div id="logs_div">
+      <table id='logs' class="listing logs">
+        <thead>
+          <tr py:if="c.channel_participation.channel_topic.topic">
+            <th colspan="3" class="topic">
+            $c.channel_participation.channel_topic.topic<br/>
+              <span py:if="c.channel_participation.channel_topic_info">
+                ${_("topic updated by %s on %s" % \
+                    (c.channel_participation.channel_topic_info.changed_by,
+                     h.format_datetime(c.channel_participation.channel_topic_info.changed_on,
+                                       format='long', tzinfo=c.timezone, locale=g.locale)
+                     ))}</span>
+
+            </th>
+          </tr>
+          <tr py:if="c.events">
+            <th>${ h.get_timezone_name(c.timezone, locale=g.locale)}</th>
+            <th colspan="2" style="text-align: right; width: 100%;">
+              ${h.format_date(c.date, format='long', locale=g.locale)}
+            </th>
+          </tr>
+          <tr><td colspan="3"/></tr>
+        </thead>
+        <tbody>
+          <tr py:for="message in c.events" class="${ message.subtype or message.type}">
+            <td class="time">
+              <a href="#UTC:${h.format_time(message.stamp, locale='en_GB')}"
+                 title="Timezone is '$c.timezone'">
+                 ${h.format_time(message.stamp, tzinfo=c.timezone, locale=g.locale)}
+              </a>
+            </td>
+            <td class="nick">$message.source</td>
+            <td class="message">$message.msg</td>
+          </tr>
+          <tr py:if="not c.events">
+            <td colspan="3">
+              <strong><center>No log entries for this day.</center></strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script type="text/javascript" py:if="c.minDate and c.maxDate">
+    var dates = [
+    <py:for each="date in c.calendar_dates">
+      [$date.year, ${date.month-1}, $date.day],
+    </py:for>
+    ];
+    //console.log(dates);
+    $(document).ready(function () {
+      //var m = 0;
+      function get_date(date) {
+
+        for (var i=0; i &lt; dates.length; i++ ) {
+          //console.log(dates[i][0], dates[i][1], dates[i][2]);
+          if ( dates[i][0]==date.getFullYear() &amp;&amp; dates[i][1] == date.getMonth() &amp;&amp; dates[i][2] == date.getDate() ) {
+            //console.log(m, true, date);
+            return [true, ""];
+          };
+        };
+        //console.log(m, false, date);
+        //m++;
+        return [false, ""];
+      };
+
+      $('#inline_calendar').calendar({
+        inline:true,
+        changeMonth: false,
+        changeYear: false,
+        changeFirstDay: false,
+        monthNames: [${','.join(["'%s'" % val for val in c.monthNames])}],
+        dayNames: [${','.join(["'%s'" % val.capitalize() for val in c.weekDays])}],
+        currentText: '${_("Today")}',
+        selectedYear: $c.date.year,
+        selectedMonth: ${c.date.month-1},
+        selectedDay: $c.date.day,
+        dateFormat: 'YMD/',
+        minDate: new Date($c.minDate.year,${c.minDate.month-1},$c.minDate.day),
+        maxDate: new Date($c.maxDate.year,${c.maxDate.month-1},$c.maxDate.day),
+        customEvent:function () {
+          location.href = "$c.baseurl/" + this.date;
+        },
+        customDate: get_date
+      });
+    });
+    </script>
+  </body>
+</html>

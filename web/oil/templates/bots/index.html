@@ -42,10 +42,11 @@
               <td>$network.address</td>
               <td>$network.port</td>
               <td>
-                <py:for each="channel in participation.channel_participation">
+                <py:for each="channelp in participation.channel_participation">
                 <a href="${h.url_for('logs',
                                      network=network.name,
-                                     channel=channel.channel_name)}">$channel.channel_name</a>
+                                     channel=channelp.channel_name)}">
+                  $channelp.channel.channel_prefix$channelp.channel_name</a>
                 </py:for>
               </td>
 

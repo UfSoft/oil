@@ -53,7 +53,7 @@
                 <a href="${h.url_for('logs',
                                      network=network.name,
                                      channel=channel.channel_name)}"
-                   title="See the logs">$channel.channel_name</a>
+                   title="See the logs">$channel.channel_prefix$channel.channel_name</a>
                </py:for>
               </td>
               <td class="actions">
