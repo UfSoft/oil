@@ -7,7 +7,7 @@ except ImportError:
     from setuptools import setup, find_packages
 
 setup(
-    name='OIL',
+    name='OilWeb',
     version='0.1',
     description="Online IRC Logger",
     author="Pedro Algarvio",
@@ -16,6 +16,7 @@ setup(
     install_requires=["Pylons", "Genshi", "python-openid>=2.0.1"],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
+    namespace_packages=['oil'],
     test_suite='nose.collector',
     package_data={'oil': ['i18n/*/LC_MESSAGES/*.mo']},
     message_extractors = {'oil': [

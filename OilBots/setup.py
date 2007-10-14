@@ -7,7 +7,7 @@ except ImportError:
     from setuptools import setup, find_packages
 
 setup(
-    name='BOil',
+    name='OilBots',
     version='0.1',
     description='OIL Bots Application',
     author='Pedro Algarvio',
@@ -16,11 +16,12 @@ setup(
     install_requires=["Pylons>=0.9.5"],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
+    namespace_packages=['oil'],
     test_suite='nose.collector',
-    package_data={'boil': ['i18n/*/LC_MESSAGES/*.mo']},
+    package_data={'oil': ['i18n/*/LC_MESSAGES/*.mo']},
     entry_points="""
     [paste.app_factory]
-    main = boil.wsgiapp:make_app
+    main = oil.wsgiapp:make_app
 
     [paste.app_install]
     main = pylons.util:PylonsInstaller
