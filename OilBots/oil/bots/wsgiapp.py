@@ -11,8 +11,8 @@ from pylons.middleware import error_mapper, ErrorDocuments, ErrorHandler, \
     StaticJavascripts
 from pylons.wsgiapp import PylonsApp
 
-import boil.helpers
-from boil.routing import make_map
+import oil.bots.helpers
+from oil.bots.routing import make_map
 
 def load_environment(global_conf, app_conf):
     """Configure the Pylons environment via the ``pylons.config`` object"""
@@ -24,11 +24,11 @@ def load_environment(global_conf, app_conf):
                  templates=[os.path.join(root, 'templates')])
 
     # Initialize config with the basic options
-    config.init_app(global_conf, app_conf, package='boil',
+    config.init_app(global_conf, app_conf, package='oil.bots',
                     template_engine='genshi', paths=paths)
 
     config['pylons.g'] = Globals()
-    config['pylons.h'] = boil.helpers
+    config['pylons.h'] = oil.bots.helpers
     config['routes.map'] = make_map()
 
     # Customize templating options via this variable
@@ -62,15 +62,6 @@ def make_app(global_conf, full_stack=True, **app_conf):
     app = PylonsApp()
 
     # CUSTOM MIDDLEWARE HERE (filtered by the error handling middlewares)
-    import threading
-    from boil.IRC import network
-    #from oil.lib.helpers import url_for
-    irc = network.IRCBotsNetwork()
-    irc.connect_all()
-    th = threading.Timer(5.0, irc.process_all)
-    th.start()
-    config['pylons.g'].ircnw = irc
-
     if asbool(full_stack):
         # Handle Python exceptions
         app = ErrorHandler(app, global_conf, error_template=error_template,
@@ -87,6 +78,36 @@ def make_app(global_conf, full_stack=True, **app_conf):
     javascripts_app = StaticJavascripts()
     static_app = StaticURLParser(config['pylons.paths']['static_files'])
     app = Cascade([static_app, javascripts_app, app])
+
+
+    try:
+        import threading
+        from oil.bots.IRC import network
+        #from oil.lib.helpers import url_for
+        irc = network.IRCBotsNetwork(app_conf['base_url'])
+    #    irc.setDaemon(True)
+    #    irc.start()
+        irc.connect_all()
+    #    irc.process_all()
+    #    irc.register()
+    ##    th1 = threading.Timer(0.5, irc.connect_all)
+    ##    th1.setDaemon(True)
+    ##    th1.start()
+        th2 = threading.Timer(2.0, irc.process_all)
+    #    th2 = threading.Thread(target=irc.process_all)
+    #    th2.setDaemon(True)
+        th2.start()
+    ##    th = threading.Thread(target=irc.process_all)
+    ##    th2.start()
+    ##    th3 = threading.Timer(50.0, irc.register)
+    ##    th3.setDaemon(True)
+    #    th3.start()
+    except (SystemExit, KeyboardInterrupt), e:
+        print e
+        irc.quit()
+    config['pylons.g'].ircnw = irc
+    print config['pylons.g'].ircnw
+
     return app
 
 

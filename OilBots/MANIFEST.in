@@ -1,2 +1,2 @@
-recursive-include boil/public *
-recursive-include boil/templates *
+recursive-include oil/bots/public *
+recursive-include oil/bots/templates *

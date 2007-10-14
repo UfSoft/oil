@@ -10,8 +10,8 @@ from pylons.decorators import jsonify, validate
 from pylons.i18n import _, ungettext, N_
 from pylons.templating import render
 
-import boil.helpers as h
-from boil import model
+import oil.bots.helpers as h
+from oil import db as model
 
 class BaseController(WSGIController):
 

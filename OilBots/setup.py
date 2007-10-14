@@ -18,10 +18,10 @@ setup(
     include_package_data=True,
     namespace_packages=['oil'],
     test_suite='nose.collector',
-    package_data={'oil': ['i18n/*/LC_MESSAGES/*.mo']},
+    package_data={'oil/bots': ['i18n/*/LC_MESSAGES/*.mo']},
     entry_points="""
     [paste.app_factory]
-    main = oil.wsgiapp:make_app
+    main = oil.bots.wsgiapp:make_app
 
     [paste.app_install]
     main = pylons.util:PylonsInstaller

@@ -1,2 +1,2 @@
-from oil.model import *
+from oil.db import *
 

@@ -1,4 +1,4 @@
-from boil.tests import *
+from oil.bots.tests import *
 
 class TestBotsController(TestController):
 

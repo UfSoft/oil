@@ -1,6 +1,6 @@
 import logging
 
-from boil.controllers import *
+from oil.bots.controllers import *
 
 log = logging.getLogger(__name__)
 
