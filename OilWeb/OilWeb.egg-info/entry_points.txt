@@ -1,6 +1,6 @@
 
     [paste.app_factory]
-    main = oil.config.middleware:make_app
+    main = oil.web.config.middleware:make_app
 
     [paste.app_install]
     main = pylons.util:PylonsInstaller
@@ -10,7 +10,4 @@
     init = babel.messages.frontend:init_catalog
     compile = babel.messages.frontend:compile_catalog
     update = babel.messages.frontend:update_catalog
-
-    [console_scripts]
-    bot-launch = oil.IRC.cmdline:main
     

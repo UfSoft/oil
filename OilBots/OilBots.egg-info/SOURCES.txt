@@ -17,7 +17,6 @@ ez_setup/README.txt
 ez_setup/__init__.py
 oil/__init__.py
 oil/bots/__init__.py
-oil/bots/__init__.pyc
 oil/bots/helpers.py
 oil/bots/model.py
 oil/bots/routing.py
