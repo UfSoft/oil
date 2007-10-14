@@ -3,7 +3,7 @@
 # =============================================================================
 # $Id: schemas.py 27 2007-09-09 17:50:17Z s0undt3ch $
 # =============================================================================
-#             $URL: http://oil.ufsoft.org/svn/trunk/OilWeb/oil/model/fe/schemas.py $
+#             $URL: http://oil.ufsoft.org/svn/trunk/OilWeb/web/model/fe/schemas.py $
 # $LastChangedDate: 2007-09-09 18:50:17 +0100 (Sun, 09 Sep 2007) $
 #             $Rev: 27 $
 #   $LastChangedBy: s0undt3ch $

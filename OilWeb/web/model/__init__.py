@@ -3,7 +3,7 @@
 # =============================================================================
 # $Id: __init__.py 30 2007-10-14 13:51:25Z s0undt3ch $
 # =============================================================================
-#             $URL: http://oil.ufsoft.org/svn/trunk/OilWeb/oil/model/__init__.py $
+#             $URL: http://oil.ufsoft.org/svn/trunk/OilWeb/web/model/__init__.py $
 # $LastChangedDate: 2007-10-14 14:51:25 +0100 (Sun, 14 Oct 2007) $
 #             $Rev: 30 $
 #   $LastChangedBy: s0undt3ch $
