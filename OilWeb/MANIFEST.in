@@ -1,2 +1,2 @@
-recursive-include oil/public *
-recursive-include oil/templates *
+recursive-include oil/web/public *
+recursive-include oil/web/templates *

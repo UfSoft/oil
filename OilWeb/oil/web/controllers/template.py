@@ -1,4 +1,4 @@
-from oil.lib.base import *
+from oil.web.lib.base import *
 
 class TemplateController(BaseController):
 

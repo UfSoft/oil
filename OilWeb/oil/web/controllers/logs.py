@@ -1,6 +1,6 @@
 import logging
 import datetime
-from oil.lib.base import *
+from oil.web.lib.base import *
 import pytz
 
 log = logging.getLogger(__name__)

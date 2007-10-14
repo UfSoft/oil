@@ -18,7 +18,7 @@ setup(
     include_package_data=True,
     namespace_packages=['oil'],
     test_suite='nose.collector',
-    package_data={'oil': ['i18n/*/LC_MESSAGES/*.mo']},
+    package_data={'oil.web': ['i18n/*/LC_MESSAGES/*.mo']},
     message_extractors = {'oil': [
         ('**.py', 'python', None),
         ('**/templates/**.html', 'genshi', None),
@@ -26,7 +26,7 @@ setup(
     },
     entry_points="""
     [paste.app_factory]
-    main = oil.config.middleware:make_app
+    main = oil.web.config.middleware:make_app
 
     [paste.app_install]
     main = pylons.util:PylonsInstaller
@@ -36,8 +36,8 @@ setup(
     init = babel.messages.frontend:init_catalog
     compile = babel.messages.frontend:compile_catalog
     update = babel.messages.frontend:update_catalog
-
-    [console_scripts]
-    bot-launch = oil.IRC.cmdline:main
-    """,
+    """
+#    [console_scripts]
+#    bot-launch = oil.IRC.cmdline:main
+#    """,
 )

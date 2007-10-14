@@ -4,7 +4,7 @@ import logging
 from paste.deploy import appconfig
 from pylons import config
 
-from oil.config.environment import load_environment
+from oil.web.config.environment import load_environment
 
 log = logging.getLogger(__name__)
 
@@ -13,7 +13,7 @@ def setup_config(command, filename, section, vars):
     conf = appconfig('config:' + filename)
     load_environment(conf.global_conf, conf.local_conf)
     # Forced late import of model
-    from oil import model
+    from oil import db as model
     answer = raw_input('Delete Current Tables If any exist [y/n]?')
     if answer.lower() in ('y', 'yes', ''):
         model.metadata.drop_all(bind=config['pylons.g'].sa_engine)

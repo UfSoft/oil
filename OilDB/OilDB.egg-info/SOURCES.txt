@@ -1,0 +1,10 @@
+setup.cfg
+setup.py
+OilDB.egg-info/PKG-INFO
+OilDB.egg-info/SOURCES.txt
+OilDB.egg-info/dependency_links.txt
+OilDB.egg-info/namespace_packages.txt
+OilDB.egg-info/requires.txt
+OilDB.egg-info/top_level.txt
+oil/__init__.py
+oil/db/__init__.py

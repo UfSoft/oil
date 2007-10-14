@@ -11,9 +11,9 @@ from pylons.decorators.cache import beaker_cache
 from pylons.i18n import _, ungettext, N_
 from pylons.templating import render
 
-import oil.lib.helpers as h
-import oil.model as model
-from oil.lib.helpers import validate
+import oil.web.lib.helpers as h
+import oil.web.model as model
+from oil.web.lib.helpers import validate
 
 import os
 from babel import Locale
@@ -78,7 +78,7 @@ class BaseController(WSGIController):
                                'i18n')
         for entry in os.listdir(i18ndir):
             mo_path = os.path.join(i18ndir, entry, 'LC_MESSAGES',
-                                   'oil.mo')
+                                   '%s.mo' % config['pylons.package'])
             if os.path.isfile(mo_path):
                 available_locales.append(entry)
 #                if '_' in entry:

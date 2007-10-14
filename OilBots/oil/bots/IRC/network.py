@@ -1,6 +1,6 @@
 import logging
 import irclib
-from oil import model
+from oil import db as model
 #from pylons.i18n import ugettext as _
 
 log = logging.getLogger(__name__)

@@ -28,7 +28,7 @@ def wrap_helpers(localdict):
 wrap_helpers(locals())
 
 def get_perms(openid):
-    from oil import model
+    from oil.web import model
     if openid == {}: return None
     user = model.Session.query(model.Admin).filter_by(openid=openid).first()
     if not user:

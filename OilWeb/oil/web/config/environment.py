@@ -3,9 +3,9 @@ import os
 
 from pylons import config
 
-import oil.lib.app_globals as app_globals
-import oil.lib.helpers
-from oil.config.routing import make_map
+import oil.web.lib.app_globals as app_globals
+import oil.web.lib.helpers
+from oil.web.config.routing import make_map
 from sqlalchemy import engine_from_config
 from pylons.i18n import ugettext
 from genshi.filters import Translator
@@ -24,11 +24,11 @@ def load_environment(global_conf, app_conf):
                  templates=[os.path.join(root, 'templates')])
 
     # Initialize config with the basic options
-    config.init_app(global_conf, app_conf, package='oil',
+    config.init_app(global_conf, app_conf, package='oil.web',
                     template_engine='genshi', paths=paths)
 
     config['pylons.g'] = app_globals.Globals()
-    config['pylons.h'] = oil.lib.helpers
+    config['pylons.h'] = oil.web.lib.helpers
     config['routes.map'] = make_map()
 
     # Customize templating options via this variable

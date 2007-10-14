@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: sw=4 ts=4 fenc=utf-8
 # =============================================================================
-# $Id: schemas.py 27 2007-09-09 17:50:17Z s0undt3ch $
+# $Id: schemas.py 33 2007-10-14 15:08:27Z s0undt3ch $
 # =============================================================================
 #             $URL: http://oil.ufsoft.org/svn/trunk/OilWeb/oil/web/model/fe/schemas.py $
-# $LastChangedDate: 2007-09-09 18:50:17 +0100 (Sun, 09 Sep 2007) $
-#             $Rev: 27 $
+# $LastChangedDate: 2007-10-14 16:08:27 +0100 (Sun, 14 Oct 2007) $
+#             $Rev: 33 $
 #   $LastChangedBy: s0undt3ch $
 # =============================================================================
 # Copyright (C) 2007 Ufsoft.org - Pedro Algarvio <ufs@ufsoft.org>
@@ -13,7 +13,7 @@
 # Please view LICENSE for additional licensing information.
 # =============================================================================
 from formencode import Schema, validators
-from oil.model.fe import validators as validator
+from oil.web.model.fe import validators as validator
 
 class UpdateUser(Schema):
     allow_extra_fields = True

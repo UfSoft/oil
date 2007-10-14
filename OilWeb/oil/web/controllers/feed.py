@@ -1,6 +1,6 @@
 import logging
 
-from oil.lib.base import *
+from oil.web.lib.base import *
 import pylons
 
 log = logging.getLogger(__name__)

@@ -1,7 +1,7 @@
 import logging
 
-from oil.lib.base import *
-from oil.model.fe import schemas as schema
+from oil.web.lib.base import *
+from oil.web.model.fe import schemas as schema
 
 log = logging.getLogger(__name__)
 

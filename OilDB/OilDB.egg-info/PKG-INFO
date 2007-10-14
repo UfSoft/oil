@@ -1,7 +1,7 @@
 Metadata-Version: 1.0
-Name: OilBots
-Version: 0.1dev-r31
-Summary: OIL Bots Application
+Name: OilDB
+Version: 0.1dev-r28
+Summary: OIL Database Layout
 Home-page: http://oil.ufsoft.org
 Author: Pedro Algarvio
 Author-email: ufs@ufsoft.org

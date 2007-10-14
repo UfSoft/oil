@@ -10,7 +10,7 @@ from pylons.middleware import error_mapper, ErrorDocuments, ErrorHandler, \
     StaticJavascripts
 from pylons.wsgiapp import PylonsApp
 
-from oil.config.environment import load_environment
+from oil.web.config.environment import load_environment
 
 import threading
 

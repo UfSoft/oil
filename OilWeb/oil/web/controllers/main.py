@@ -1,6 +1,6 @@
 import logging
 
-from oil.lib.base import *
+from oil.web.lib.base import *
 
 log = logging.getLogger(__name__)
 

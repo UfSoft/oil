@@ -1,9 +1,9 @@
 import logging
 
-from oil.lib.base import *
+from oil.web.lib.base import *
 from openid.consumer.consumer import Consumer, SUCCESS, FAILURE, DiscoveryFailure
 from openid import sreg
-from oil.model.fe import schemas as schema
+from oil.web.model.fe import schemas as schema
 
 log = logging.getLogger(__name__)
 

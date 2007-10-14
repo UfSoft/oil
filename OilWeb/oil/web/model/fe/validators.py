@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: sw=4 ts=4 fenc=utf-8
 # =============================================================================
-# $Id: validators.py 16 2007-08-30 00:16:26Z s0undt3ch $
+# $Id: validators.py 33 2007-10-14 15:08:27Z s0undt3ch $
 # =============================================================================
 #             $URL: http://oil.ufsoft.org/svn/trunk/OilWeb/oil/web/model/fe/validators.py $
-# $LastChangedDate: 2007-08-30 01:16:26 +0100 (Thu, 30 Aug 2007) $
-#             $Rev: 16 $
+# $LastChangedDate: 2007-10-14 16:08:27 +0100 (Sun, 14 Oct 2007) $
+#             $Rev: 33 $
 #   $LastChangedBy: s0undt3ch $
 # =============================================================================
 # Copyright (C) 2007 Ufsoft.org - Pedro Algarvio <ufs@ufsoft.org>
@@ -16,7 +16,7 @@
 from formencode import validators, Invalid
 from pylons.i18n import N_, _
 from pylons import request, c
-import oil.model as model
+import oil.db as model
 import logging
 
 log = logging.getLogger(__name__)
