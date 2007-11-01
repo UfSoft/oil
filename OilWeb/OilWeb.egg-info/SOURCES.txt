@@ -73,6 +73,7 @@ oil/web/templates/account/index.html
 oil/web/templates/account/remove.html
 oil/web/templates/account/signin.html
 oil/web/templates/bots/__init__.py
+oil/web/templates/bots/__init__.pyc
 oil/web/templates/bots/delete.html
 oil/web/templates/bots/edit.html
 oil/web/templates/bots/index.html
@@ -91,6 +92,7 @@ oil/web/templates/main/__init__.pyc
 oil/web/templates/main/index.html
 oil/web/templates/main/view.html
 oil/web/templates/networks/__init__.py
+oil/web/templates/networks/__init__.pyc
 oil/web/templates/networks/add.html
 oil/web/templates/networks/delete.html
 oil/web/templates/networks/edit.html

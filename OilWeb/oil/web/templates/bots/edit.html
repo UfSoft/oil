@@ -20,7 +20,7 @@
 
         <label for="name">Name:</label>
         <input type="text" id="name" name="name"
-               value="${c.form_result.name or c.bot.name}"/>
+               value="${c.bot.name}"/>
         <span class="error-message" py:if="'name' in c.errors">
           $c.errors.name
         </span>

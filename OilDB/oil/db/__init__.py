@@ -236,11 +236,7 @@ class ChannelTopicInfo(object):
     def __init__(self, channel_participation, changed_by, changed_on):
         self.channel_participation = channel_participation
         self.changed_by = changed_by
-        if not isinstance(changed_on, float):
-            changed_on = float(changed_on)
-        self.changed_on = UTC.localize(
-            datetime.datetime.utcfromtimestamp(changed_on)
-        )
+        self.changed_on = changed_on
 
     def __repr__(self):
         return "<ChannelTopicInfo: topic for %s%s changed by %s on %s>" % \

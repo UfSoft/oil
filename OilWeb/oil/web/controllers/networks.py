@@ -63,6 +63,7 @@ class NetworksController(BaseController):
         participation = query.filter_by(nick=nick,
                                         network_name=network.name).first()
         log.debug(participation)
+        log.debug(participation.nick)
         c.participation = participation
         return render('networks.edit')
 

@@ -30,6 +30,11 @@ class LogsController(BaseController):
         channel_participation = model.Session.query(model.ChannelParticipation) \
             .filter_by(network_name=network, channel_name=channel ).first()
         c.channel_participation = channel_participation
+        if channel_participation.channel_topic:
+            log.debug('we have the topic: %s' % channel_participation.channel_topic.topic)
+            c.topic = channel_participation.channel_topic.topic
+        else:
+            c.topic = None
         c.events = channel_participation.get_events_for(c.date)
 
         # Get all dates which have log entries

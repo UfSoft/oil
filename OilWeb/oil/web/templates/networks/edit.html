@@ -21,7 +21,7 @@
 
         <label for="nick">Nick:</label>
         <input type="text" id="nick" name="nick"
-               value="${c.form_result.nick or c.participation.nick}"/>
+               value="${defined('c.form_result.nick') or c.participation.nick}"/>
         <span class="error-message" py:if="'nick' in c.errors">
           ${ c.errors.nick }
         </span><br/>

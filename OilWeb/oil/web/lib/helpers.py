@@ -135,8 +135,18 @@ def validate(template=None, schema=None, validators=None, form=None, variable_de
 
             log.debug(errors)
             pylons.c.errors = errors
-            pylons.c.form_result = decoded
+            engine_dict = pylons.buffet._update_names({})
+            import os
+            from genshi.filters.html import HTMLFormFiller
+            from genshi.template.loader import TemplateLoader
+            loader = TemplateLoader(pylons.config['pylons.paths']['templates'])
+            _template = loader.load(template.replace('.', os.sep)+'.html')
+            # If the session was overriden to be None, don't populate the session
+            # var
+#            if pylons.config['pylons.environ_config'].get('session', True):
+#                d['session'] = pylons.session._current_obj()
+            stream = _template.generate(**engine_dict) | HTMLFormFiller(data=decoded)
 
-            return render(template)
+            return  stream.render()
         return func(self, *args, **kwargs)
     return decorator(wrapper)

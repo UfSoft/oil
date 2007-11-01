@@ -16,9 +16,9 @@
     <div id="logs_div">
       <table id='logs' class="listing logs">
         <thead>
-          <tr py:if="c.channel_participation.channel_topic.topic">
+          <tr py:if="c.topic">
             <th colspan="3" class="topic">
-            $c.channel_participation.channel_topic.topic<br/>
+            $c.topic<br/>
               <span py:if="c.channel_participation.channel_topic_info">
                 ${_("topic updated by %s on %s" % \
                     (c.channel_participation.channel_topic_info.changed_by,
