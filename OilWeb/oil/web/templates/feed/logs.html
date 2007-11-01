@@ -2,18 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom"
       xmlns:py="http://genshi.edgewall.org/">
   <title>$c.topic</title>
-  <id href="h.url_for('/')"/>
-  <link rel="alternate" href="$c.url" type="text/html"/>
+  <id href="${h.url_for('/')}"/>
+  <link rel="alternate" href="$c.logs_url" type="text/html"/>
   <link rel="self" href="$c.url" type="application/atom+xml"/>
   <updated>${ c.events[-1].stamp.isoformat() }</updated>
 
   <py:for each="event in reversed(c.events)">
   <entry>
-    <title/>
+    <title>$event.source</title>
     <date>$event.stamp</date>
-    <link rel="alternate" href="$c.url#UTC:${h.format_time(event.stamp, locale='en_GB')}" type="text/html"/>
-    <link rel="via" href="$c.url#UTC:${h.format_time(event.stamp, locale='en_GB')}" type="text/html"/>
-    <id xml:lang="en">${h.url_for('/')}#UTC:${h.format_time(event.stamp, locale='en_GB')}</id>
+    <link rel="alternate" href="$c.logs_url#UTC:${h.format_time(event.stamp, locale='en_GB')}" type="text/html"/>
+    <link rel="via" href="$c.logs_url#UTC:${h.format_time(event.stamp, locale='en_GB')}" type="text/html"/>
+    <id xml:lang="en">$c.logs_url#UTC:${h.format_time(event.stamp, locale='en_GB')}</id>
     <author>
       <name>$event.source</name>
     </author>

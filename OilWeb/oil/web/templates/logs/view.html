@@ -37,12 +37,12 @@
           <tr><td colspan="3"/></tr>
         </thead>
         <tbody>
-          <tr py:for="message in c.events" class="${ message.subtype or message.type}">
-            <td class="time">
-              <a href="#UTC:${h.format_time(message.stamp, locale='en_GB')}"
-                 title="Timezone is '$c.timezone'">
-                 ${h.format_time(message.stamp, tzinfo=c.timezone, locale=g.locale)}
-              </a>
+          <tr py:for="message in c.events" class="${ message.subtype or message.type}"
+              py:with="stamp = 'UTC:%s' % h.format_time(message.stamp, locale='en_GB')">
+            <td class="time" id="$stamp">
+              <a href="#$stamp" title="Timezone is '$c.timezone'">${
+                h.format_time(message.stamp, tzinfo=c.timezone, locale=g.locale)
+              }</a>
             </td>
             <td class="nick">$message.source</td>
             <td class="message">$message.msg</td>

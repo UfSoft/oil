@@ -20,7 +20,8 @@ class FeedController(BaseController):
         channel=channel_participation.channel_name
         c.url = h.url_for('feed_logs', network=network, channel=channel,
                           qualified=True)
-        c.topic = channel_participation.channel.topic
+        c.logs_url = h.url_for('logs', network=network, channel=channel)
+        c.topic = channel_participation.channel_topic.topic
         if not c.topic:
             c.topic = "Logs for #%s on %s" % (channel, network.replace('-', ':'))
 
