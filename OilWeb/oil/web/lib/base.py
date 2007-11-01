@@ -65,6 +65,8 @@ class BaseController(WSGIController):
             session['message'] = ''
             session.save()
 
+        # Restore Content-Type in case the feed was browsed
+        response.headers['Content-Type'] = 'text/html; charset=utf-8'
         try:
             return WSGIController.__call__(self, environ, start_response)
         finally:
